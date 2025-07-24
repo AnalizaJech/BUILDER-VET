@@ -24,8 +24,12 @@ export default function Navigation() {
               <SimplePawLogo className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-foreground">Matis Pet Groomer</h1>
-              <p className="text-xs text-muted-foreground">Cuidado veterinario profesional</p>
+              <h1 className="text-xl font-bold text-foreground">
+                Matis Pet Groomer
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                Cuidado veterinario profesional
+              </p>
             </div>
           </Link>
 
@@ -56,7 +60,11 @@ export default function Navigation() {
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>

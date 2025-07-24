@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { useAuth } from '@/contexts/AuthContext';
-import { SimplePawLogo } from '@/components/PetPawLogo';
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { SimplePawLogo } from "@/components/PetPawLogo";
 import {
   Heart,
   Users,
@@ -19,9 +19,9 @@ import {
   Scissors,
   DollarSign,
   FileText,
-  Bell
-} from 'lucide-react';
-import { UserRole } from '@shared/types';
+  Bell,
+} from "lucide-react";
+import { UserRole } from "@shared/types";
 
 interface DashboardLayoutProps {
   children: React.ReactNode;
@@ -36,65 +36,65 @@ interface NavItem {
 
 const navigationItems: NavItem[] = [
   {
-    href: '/dashboard',
-    label: 'Panel Principal',
+    href: "/dashboard",
+    label: "Panel Principal",
     icon: Home,
-    roles: ['admin', 'veterinarian', 'receptionist', 'cashier', 'groomer']
+    roles: ["admin", "veterinarian", "receptionist", "cashier", "groomer"],
   },
   {
-    href: '/dashboard/owners',
-    label: 'Propietarios',
+    href: "/dashboard/owners",
+    label: "Propietarios",
     icon: Users,
-    roles: ['admin', 'veterinarian', 'receptionist']
+    roles: ["admin", "veterinarian", "receptionist"],
   },
   {
-    href: '/dashboard/appointments',
-    label: 'Citas',
+    href: "/dashboard/appointments",
+    label: "Citas",
     icon: Calendar,
-    roles: ['admin', 'veterinarian', 'receptionist', 'groomer']
+    roles: ["admin", "veterinarian", "receptionist", "groomer"],
   },
   {
-    href: '/dashboard/medical',
-    label: 'Historial Clínico',
+    href: "/dashboard/medical",
+    label: "Historial Clínico",
     icon: Stethoscope,
-    roles: ['admin', 'veterinarian']
+    roles: ["admin", "veterinarian"],
   },
   {
-    href: '/dashboard/inventory',
-    label: 'Inventario',
+    href: "/dashboard/inventory",
+    label: "Inventario",
     icon: Package,
-    roles: ['admin', 'veterinarian', 'cashier']
+    roles: ["admin", "veterinarian", "cashier"],
   },
   {
-    href: '/dashboard/sales',
-    label: 'Ventas',
+    href: "/dashboard/sales",
+    label: "Ventas",
     icon: CreditCard,
-    roles: ['admin', 'cashier']
+    roles: ["admin", "cashier"],
   },
   {
-    href: '/dashboard/grooming',
-    label: 'Grooming',
+    href: "/dashboard/grooming",
+    label: "Grooming",
     icon: Scissors,
-    roles: ['admin', 'groomer', 'receptionist']
+    roles: ["admin", "groomer", "receptionist"],
   },
   {
-    href: '/dashboard/reports',
-    label: 'Reportes',
+    href: "/dashboard/reports",
+    label: "Reportes",
     icon: BarChart3,
-    roles: ['admin']
+    roles: ["admin"],
   },
   {
-    href: '/dashboard/notifications',
-    label: 'Notificaciones',
+    href: "/dashboard/notifications",
+    label: "Notificaciones",
     icon: Bell,
-    roles: ['admin']
+    roles: ["admin"],
   },
   {
-    href: '/dashboard/settings',
-    label: 'Configuración',
+    href: "/dashboard/settings",
+    label: "Configuración",
     icon: Settings,
-    roles: ['admin']
-  }
+    roles: ["admin"],
+  },
 ];
 
 export default function DashboardLayout({ children }: DashboardLayoutProps) {
@@ -105,20 +105,20 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
+    navigate("/login");
   };
 
-  const visibleNavItems = navigationItems.filter(item => 
-    item.roles.some(role => hasRole(role))
+  const visibleNavItems = navigationItems.filter((item) =>
+    item.roles.some((role) => hasRole(role)),
   );
 
   const getRoleDisplayName = (role: UserRole): string => {
     const roleNames = {
-      admin: 'Administrador',
-      veterinarian: 'Veterinario',
-      receptionist: 'Recepcionista',
-      cashier: 'Cajero',
-      groomer: 'Groomer'
+      admin: "Administrador",
+      veterinarian: "Veterinario",
+      receptionist: "Recepcionista",
+      cashier: "Cajero",
+      groomer: "Groomer",
     };
     return roleNames[role];
   };
@@ -134,11 +134,13 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
       )}
 
       {/* Sidebar */}
-      <aside className={`
+      <aside
+        className={`
         fixed top-0 left-0 z-50 h-full w-64 bg-card border-r border-border transform transition-transform duration-200 ease-in-out
-        ${isSidebarOpen ? 'translate-x-0' : '-translate-x-full'}
+        ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"}
         lg:translate-x-0 lg:relative lg:z-auto lg:flex-shrink-0
-      `}>
+      `}
+      >
         <div className="flex flex-col h-full">
           {/* Logo */}
           <div className="p-6 border-b border-border">
@@ -148,7 +150,9 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               </div>
               <div>
                 <h1 className="text-lg font-bold text-foreground">Matis Pet</h1>
-                <p className="text-xs text-muted-foreground">Sistema Veterinario</p>
+                <p className="text-xs text-muted-foreground">
+                  Sistema Veterinario
+                </p>
               </div>
             </Link>
           </div>
@@ -158,7 +162,7 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
             {visibleNavItems.map((item) => {
               const Icon = item.icon;
               const isActive = location.pathname === item.href;
-              
+
               return (
                 <Link
                   key={item.href}
@@ -166,9 +170,10 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
                   onClick={() => setIsSidebarOpen(false)}
                   className={`
                     flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors
-                    ${isActive 
-                      ? 'bg-primary text-primary-foreground' 
-                      : 'text-muted-foreground hover:text-foreground hover:bg-muted'
+                    ${
+                      isActive
+                        ? "bg-primary text-primary-foreground"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
                     }
                   `}
                 >
@@ -182,14 +187,16 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           {/* User info and logout */}
           <div className="p-4 border-t border-border">
             <div className="mb-4">
-              <p className="text-sm font-medium text-foreground">{user?.fullName}</p>
+              <p className="text-sm font-medium text-foreground">
+                {user?.fullName}
+              </p>
               <p className="text-xs text-muted-foreground">
                 {user?.role && getRoleDisplayName(user.role)}
               </p>
             </div>
-            <Button 
-              variant="outline" 
-              size="sm" 
+            <Button
+              variant="outline"
+              size="sm"
               onClick={handleLogout}
               className="w-full justify-start"
             >
@@ -211,22 +218,24 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
               onClick={() => setIsSidebarOpen(!isSidebarOpen)}
               className="lg:hidden"
             >
-              {isSidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
+              {isSidebarOpen ? (
+                <X className="w-4 h-4" />
+              ) : (
+                <Menu className="w-4 h-4" />
+              )}
             </Button>
             <h1 className="text-xl font-semibold text-foreground hidden sm:block">
-              {visibleNavItems.find(item => item.href === location.pathname)?.label || 'Dashboard'}
+              {visibleNavItems.find((item) => item.href === location.pathname)
+                ?.label || "Dashboard"}
             </h1>
           </div>
 
-          <div className="flex items-center space-x-4">
-          </div>
+          <div className="flex items-center space-x-4"></div>
         </header>
 
         {/* Page content */}
         <main className="flex-1 p-4 lg:p-6 overflow-y-auto">
-          <div className="max-w-full">
-            {children}
-          </div>
+          <div className="max-w-full">{children}</div>
         </main>
       </div>
     </div>

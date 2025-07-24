@@ -1,5 +1,5 @@
-import React from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
 export const UTF8Test: React.FC = () => {
   const testStrings = [
@@ -11,7 +11,7 @@ export const UTF8Test: React.FC = () => {
     "Cirugía especializada",
     "Nutrición animal",
     "Diagnóstico",
-    "Peluquería canina"
+    "Peluquería canina",
   ];
 
   return (

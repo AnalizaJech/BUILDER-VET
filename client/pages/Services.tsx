@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navigation from "@/components/Navigation";
@@ -33,7 +39,7 @@ import {
   Bath,
   Brush,
   Gem,
-  Crown
+  Crown,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -46,13 +52,14 @@ export default function Services() {
     { id: "preventive", label: "Medicina Preventiva", icon: Shield },
     { id: "surgical", label: "Cirugías", icon: Heart },
     { id: "specialty", label: "Especialidades", icon: Award },
-    { id: "home", label: "Servicios a Domicilio", icon: Home }
+    { id: "home", label: "Servicios a Domicilio", icon: Home },
   ];
 
   const medicalServices = [
     {
       title: "Consulta Veterinaria General",
-      description: "Examen médico completo para evaluar la salud integral de tu mascota",
+      description:
+        "Examen médico completo para evaluar la salud integral de tu mascota",
       price: "S/ 60",
       duration: "30-45 min",
       includes: [
@@ -60,14 +67,15 @@ export default function Services() {
         "Evaluación del comportamiento",
         "Recomendaciones nutricionales",
         "Plan de tratamiento personalizado",
-        "Historial médico digital"
+        "Historial médico digital",
       ],
       icon: Stethoscope,
-      popular: true
+      popular: true,
     },
     {
       title: "Consulta de Especialidad",
-      description: "Atención especializada en dermatología, cardiología, neurología y más",
+      description:
+        "Atención especializada en dermatología, cardiología, neurología y más",
       price: "S/ 120",
       duration: "45-60 min",
       includes: [
@@ -75,10 +83,10 @@ export default function Services() {
         "Estudios especializados",
         "Diagnóstico avanzado",
         "Tratamiento específico",
-        "Seguimiento personalizado"
+        "Seguimiento personalizado",
       ],
       icon: Award,
-      badge: "Especialista"
+      badge: "Especialista",
     },
     {
       title: "Medicina Interna",
@@ -90,17 +98,18 @@ export default function Services() {
         "Interpretación de resultados",
         "Plan terapéutico integral",
         "Monitoreo de evolución",
-        "Consultas de seguimiento"
+        "Consultas de seguimiento",
       ],
       icon: Activity,
-      badge: "Avanzado"
-    }
+      badge: "Avanzado",
+    },
   ];
 
   const groomingServices = [
     {
       title: "Grooming Completo Premium",
-      description: "Servicio integral de estética y cuidado para que tu mascota luzca espectacular",
+      description:
+        "Servicio integral de estética y cuidado para que tu mascota luzca espectacular",
       price: "S/ 80",
       duration: "2-3 horas",
       includes: [
@@ -109,14 +118,15 @@ export default function Services() {
         "Limpieza de oídos",
         "Corte de uñas",
         "Cepillado dental",
-        "Perfume hipoalergénico"
+        "Perfume hipoalergénico",
       ],
       icon: Crown,
-      popular: true
+      popular: true,
     },
     {
       title: "Baño Terapéutico",
-      description: "Baño especializado con productos medicinales para problemas de piel",
+      description:
+        "Baño especializado con productos medicinales para problemas de piel",
       price: "S/ 50",
       duration: "1-1.5 horas",
       includes: [
@@ -124,10 +134,10 @@ export default function Services() {
         "Tratamiento para la piel",
         "Secado profesional",
         "Cepillado suave",
-        "Hidratación de piel y pelo"
+        "Hidratación de piel y pelo",
       ],
       icon: Bath,
-      badge: "Terapéutico"
+      badge: "Terapéutico",
     },
     {
       title: "Spa Relajante",
@@ -140,17 +150,18 @@ export default function Services() {
         "Baño con sales especiales",
         "Mascarilla facial",
         "Pedicura completa",
-        "Sesión de relajación"
+        "Sesión de relajación",
       ],
       icon: Sparkles,
-      badge: "Luxury"
-    }
+      badge: "Luxury",
+    },
   ];
 
   const preventiveServices = [
     {
       title: "Programa de Vacunación",
-      description: "Plan completo de vacunación adaptado a la edad y necesidades de tu mascota",
+      description:
+        "Plan completo de vacunación adaptado a la edad y necesidades de tu mascota",
       price: "S/ 45",
       duration: "20 min",
       includes: [
@@ -158,10 +169,10 @@ export default function Services() {
         "Calendario personalizado",
         "Recordatorios automáticos",
         "Certificado oficial",
-        "Registro en carnet de vacunación"
+        "Registro en carnet de vacunación",
       ],
       icon: Syringe,
-      popular: true
+      popular: true,
     },
     {
       title: "Control de Parásitos",
@@ -173,10 +184,10 @@ export default function Services() {
         "Tratamiento antipulgas",
         "Productos de calidad premium",
         "Plan de prevención",
-        "Seguimiento trimestral"
+        "Seguimiento trimestral",
       ],
       icon: Shield,
-      badge: "Preventivo"
+      badge: "Preventivo",
     },
     {
       title: "Chequeo Geriátrico",
@@ -188,17 +199,18 @@ export default function Services() {
         "Evaluación cardiovascular",
         "Examen neurológico",
         "Radiografías básicas",
-        "Plan de cuidados senior"
+        "Plan de cuidados senior",
       ],
       icon: Heart,
-      badge: "Senior"
-    }
+      badge: "Senior",
+    },
   ];
 
   const surgicalServices = [
     {
       title: "Cirugías de Rutina",
-      description: "Esterilización, castración y procedimientos menores ambulatorios",
+      description:
+        "Esterilización, castración y procedimientos menores ambulatorios",
       price: "S/ 350",
       duration: "1-2 horas",
       includes: [
@@ -206,14 +218,15 @@ export default function Services() {
         "Monitoreo constante",
         "Medicación post-operatoria",
         "Revisiones de control",
-        "Atención 24h post-cirugía"
+        "Atención 24h post-cirugía",
       ],
       icon: Heart,
-      popular: true
+      popular: true,
     },
     {
       title: "Cirugías Especializadas",
-      description: "Procedimientos complejos con equipamiento de última tecnología",
+      description:
+        "Procedimientos complejos con equipamiento de última tecnología",
       price: "S/ 800",
       duration: "2-4 horas",
       includes: [
@@ -221,10 +234,10 @@ export default function Services() {
         "Cirugía con especialista",
         "Tecnología de vanguardia",
         "Cuidados intensivos",
-        "Seguimiento especializado"
+        "Seguimiento especializado",
       ],
       icon: Award,
-      badge: "Especializada"
+      badge: "Especializada",
     },
     {
       title: "Cirugías de Emergencia",
@@ -236,11 +249,11 @@ export default function Services() {
         "Estabilización de emergencia",
         "Cirugía de urgencia",
         "Cuidados críticos",
-        "Monitoreo intensivo"
+        "Monitoreo intensivo",
       ],
       icon: Clock,
-      badge: "Emergencia"
-    }
+      badge: "Emergencia",
+    },
   ];
 
   const specialtyServices = [
@@ -254,10 +267,10 @@ export default function Services() {
         "Pruebas de alergia",
         "Tratamientos específicos",
         "Productos dermatológicos",
-        "Seguimiento personalizado"
+        "Seguimiento personalizado",
       ],
       icon: Eye,
-      badge: "Especialidad"
+      badge: "Especialidad",
     },
     {
       title: "Cardiología",
@@ -269,10 +282,10 @@ export default function Services() {
         "Ecocardiografía",
         "Evaluación cardiovascular",
         "Plan de tratamiento cardíaco",
-        "Monitoreo especializado"
+        "Monitoreo especializado",
       ],
       icon: Activity,
-      badge: "Cardiología"
+      badge: "Cardiología",
     },
     {
       title: "Odontología Veterinaria",
@@ -284,11 +297,11 @@ export default function Services() {
         "Radiografías dentales",
         "Extracciones si necesario",
         "Tratamiento periodontal",
-        "Plan de higiene dental"
+        "Plan de higiene dental",
       ],
       icon: Gem,
-      badge: "Dental"
-    }
+      badge: "Dental",
+    },
   ];
 
   const homeServices = [
@@ -302,10 +315,10 @@ export default function Services() {
         "Examen médico completo",
         "Medicamentos si es necesario",
         "Recomendaciones personalizadas",
-        "Seguimiento telefónico"
+        "Seguimiento telefónico",
       ],
       icon: Home,
-      popular: true
+      popular: true,
     },
     {
       title: "Vacunación a Domicilio",
@@ -317,14 +330,15 @@ export default function Services() {
         "Aplicación profesional",
         "Certificado de vacunación",
         "Observación post-vacunal",
-        "Programación de siguiente dosis"
+        "Programación de siguiente dosis",
       ],
       icon: Syringe,
-      badge: "Domicilio"
+      badge: "Domicilio",
     },
     {
       title: "Eutanasia Asistida",
-      description: "Acompañamiento profesional y compasivo en momentos difíciles",
+      description:
+        "Acompañamiento profesional y compasivo en momentos difíciles",
       price: "S/ 250",
       duration: "60-90 min",
       includes: [
@@ -332,22 +346,29 @@ export default function Services() {
         "Acompañamiento familiar",
         "Sedación previa",
         "Certificado de defunción",
-        "Opciones de cremación"
+        "Opciones de cremación",
       ],
       icon: Heart,
-      badge: "Compasivo"
-    }
+      badge: "Compasivo",
+    },
   ];
 
   const getCurrentServices = () => {
     switch (selectedCategory) {
-      case "medical": return medicalServices;
-      case "grooming": return groomingServices;
-      case "preventive": return preventiveServices;
-      case "surgical": return surgicalServices;
-      case "specialty": return specialtyServices;
-      case "home": return homeServices;
-      default: return medicalServices;
+      case "medical":
+        return medicalServices;
+      case "grooming":
+        return groomingServices;
+      case "preventive":
+        return preventiveServices;
+      case "surgical":
+        return surgicalServices;
+      case "specialty":
+        return specialtyServices;
+      case "home":
+        return homeServices;
+      default:
+        return medicalServices;
     }
   };
 
@@ -355,29 +376,31 @@ export default function Services() {
     {
       icon: Award,
       title: "Veterinarios Certificados",
-      description: "Equipo de profesionales con certificaciones internacionales"
+      description:
+        "Equipo de profesionales con certificaciones internacionales",
     },
     {
       icon: Clock,
       title: "Atención 24/7",
-      description: "Emergencias atendidas todos los días del año"
+      description: "Emergencias atendidas todos los días del año",
     },
     {
       icon: Shield,
       title: "Tecnología Moderna",
-      description: "Equipamiento de última generación para diagnósticos precisos"
+      description:
+        "Equipamiento de última generación para diagnósticos precisos",
     },
     {
       icon: Heart,
       title: "Trato Humanizado",
-      description: "Atención cálida y personalizada para cada mascota"
-    }
+      description: "Atención cálida y personalizada para cada mascota",
+    },
   ];
 
   return (
     <>
       <Navigation />
-      
+
       {/* Hero Section */}
       <section className="bg-green-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -391,12 +414,17 @@ export default function Services() {
               <span className="text-green-600"> tu Mascota</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
-              Ofrecemos una amplia gama de servicios veterinarios con los más altos estándares 
-              de calidad, tecnología moderna y un equipo apasionado por el bienestar animal.
+              Ofrecemos una amplia gama de servicios veterinarios con los más
+              altos estándares de calidad, tecnología moderna y un equipo
+              apasionado por el bienestar animal.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white">
+              <Button
+                asChild
+                size="lg"
+                className="bg-green-600 hover:bg-green-700 text-white"
+              >
                 <Link to="/citas">
                   <Calendar className="w-5 h-5 mr-2" />
                   Agendar Cita
@@ -420,7 +448,9 @@ export default function Services() {
                   <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border-2 border-green-500">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
-                  <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
+                  <h3 className="font-semibold text-gray-900 mb-2">
+                    {feature.title}
+                  </h3>
                   <p className="text-sm text-gray-600">{feature.description}</p>
                 </div>
               );
@@ -433,9 +463,12 @@ export default function Services() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Nuestros Servicios</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Nuestros Servicios
+            </h2>
             <p className="text-gray-600 max-w-2xl mx-auto">
-              Explora nuestra completa gama de servicios diseñados para mantener a tu mascota sana y feliz
+              Explora nuestra completa gama de servicios diseñados para mantener
+              a tu mascota sana y feliz
             </p>
           </div>
 
@@ -451,8 +484,8 @@ export default function Services() {
                     onClick={() => setSelectedCategory(category.id)}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-lg font-medium transition-all ${
                       isActive
-                        ? 'bg-green-600 text-white shadow-lg'
-                        : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                        ? "bg-green-600 text-white shadow-lg"
+                        : "bg-gray-100 text-gray-600 hover:bg-gray-200"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
@@ -468,14 +501,19 @@ export default function Services() {
             {getCurrentServices().map((service, index) => {
               const Icon = service.icon;
               return (
-                <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-1">
+                <Card
+                  key={index}
+                  className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-1"
+                >
                   <CardHeader className="text-center">
                     <div className="flex items-center justify-center space-x-2 mb-4">
                       <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform border-2 border-green-200">
                         <Icon className="w-8 h-8 text-green-600" />
                       </div>
                       {service.badge && (
-                        <Badge className="bg-blue-100 text-blue-700">{service.badge}</Badge>
+                        <Badge className="bg-blue-100 text-blue-700">
+                          {service.badge}
+                        </Badge>
                       )}
                       {service.popular && (
                         <Badge className="bg-yellow-100 text-yellow-700">
@@ -484,18 +522,28 @@ export default function Services() {
                         </Badge>
                       )}
                     </div>
-                    <CardTitle className="text-xl text-gray-900 mb-2">{service.title}</CardTitle>
-                    <CardDescription className="text-gray-600">{service.description}</CardDescription>
+                    <CardTitle className="text-xl text-gray-900 mb-2">
+                      {service.title}
+                    </CardTitle>
+                    <CardDescription className="text-gray-600">
+                      {service.description}
+                    </CardDescription>
                   </CardHeader>
-                  
+
                   <CardContent>
                     <div className="flex items-center justify-between mb-4">
-                      <div className="text-2xl font-bold text-green-600">{service.price}</div>
-                      <div className="text-sm text-gray-500">{service.duration}</div>
+                      <div className="text-2xl font-bold text-green-600">
+                        {service.price}
+                      </div>
+                      <div className="text-sm text-gray-500">
+                        {service.duration}
+                      </div>
                     </div>
 
                     <div className="space-y-2 mb-6">
-                      <p className="text-sm font-medium text-gray-900">Incluye:</p>
+                      <p className="text-sm font-medium text-gray-900">
+                        Incluye:
+                      </p>
                       {service.includes.map((item, i) => (
                         <div key={i} className="flex items-start space-x-2">
                           <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
@@ -505,7 +553,10 @@ export default function Services() {
                     </div>
 
                     <div className="flex space-x-2">
-                      <Button asChild className="flex-1 bg-green-600 hover:bg-green-700 text-white">
+                      <Button
+                        asChild
+                        className="flex-1 bg-green-600 hover:bg-green-700 text-white"
+                      >
                         <Link to="/citas">
                           <Calendar className="w-4 h-4 mr-2" />
                           Agendar
@@ -535,8 +586,9 @@ export default function Services() {
             Emergencias Veterinarias 24/7
           </h2>
           <p className="text-xl text-gray-600 mb-8">
-            Los accidentes no esperan. Nuestro equipo de emergencias está disponible 
-            las 24 horas para atender a tu mascota cuando más nos necesite.
+            Los accidentes no esperan. Nuestro equipo de emergencias está
+            disponible las 24 horas para atender a tu mascota cuando más nos
+            necesite.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-red-600 hover:bg-red-700">
@@ -545,8 +597,17 @@ export default function Services() {
                 Emergencias: +51 902 799 296
               </a>
             </Button>
-            <Button asChild size="lg" variant="outline" className="border-red-200 text-red-700 hover:bg-red-50">
-              <a href="https://wa.me/51902799296?text=EMERGENCIA" target="_blank" rel="noopener noreferrer">
+            <Button
+              asChild
+              size="lg"
+              variant="outline"
+              className="border-red-200 text-red-700 hover:bg-red-50"
+            >
+              <a
+                href="https://wa.me/51902799296?text=EMERGENCIA"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
                 WhatsApp Emergencia
               </a>
             </Button>
@@ -564,8 +625,12 @@ export default function Services() {
                   <SimplePawLogo className="w-6 h-6 text-white" />
                 </div>
                 <div>
-                  <h3 className="text-xl font-bold text-white">Matis Pet Groomer</h3>
-                  <p className="text-sm text-gray-400">Cuidado veterinario de excelencia</p>
+                  <h3 className="text-xl font-bold text-white">
+                    Matis Pet Groomer
+                  </h3>
+                  <p className="text-sm text-gray-400">
+                    Cuidado veterinario de excelencia
+                  </p>
                 </div>
               </Link>
               <p className="text-gray-400">
@@ -576,20 +641,76 @@ export default function Services() {
             <div>
               <h4 className="font-semibold text-white mb-4">Servicios</h4>
               <ul className="space-y-2">
-                <li><Link to="/servicios" className="hover:text-white transition-colors">Consultas Veterinarias</Link></li>
-                <li><Link to="/servicios" className="hover:text-white transition-colors">Grooming Premium</Link></li>
-                <li><Link to="/servicios" className="hover:text-white transition-colors">Vacunación</Link></li>
-                <li><Link to="/servicios" className="hover:text-white transition-colors">Cirugías</Link></li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Consultas Veterinarias
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Grooming Premium
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Vacunación
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Cirugías
+                  </Link>
+                </li>
               </ul>
             </div>
 
             <div>
               <h4 className="font-semibold text-white mb-4">Enlaces</h4>
               <ul className="space-y-2">
-                <li><Link to="/citas" className="hover:text-white transition-colors">Agendar Cita</Link></li>
-                <li><Link to="/login" className="hover:text-white transition-colors">Portal Clientes</Link></li>
-                <li><Link to="/contacto" className="hover:text-white transition-colors">Contacto</Link></li>
-                <li><Link to="/login" className="hover:text-white transition-colors">Sistema Veterinario</Link></li>
+                <li>
+                  <Link
+                    to="/citas"
+                    className="hover:text-white transition-colors"
+                  >
+                    Agendar Cita
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="hover:text-white transition-colors"
+                  >
+                    Portal Clientes
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contacto"
+                    className="hover:text-white transition-colors"
+                  >
+                    Contacto
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="hover:text-white transition-colors"
+                  >
+                    Sistema Veterinario
+                  </Link>
+                </li>
               </ul>
             </div>
 
@@ -617,7 +738,10 @@ export default function Services() {
           </div>
 
           <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
-            <p>&copy; 2024 Matis Pet Groomer. Todos los derechos reservados. | Desarrollado con ❤️ para el cuidado animal</p>
+            <p>
+              &copy; 2024 Matis Pet Groomer. Todos los derechos reservados. |
+              Desarrollado con ❤️ para el cuidado animal
+            </p>
           </div>
         </div>
       </footer>
