@@ -180,7 +180,7 @@ export default function DashboardAppointments() {
 
   const statusConfig = {
     scheduled: { label: "Programada", color: "bg-blue-100 text-blue-800" },
-    pending: { label: "Pendiente", color: "bg-yellow-100 text-yellow-800" },
+    pending: { label: "Pendiente", color: "bg-orange-100 text-orange-800" },
     confirmed: { label: "Confirmada", color: "bg-green-100 text-green-800" },
     "in-progress": {
       label: "En Progreso",
@@ -743,7 +743,7 @@ export default function DashboardAppointments() {
                       </>
                     ) : (
                       <>
-                        <AlertCircle className="w-3 h-3 text-yellow-600" />
+                        <AlertCircle className="w-3 h-3 text-orange-600" />
                         <span>Pendiente</span>
                       </>
                     )}
@@ -1073,7 +1073,7 @@ export default function DashboardAppointments() {
                           {appointment.reminderSent ? (
                             <CheckCircle className="w-4 h-4 text-green-600" />
                           ) : (
-                            <AlertCircle className="w-4 h-4 text-yellow-600" />
+                            <AlertCircle className="w-4 h-4 text-orange-600" />
                           )}
                         </TableCell>
                         <TableCell className="text-right">
