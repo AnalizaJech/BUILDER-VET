@@ -491,26 +491,73 @@ export default function Contact() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20 bg-green-600 text-white">
-        <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
-          <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
-            <SimplePawLogo className="w-10 h-10 text-white" />
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-300 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <Link to="/" className="flex items-center space-x-2">
+                <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center border-2 border-green-500">
+                  <SimplePawLogo className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">Matis Pet Groomer</h3>
+                  <p className="text-sm text-gray-400">Cuidado veterinario de excelencia</p>
+                </div>
+              </Link>
+              <p className="text-gray-400">
+                Comprometidos con la salud y felicidad de tu mascota desde 2019.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Servicios</h4>
+              <ul className="space-y-2">
+                <li><Link to="/servicios" className="hover:text-white transition-colors">Consultas Veterinarias</Link></li>
+                <li><Link to="/servicios" className="hover:text-white transition-colors">Grooming Premium</Link></li>
+                <li><Link to="/servicios" className="hover:text-white transition-colors">Vacunación</Link></li>
+                <li><Link to="/servicios" className="hover:text-white transition-colors">Cirugías</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Enlaces</h4>
+              <ul className="space-y-2">
+                <li><Link to="/citas" className="hover:text-white transition-colors">Agendar Cita</Link></li>
+                <li><Link to="/login" className="hover:text-white transition-colors">Portal Clientes</Link></li>
+                <li><Link to="/contacto" className="hover:text-white transition-colors">Contacto</Link></li>
+                <li><Link to="/login" className="hover:text-white transition-colors">Sistema Veterinario</Link></li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Contacto</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li className="flex items-center space-x-2">
+                  <Phone className="w-4 h-4" />
+                  <span>+51 902 799 296</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircle className="w-4 h-4" />
+                  <span>+51 902 799 296</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Mail className="w-4 h-4" />
+                  <span>info@matispetgroomer.com</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>Lima, Perú</span>
+                </li>
+              </ul>
+            </div>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            ¿Prefieren una cita inmediata?
-          </h2>
-          <p className="text-xl mb-8 opacity-90">
-            Nuestro sistema de citas online está disponible 24/7 para tu comodidad
-          </p>
-          <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-gray-100">
-            <Link to="/citas">
-              <Calendar className="w-5 h-5 mr-2" />
-              Agendar Cita Online
-            </Link>
-          </Button>
+
+          <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
+            <p>&copy; 2024 Matis Pet Groomer. Todos los derechos reservados. | Desarrollado con ❤️ para el cuidado animal</p>
+          </div>
         </div>
-      </section>
+      </footer>
     </>
   );
 }
