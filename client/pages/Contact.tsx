@@ -57,14 +57,14 @@ export default function Contact() {
     {
       icon: Phone,
       title: "Teléfono Principal",
-      details: ["(01) 234-5678", "Lun - Dom: 8:00 AM - 8:00 PM"],
+      details: ["+51 902 799 296", "Lun - Dom: 8:00 AM - 8:00 PM"],
       color: "text-green-600",
       bgColor: "bg-green-50"
     },
     {
       icon: MessageCircle,
       title: "WhatsApp",
-      details: ["+51 987-654-321", "Respuesta inmediata 24/7"],
+      details: ["+51 902 799 296", "Respuesta inmediata 24/7"],
       color: "text-blue-600",
       bgColor: "bg-blue-50"
     },
@@ -106,7 +106,7 @@ export default function Contact() {
     return (
       <>
         <Navigation />
-        <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
           <Card className="max-w-md w-full">
             <CardContent className="text-center p-8">
               <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
@@ -139,7 +139,7 @@ export default function Contact() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 py-20">
+      <section className="bg-green-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-green-100 text-green-700 mb-4">
@@ -158,13 +158,13 @@ export default function Contact() {
           {/* Quick Actions */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
             <Button asChild size="lg" className="bg-green-600 hover:bg-green-700">
-              <a href="https://wa.me/51987654321" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/51902799296" target="_blank" rel="noopener noreferrer">
                 <MessageCircle className="w-5 h-5 mr-2" />
                 WhatsApp Directo
               </a>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <a href="tel:012345678">
+              <a href="tel:+51902799296">
                 <Phone className="w-5 h-5 mr-2" />
                 Llamar Ahora
               </a>
@@ -322,7 +322,7 @@ export default function Contact() {
                       />
                     </div>
 
-                    <Button type="submit" className="w-full bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700">
+                    <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white">
                       <Send className="w-4 h-4 mr-2" />
                       Enviar Mensaje
                     </Button>
@@ -365,13 +365,13 @@ export default function Contact() {
                   </p>
                   <div className="space-y-2">
                     <Button asChild className="w-full bg-red-600 hover:bg-red-700">
-                      <a href="tel:987654321">
+                      <a href="tel:+51902799296">
                         <Phone className="w-4 h-4 mr-2" />
-                        Emergencias: +51 987-654-321
+                        Emergencias: +51 902 799 296
                       </a>
                     </Button>
                     <Button asChild variant="outline" className="w-full border-red-200 text-red-700 hover:bg-red-50">
-                      <a href="https://wa.me/51987654321?text=EMERGENCIA" target="_blank" rel="noopener noreferrer">
+                      <a href="https://wa.me/51902799296?text=EMERGENCIA" target="_blank" rel="noopener noreferrer">
                         <MessageCircle className="w-4 h-4 mr-2" />
                         WhatsApp Emergencia
                       </a>
@@ -492,7 +492,7 @@ export default function Contact() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+      <section className="py-20 bg-green-600 text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <SimplePawLogo className="w-10 h-10 text-white" />
