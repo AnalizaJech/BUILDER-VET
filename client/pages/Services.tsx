@@ -42,7 +42,6 @@ import {
   Crown,
   UserCheck,
   ShieldCheck,
-  Syringe,
   ClipboardCheck,
   Bell,
   FileText,
