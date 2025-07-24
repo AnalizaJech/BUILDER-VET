@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import { useBusinessData } from "@/contexts/BusinessDataContext";
 import { useNotifications } from "@/contexts/NotificationContext";
+import { Link } from "react-router-dom";
 import {
   Calendar as CalendarIcon,
   Clock,
