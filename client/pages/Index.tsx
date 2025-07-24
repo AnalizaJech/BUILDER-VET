@@ -136,12 +136,7 @@ export default function Index() {
                     Agendar Cita Ahora
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="lg" className="text-lg px-8 py-4 rounded-xl border-2 hover:bg-gray-50">
-                  <Link to="/demo">
-                    <PlayCircle className="w-5 h-5 mr-2" />
-                    Ver Demo del Sistema
-                  </Link>
-                </Button>
+
                 <Button asChild variant="ghost" size="lg" className="text-lg px-8 py-4 rounded-xl hover:bg-gray-50">
                   <Link to="/login">
                     Acceder al Sistema
