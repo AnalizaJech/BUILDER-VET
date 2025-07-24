@@ -34,20 +34,25 @@ export default function Navigation() {
           </Link>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-1">
+          <div className="hidden md:flex items-center space-x-8 ml-auto">
             {navItems.map((item) => {
               const isActive = location.pathname === item.href;
               return (
                 <Link
                   key={item.href}
                   to={item.href}
-                  className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  className={`relative py-2 text-sm font-medium transition-all duration-300 group ${
                     isActive
-                      ? "bg-primary text-primary-foreground"
-                      : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                      ? "text-green-600"
+                      : "text-gray-700 hover:text-green-600"
                   }`}
                 >
                   {item.label}
+                  <span className={`absolute bottom-0 left-0 h-0.5 bg-green-600 transition-all duration-300 ${
+                    isActive
+                      ? "w-full"
+                      : "w-0 group-hover:w-full"
+                  }`}></span>
                 </Link>
               );
             })}
