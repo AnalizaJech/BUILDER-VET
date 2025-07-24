@@ -50,7 +50,7 @@ export default function Index() {
       icon: Shield,
       title: "Cirugías Especializadas",
       description: "Procedimientos quirúrgicos con tecnología moderna y los más altos estándares de seguridad veterinaria",
-      features: ["Quir��fano moderno", "Anestesia segura", "Cuidado post-operatorio", "Monitoreo especializado"]
+      features: ["Quirófano moderno", "Anestesia segura", "Cuidado post-operatorio", "Monitoreo especializado"]
     },
     {
       icon: Sparkles,
