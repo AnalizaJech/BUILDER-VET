@@ -39,7 +39,7 @@ export default function Services() {
 
   const serviceCategories = [
     { id: "medical", label: "Servicios Médicos", icon: Stethoscope },
-    { id: "grooming", label: "Grooming & Estética", icon: Scissors },
+    { id: "grooming", label: "Grooming & Est��tica", icon: Scissors },
     { id: "preventive", label: "Medicina Preventiva", icon: Shield },
     { id: "surgical", label: "Cirugías", icon: Heart },
     { id: "specialty", label: "Especialidades", icon: Award },
@@ -376,7 +376,7 @@ export default function Services() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 py-20">
+      <section className="bg-green-50 py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-green-100 text-green-700 mb-4">
@@ -385,7 +385,7 @@ export default function Services() {
             </Badge>
             <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
               Cuidado Integral para
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600"> tu Mascota</span>
+              <span className="text-green-600"> tu Mascota</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto mb-8">
               Ofrecemos una amplia gama de servicios veterinarios con los más altos estándares 
@@ -393,7 +393,7 @@ export default function Services() {
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button asChild size="lg" className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800">
+              <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white">
                 <Link to="/citas">
                   <Calendar className="w-5 h-5 mr-2" />
                   Agendar Cita
@@ -414,7 +414,7 @@ export default function Services() {
               const Icon = feature.icon;
               return (
                 <div key={index} className="text-center">
-                  <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-blue-500 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                  <div className="w-16 h-16 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-4 border-2 border-green-500">
                     <Icon className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="font-semibold text-gray-900 mb-2">{feature.title}</h3>
@@ -468,7 +468,7 @@ export default function Services() {
                 <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-1">
                   <CardHeader className="text-center">
                     <div className="flex items-center justify-center space-x-2 mb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-green-100 to-blue-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                      <div className="w-16 h-16 bg-green-100 rounded-xl flex items-center justify-center group-hover:scale-110 transition-transform border-2 border-green-200">
                         <Icon className="w-8 h-8 text-green-600" />
                       </div>
                       {service.badge && (
@@ -502,7 +502,7 @@ export default function Services() {
                     </div>
 
                     <div className="flex space-x-2">
-                      <Button asChild className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600">
+                      <Button asChild className="flex-1 bg-green-600 hover:bg-green-700 text-white">
                         <Link to="/citas">
                           <Calendar className="w-4 h-4 mr-2" />
                           Agendar
@@ -537,13 +537,13 @@ export default function Services() {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button asChild size="lg" className="bg-red-600 hover:bg-red-700">
-              <a href="tel:987654321">
+              <a href="tel:+51902799296">
                 <Phone className="w-5 h-5 mr-2" />
-                Emergencias: +51 987-654-321
+                Emergencias: +51 902 799 296
               </a>
             </Button>
             <Button asChild size="lg" variant="outline" className="border-red-200 text-red-700 hover:bg-red-50">
-              <a href="https://wa.me/51987654321?text=EMERGENCIA" target="_blank" rel="noopener noreferrer">
+              <a href="https://wa.me/51902799296?text=EMERGENCIA" target="_blank" rel="noopener noreferrer">
                 WhatsApp Emergencia
               </a>
             </Button>
@@ -552,7 +552,7 @@ export default function Services() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-green-600 to-blue-600 text-white">
+      <section className="py-20 bg-green-600 text-white">
         <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
           <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <SimplePawLogo className="w-10 h-10 text-white" />
