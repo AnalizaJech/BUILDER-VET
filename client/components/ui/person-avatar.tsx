@@ -10,7 +10,7 @@ interface PersonAvatarProps {
 // Database of high-quality professional avatar images mapped to specific names
 const avatarDatabase = {
   // Female clients
-  "María González Sánchez": "photo-1494790108755-2616b612b786",
+  "María González Sánchez": "photo-1580489944761-15a19d654956",
   "Ana Rodríguez Vásquez": "photo-1438761681033-6461ffad8d80",
   "Patricia Núñez Torres": "photo-1544005313-94ddf0286df2",
 
