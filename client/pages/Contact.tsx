@@ -725,7 +725,7 @@ export default function Contact() {
                 </li>
                 <li className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
-                  <span>Lima, Perú</span>
+                  <span>Jr. Lampa 1260, Cercado de Lima</span>
                 </li>
               </ul>
             </div>
