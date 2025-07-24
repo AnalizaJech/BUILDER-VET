@@ -60,7 +60,7 @@ export default function Index() {
     },
     {
       icon: Heart,
-      title: "Vacunación y Prevención",
+      title: "Vacunaci��n y Prevención",
       description:
         "Programa completo de inmunización y medicina preventiva para mantener la salud óptima de tu compañero",
       features: [
@@ -645,7 +645,7 @@ export default function Index() {
                 </li>
                 <li className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
-                  <span>Lima, Perú</span>
+                  <span>San Vicente de Cañete, Lima</span>
                 </li>
               </ul>
             </div>
