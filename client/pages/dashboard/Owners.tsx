@@ -315,7 +315,7 @@ export default function Owners() {
                       <h3 className="font-semibold">{pet.name}</h3>
                       <Badge variant="outline">{getSpeciesLabel(pet.species)}</Badge>
                     </div>
-                    <Button size="sm" variant="outline">
+                    <Button size="sm" variant="info" onClick={() => alert(`Ver historial médico de ${pet.name}`)}>
                       <Calendar className="w-3 h-3 mr-1" />
                       Ver Historial
                     </Button>
@@ -505,11 +505,11 @@ export default function Owners() {
                             <OwnerDetailsDialog owner={selectedOwner} />
                           </Dialog>
                           
-                          <Button size="sm" variant="outline">
+                          <Button size="sm" variant="outline" onClick={() => handleEditOwner(owner)}>
                             <Edit className="w-3 h-3" />
                           </Button>
                           
-                          <Button size="sm" variant="outline" className="text-red-600 hover:text-red-700">
+                          <Button size="sm" variant="destructive" onClick={() => handleDeleteOwner(owner)}>
                             <Trash2 className="w-3 h-3" />
                           </Button>
                         </div>
