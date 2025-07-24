@@ -325,7 +325,7 @@ export default function Inventory() {
   };
 
   const NewProductForm = () => (
-    <form className="space-y-4">
+    <form className="space-y-4" onSubmit={handleCreateProduct}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="product-name">Nombre del Producto *</Label>
