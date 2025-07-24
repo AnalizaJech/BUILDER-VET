@@ -50,21 +50,8 @@ export default function Navigation() {
             })}
           </div>
 
-          {/* CTA Button & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <Button asChild variant="outline" className="hidden sm:flex">
-              <Link to="/login">
-                <User className="w-4 h-4 mr-2" />
-                Acceder al Sistema
-              </Link>
-            </Button>
-            <Button asChild className="hidden sm:flex">
-              <Link to="/citas">
-                <Calendar className="w-4 h-4 mr-2" />
-                Agendar Cita
-              </Link>
-            </Button>
-
+          {/* Mobile Menu */}
+          <div className="flex items-center">
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
