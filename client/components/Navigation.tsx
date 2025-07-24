@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Heart, Calendar, Phone, User, Menu, X } from "lucide-react";
+import { Heart, Calendar, Phone, Menu, X } from "lucide-react";
 import { SimplePawLogo } from "@/components/PetPawLogo";
 import { useState } from "react";
 
