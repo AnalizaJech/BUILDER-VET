@@ -37,8 +37,9 @@ const detectGender = (name: string): 'male' | 'female' => {
 // Generate consistent high-quality image based on gender
 const generateImageUrl = (name: string, size: number): string => {
   // Check if we have a specific image for this person
-  if (avatarDatabase[name as keyof typeof avatarDatabase]) {
-    return avatarDatabase[name as keyof typeof avatarDatabase];
+  const specificImageId = avatarDatabase[name as keyof typeof avatarDatabase];
+  if (specificImageId) {
+    return `https://images.unsplash.com/${specificImageId}?w=${size}&h=${size}&fit=crop&crop=face`;
   }
 
   const gender = detectGender(name);
