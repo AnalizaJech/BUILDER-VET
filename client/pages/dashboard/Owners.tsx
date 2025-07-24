@@ -238,7 +238,8 @@ export default function Owners() {
         <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
           Cancelar
         </Button>
-        <Button type="submit">
+        <Button type="submit" variant="success">
+          <Plus className="w-4 h-4 mr-2" />
           Registrar Propietario
         </Button>
       </div>
