@@ -57,6 +57,12 @@ export default function Index() {
       title: "Tratamientos Especiales",
       description: "Terapias avanzadas y tratamientos innovadores para casos especiales y rehabilitación animal",
       features: ["Fisioterapia veterinaria", "Medicina holística", "Tratamientos regenerativos", "Cuidados geriátricos"]
+    },
+    {
+      icon: Camera,
+      title: "Radiografías y Diagnóstico",
+      description: "Equipos de imagen de última generación para diagnósticos precisos y seguimiento médico especializado",
+      features: ["Rayos X digitales", "Ecografías", "Análisis clínicos", "Diagnóstico por imágenes"]
     }
   ];
 
