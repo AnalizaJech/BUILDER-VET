@@ -873,6 +873,237 @@ export default function Owners() {
         <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
           <OwnerDetailsDialog owner={selectedOwner} />
         </Dialog>
+
+        {/* Add Pet Dialog */}
+        <Dialog open={isPetDialogOpen} onOpenChange={setIsPetDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Agregar Nueva Mascota</DialogTitle>
+              <DialogDescription>
+                Agregar una nueva mascota para {selectedOwnerForPet?.fullName}
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={submitNewPet} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="pet-name">Nombre *</Label>
+                  <Input
+                    id="pet-name"
+                    placeholder="Nombre de la mascota"
+                    value={petForm.name}
+                    onChange={(e) => setPetForm(prev => ({ ...prev, name: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pet-species">Especie *</Label>
+                  <Select value={petForm.species} onValueChange={(value: 'dog' | 'cat') => setPetForm(prev => ({ ...prev, species: value }))} required>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar especie" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dog">Perro</SelectItem>
+                      <SelectItem value="cat">Gato</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="pet-breed">Raza *</Label>
+                  <Input
+                    id="pet-breed"
+                    placeholder="Raza"
+                    value={petForm.breed}
+                    onChange={(e) => setPetForm(prev => ({ ...prev, breed: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pet-age">Edad (años)</Label>
+                  <Input
+                    id="pet-age"
+                    type="number"
+                    placeholder="0"
+                    min="0"
+                    max="30"
+                    value={petForm.age}
+                    onChange={(e) => setPetForm(prev => ({ ...prev, age: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="pet-weight">Peso (kg)</Label>
+                  <Input
+                    id="pet-weight"
+                    type="number"
+                    placeholder="0"
+                    min="0"
+                    step="0.1"
+                    value={petForm.weight}
+                    onChange={(e) => setPetForm(prev => ({ ...prev, weight: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="pet-allergies">Alergias (separar con comas)</Label>
+                <Input
+                  id="pet-allergies"
+                  placeholder="Ej: Pollo, Lácteos, Trigo"
+                  value={petForm.allergies}
+                  onChange={(e) => setPetForm(prev => ({ ...prev, allergies: e.target.value }))}
+                />
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button type="button" variant="outline" onClick={() => setIsPetDialogOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit" variant="success" disabled={isLoadingOwners}>
+                  <Plus className="w-4 h-4 mr-2" />
+                  {isLoadingOwners ? 'Agregando...' : 'Agregar Mascota'}
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* Edit Pet Dialog */}
+        <Dialog open={isPetEditDialogOpen} onOpenChange={setIsPetEditDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle>Editar Mascota</DialogTitle>
+              <DialogDescription>
+                Actualizar información de {petToEdit?.name}
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={submitEditPet} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-pet-name">Nombre *</Label>
+                  <Input
+                    id="edit-pet-name"
+                    placeholder="Nombre de la mascota"
+                    value={editPetForm.name}
+                    onChange={(e) => setEditPetForm(prev => ({ ...prev, name: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-pet-species">Especie *</Label>
+                  <Select value={editPetForm.species} onValueChange={(value: 'dog' | 'cat') => setEditPetForm(prev => ({ ...prev, species: value }))} required>
+                    <SelectTrigger>
+                      <SelectValue placeholder="Seleccionar especie" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="dog">Perro</SelectItem>
+                      <SelectItem value="cat">Gato</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                  <Label htmlFor="edit-pet-breed">Raza *</Label>
+                  <Input
+                    id="edit-pet-breed"
+                    placeholder="Raza"
+                    value={editPetForm.breed}
+                    onChange={(e) => setEditPetForm(prev => ({ ...prev, breed: e.target.value }))}
+                    required
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-pet-age">Edad (años)</Label>
+                  <Input
+                    id="edit-pet-age"
+                    type="number"
+                    placeholder="0"
+                    min="0"
+                    max="30"
+                    value={editPetForm.age}
+                    onChange={(e) => setEditPetForm(prev => ({ ...prev, age: e.target.value }))}
+                  />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="edit-pet-weight">Peso (kg)</Label>
+                  <Input
+                    id="edit-pet-weight"
+                    type="number"
+                    placeholder="0"
+                    min="0"
+                    step="0.1"
+                    value={editPetForm.weight}
+                    onChange={(e) => setEditPetForm(prev => ({ ...prev, weight: e.target.value }))}
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="edit-pet-allergies">Alergias (separar con comas)</Label>
+                <Input
+                  id="edit-pet-allergies"
+                  placeholder="Ej: Pollo, Lácteos, Trigo"
+                  value={editPetForm.allergies}
+                  onChange={(e) => setEditPetForm(prev => ({ ...prev, allergies: e.target.value }))}
+                />
+              </div>
+
+              <div className="flex justify-end space-x-2 pt-4">
+                <Button type="button" variant="outline" onClick={() => setIsPetEditDialogOpen(false)}>
+                  Cancelar
+                </Button>
+                <Button type="submit" variant="success" disabled={isLoadingOwners}>
+                  <Save className="w-4 h-4 mr-2" />
+                  {isLoadingOwners ? 'Guardando...' : 'Guardar Cambios'}
+                </Button>
+              </div>
+            </form>
+          </DialogContent>
+        </Dialog>
+
+        {/* Delete Pet Dialog */}
+        <Dialog open={isPetDeleteDialogOpen} onOpenChange={setIsPetDeleteDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center space-x-2">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+                <span>Confirmar Eliminación</span>
+              </DialogTitle>
+              <DialogDescription>
+                Esta acción no se puede deshacer. Se eliminará permanentemente la mascota y todo su historial médico.
+              </DialogDescription>
+            </DialogHeader>
+
+            {petToDelete && (
+              <div className="space-y-4">
+                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                  <p className="text-sm text-red-800">
+                    <strong>Mascota:</strong> {petToDelete.name}
+                  </p>
+                  <p className="text-sm text-red-800">
+                    <strong>Especie:</strong> {getSpeciesLabel(petToDelete.species)}
+                  </p>
+                  <p className="text-sm text-red-800">
+                    <strong>Raza:</strong> {petToDelete.breed}
+                  </p>
+                </div>
+
+                <div className="flex justify-end space-x-2">
+                  <Button variant="outline" onClick={() => setIsPetDeleteDialogOpen(false)}>
+                    Cancelar
+                  </Button>
+                  <Button variant="destructive" onClick={confirmDeletePet} disabled={isLoadingOwners}>
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    {isLoadingOwners ? 'Eliminando...' : 'Eliminar Mascota'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
       </div>
     </DashboardLayout>
   );
