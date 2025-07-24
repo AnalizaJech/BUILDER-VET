@@ -556,7 +556,7 @@ export default function Appointments() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                      className="w-4 h-4 fill-amber-400 text-amber-400"
                     />
                   ))}
                 </div>
