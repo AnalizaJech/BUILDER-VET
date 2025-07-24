@@ -88,6 +88,51 @@ export default function Inventory() {
   const [isStockMovementDialogOpen, setIsStockMovementDialogOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
+  // Handler functions for buttons
+  const handleCreateProduct = (e: React.FormEvent) => {
+    e.preventDefault();
+    showSuccess('Producto creado exitosamente');
+    setIsNewProductDialogOpen(false);
+  };
+
+  const handleCreateSupplier = (e: React.FormEvent) => {
+    e.preventDefault();
+    showSuccess('Proveedor registrado exitosamente');
+    setIsNewSupplierDialogOpen(false);
+  };
+
+  const handleStockMovement = (e: React.FormEvent) => {
+    e.preventDefault();
+    showSuccess('Movimiento de stock registrado');
+    setIsStockMovementDialogOpen(false);
+  };
+
+  const handleEditProduct = (product: Product) => {
+    showSuccess(`Editando producto: ${product.name}`);
+  };
+
+  const handleDeleteProduct = (product: Product) => {
+    if (confirm(`¿Estás seguro de eliminar ${product.name}?`)) {
+      showSuccess(`Producto ${product.name} eliminado`);
+    }
+  };
+
+  const handleViewProduct = (product: Product) => {
+    setSelectedProduct(product);
+  };
+
+  const handleDownloadReport = () => {
+    showSuccess('Generando reporte de inventario...');
+  };
+
+  const handleImportProducts = () => {
+    showSuccess('Función de importación disponible próximamente');
+  };
+
+  const handleExportProducts = () => {
+    showSuccess('Exportando productos...');
+  };
+
   // Mock data
   const products: Product[] = [
     {
