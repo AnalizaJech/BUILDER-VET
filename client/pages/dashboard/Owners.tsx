@@ -27,6 +27,29 @@ export default function Owners() {
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [selectedOwner, setSelectedOwner] = useState<Owner | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [ownerToEdit, setOwnerToEdit] = useState<Owner | null>(null);
+
+  const handleCreateOwner = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert('Propietario registrado exitosamente');
+    setIsCreateDialogOpen(false);
+  };
+
+  const handleEditOwner = (owner: Owner) => {
+    setOwnerToEdit(owner);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleDeleteOwner = (owner: Owner) => {
+    if (confirm(`¿Estás seguro de que deseas eliminar el propietario ${owner.fullName}?`)) {
+      alert(`Propietario ${owner.fullName} eliminado exitosamente`);
+    }
+  };
+
+  const handleViewDetails = (owner: Owner) => {
+    setSelectedOwner(owner);
+  };
 
   // Mock data - in real app this would come from API
   const owners: Owner[] = [
