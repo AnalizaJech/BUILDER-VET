@@ -516,7 +516,7 @@ export default function Services() {
                         </Badge>
                       )}
                       {service.popular && (
-                        <Badge className="bg-yellow-100 text-yellow-700">
+                        <Badge className="bg-amber-100 text-amber-700">
                           <Star className="w-3 h-3 mr-1" />
                           Popular
                         </Badge>
