@@ -3,6 +3,26 @@ import { EmblaOptionsType, EmblaCarouselType } from "embla-carousel";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { cn } from "@/lib/utils";
+import {
+  CheckCircle,
+  UserCheck,
+  Calendar,
+  Award,
+  Scissors,
+  Sparkles,
+  ShieldCheck,
+  ClipboardCheck,
+  Bell,
+  FileText,
+  Eye,
+  Heart,
+  Shield,
+  Stethoscope,
+  HeartHandshake,
+  Activity,
+  Syringe,
+  X
+} from "lucide-react";
 
 type ServiceCarouselProps = {
   services: Array<{
