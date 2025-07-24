@@ -202,7 +202,7 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+                <Badge className="bg-green-100 text-green-700">
                   <Award className="w-4 h-4 mr-1" />
                   Clínica Veterinaria #1 en Lima
                 </Badge>
