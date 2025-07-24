@@ -43,10 +43,10 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
       .slice(0, 2);
   };
 
-  // Generate image URL from DiceBear API for realistic person avatars
+  // Generate image URL from Pravatar API for real person photos
   const seed = generateSeed(name);
   const imageSize = sizePixels[size];
-  const imageUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${seed}&size=${imageSize}&backgroundColor=transparent`;
+  const imageUrl = `https://i.pravatar.cc/${imageSize}?img=${(seed % 70) + 1}`;
 
   return (
     <div
