@@ -202,7 +202,7 @@ export default function Index() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <Badge className="bg-green-100 text-green-700 hover:bg-green-100">
+                <Badge className="bg-green-100 text-green-700">
                   <Award className="w-4 h-4 mr-1" />
                   Clínica Veterinaria #1 en Lima
                 </Badge>
@@ -233,7 +233,7 @@ export default function Index() {
                   asChild
                   variant="ghost"
                   size="lg"
-                  className="text-lg px-8 py-4 rounded-xl hover:bg-gray-50"
+                  className="text-lg px-8 py-4 rounded-xl hover:bg-green-50 hover:text-green-700"
                 >
                   <Link to="/login">
                     Acceder al Sistema
@@ -247,25 +247,25 @@ export default function Index() {
                   <div className="flex -space-x-3">
                     <PersonAvatar
                       name="María González Sánchez"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <PersonAvatar
                       name="Carlos Mendoza Peña"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <PersonAvatar
                       name="Ana Rodríguez Vásquez"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <PersonAvatar
                       name="José Luis Ramírez"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 border-3 border-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 border-3 border-white rounded-full flex items-center justify-center shadow-lg">
                       <span className="text-xs font-bold text-green-700">
                         +1K
                       </span>
@@ -283,7 +283,7 @@ export default function Index() {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                        className="w-4 h-4 fill-amber-400 text-amber-400"
                       />
                     ))}
                   </div>
@@ -345,7 +345,7 @@ export default function Index() {
       </section>
 
       {/* Services Carousel Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-blue-100 text-blue-700 mb-4">
@@ -419,7 +419,7 @@ export default function Index() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Badge className="bg-yellow-100 text-yellow-700 mb-4">
+            <Badge className="bg-amber-100 text-amber-700 mb-4">
               <MessageCircle className="w-4 h-4 mr-1" />
               Testimonios
             </Badge>
@@ -454,7 +454,7 @@ export default function Index() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                      className="w-4 h-4 fill-amber-400 text-amber-400"
                     />
                   ))}
                 </div>
@@ -466,64 +466,66 @@ export default function Index() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {testimonials.slice(0, 6).map((testimonial, index) => (
-              <Card
+              <div
                 key={index}
-                className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group"
+                className="relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 group border border-gray-100/50 overflow-hidden"
               >
-                <CardContent className="p-8">
-                  {/* Rating Stars */}
-                  <div className="flex items-center justify-center space-x-1 mb-6">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star
-                        key={i}
-                        className="w-5 h-5 fill-yellow-400 text-yellow-400 group-hover:scale-110 transition-transform duration-300"
-                        style={{ animationDelay: `${i * 100}ms` }}
-                      />
-                    ))}
-                  </div>
+                {/* Background gradient decoration */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-green-100/20 to-blue-100/20 rounded-full transform translate-x-16 -translate-y-16 group-hover:scale-150 transition-transform duration-700"></div>
 
-                  {/* Testimonial Text */}
-                  <div className="relative mb-8">
-                    <div className="absolute -top-2 -left-2 text-6xl text-green-200 font-serif leading-none">
-                      "
+                {/* Client Info Header */}
+                <div className="flex items-center space-x-4 mb-6 relative z-10">
+                  <div className="relative">
+                    <TestimonialAvatar
+                      name={testimonial.name}
+                      className="shadow-lg ring-4 ring-white group-hover:ring-green-100 transition-all duration-300"
+                    />
+                    <div className="absolute -bottom-2 -right-2 w-8 h-8 bg-gradient-to-br from-green-500 to-green-600 rounded-full border-3 border-white flex items-center justify-center shadow-lg">
+                      <Heart className="w-4 h-4 text-white" />
                     </div>
-                    <p className="text-gray-700 leading-relaxed relative z-10 pl-6 group-hover:text-gray-800 transition-colors duration-300">
-                      {testimonial.comment}
+                  </div>
+                  <div className="flex-1">
+                    <h4 className="font-bold text-gray-900 text-lg group-hover:text-green-700 transition-colors duration-300">
+                      {testimonial.name}
+                    </h4>
+                    <p className="text-sm text-gray-600 font-medium flex items-center">
+                      <Heart className="w-3 h-3 mr-1 text-red-400" />
+                      {testimonial.pet}
                     </p>
-                    <div className="absolute -bottom-2 -right-2 text-6xl text-green-200 font-serif leading-none rotate-180">
-                      "
-                    </div>
+                    <p className="text-xs text-gray-500 flex items-center mt-1">
+                      <MapPin className="w-3 h-3 mr-1" />
+                      {testimonial.location}
+                    </p>
                   </div>
+                </div>
 
-                  {/* Client Info */}
-                  <div className="flex items-center space-x-4">
-                    <div className="relative">
-                      <TestimonialAvatar
-                        name={testimonial.name}
-                        className="shadow-lg group-hover:scale-110 transition-transform duration-300"
-                      />
-                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
-                        <Heart className="w-3 h-3 text-white" />
-                      </div>
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-bold text-gray-900 group-hover:text-green-700 transition-colors duration-300">
-                        {testimonial.name}
-                      </p>
-                      <p className="text-sm text-gray-600 font-medium">
-                        {testimonial.pet}
-                      </p>
-                      <p className="text-xs text-gray-500 flex items-center mt-1">
-                        <MapPin className="w-3 h-3 mr-1" />
-                        {testimonial.location}
-                      </p>
-                    </div>
+                {/* Rating Stars */}
+                <div className="flex items-center space-x-1 mb-6 relative z-10">
+                  {[...Array(testimonial.rating)].map((_, i) => (
+                    <Star
+                      key={i}
+                      className="w-5 h-5 fill-amber-400 text-amber-400 group-hover:scale-110 transition-transform duration-300"
+                      style={{ animationDelay: `${i * 50}ms` }}
+                    />
+                  ))}
+                </div>
+
+                {/* Testimonial Text */}
+                <div className="relative z-10">
+                  <div className="absolute -top-3 -left-1 text-4xl text-green-300/50 font-serif leading-none">
+                    "
                   </div>
+                  <p className="text-gray-700 leading-relaxed font-medium text-base pl-6 pr-2 group-hover:text-gray-800 transition-colors duration-300 italic">
+                    {testimonial.comment}
+                  </p>
+                  <div className="absolute -bottom-1 -right-1 text-4xl text-green-300/50 font-serif leading-none">
+                    "
+                  </div>
+                </div>
 
-                  {/* Hover Effect Border */}
-                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                </CardContent>
-              </Card>
+                {/* Bottom accent line */}
+                <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-green-500 via-green-400 to-blue-400 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left"></div>
+              </div>
             ))}
           </div>
         </div>
@@ -645,7 +647,7 @@ export default function Index() {
                 </li>
                 <li className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
-                  <span>Lima, Perú</span>
+                  <span>San Vicente de Cañete, Lima</span>
                 </li>
               </ul>
             </div>

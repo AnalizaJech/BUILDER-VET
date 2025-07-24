@@ -22,6 +22,7 @@ import { Badge } from "@/components/ui/badge";
 import Navigation from "@/components/Navigation";
 import { useBusinessData } from "@/contexts/BusinessDataContext";
 import { useNotifications } from "@/contexts/NotificationContext";
+import { Link } from "react-router-dom";
 import {
   Calendar as CalendarIcon,
   Clock,
@@ -30,6 +31,7 @@ import {
   Phone,
   Mail,
   MapPin,
+  MessageCircle,
   Scissors,
   Shield,
   Sparkles,
@@ -41,6 +43,18 @@ import {
   AlertCircle,
   Info,
   X,
+  UserCheck,
+  Activity,
+  ShieldCheck,
+  Pill,
+  Eye,
+  FileText,
+  Bell,
+  HeartHandshake,
+  Bath,
+  Brush,
+  Gem,
+  Syringe,
 } from "lucide-react";
 import {
   format,
@@ -556,7 +570,7 @@ export default function Appointments() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                      className="w-4 h-4 fill-amber-400 text-amber-400"
                     />
                   ))}
                 </div>
@@ -689,17 +703,110 @@ export default function Appointments() {
                               {service.description}
                             </p>
                             <div className="space-y-2">
-                              {service.features.map((feature, i) => (
-                                <div
-                                  key={i}
-                                  className="flex items-center space-x-2"
-                                >
-                                  <CheckCircle className="w-3 h-3 text-green-500" />
-                                  <span className="text-xs text-gray-600">
-                                    {feature}
-                                  </span>
-                                </div>
-                              ))}
+                              {service.features.map((feature, i) => {
+                                // Map features to relevant icons based on content
+                                const getFeatureIcon = (
+                                  feature: string,
+                                  serviceTitle: string,
+                                ) => {
+                                  const lowerFeature = feature.toLowerCase();
+
+                                  // Medical/Consultation icons
+                                  if (lowerFeature.includes("diagnóstico"))
+                                    return Stethoscope;
+                                  if (lowerFeature.includes("tratamiento"))
+                                    return Heart;
+                                  if (lowerFeature.includes("seguimiento"))
+                                    return Activity;
+                                  if (lowerFeature.includes("especializada"))
+                                    return UserCheck;
+                                  if (lowerFeature.includes("profesional"))
+                                    return UserCheck;
+                                  if (lowerFeature.includes("personalizado"))
+                                    return User;
+
+                                  // Grooming icons
+                                  if (lowerFeature.includes("corte"))
+                                    return Scissors;
+                                  if (lowerFeature.includes("baño"))
+                                    return Bath;
+                                  if (lowerFeature.includes("spa")) return Gem;
+                                  if (
+                                    lowerFeature.includes("uñas") ||
+                                    lowerFeature.includes("oídos")
+                                  )
+                                    return CheckCircle;
+                                  if (lowerFeature.includes("cepillado"))
+                                    return Brush;
+                                  if (lowerFeature.includes("relajante"))
+                                    return HeartHandshake;
+
+                                  // Vaccination icons
+                                  if (lowerFeature.includes("calendario"))
+                                    return CalendarIcon;
+                                  if (lowerFeature.includes("recordatorios"))
+                                    return Bell;
+                                  if (lowerFeature.includes("certificados"))
+                                    return FileText;
+                                  if (lowerFeature.includes("vacuna"))
+                                    return Syringe;
+
+                                  // Surgery icons
+                                  if (lowerFeature.includes("quirófano"))
+                                    return Shield;
+                                  if (lowerFeature.includes("anestesia"))
+                                    return ShieldCheck;
+                                  if (lowerFeature.includes("post-operatorio"))
+                                    return Activity;
+                                  if (lowerFeature.includes("monitoreo"))
+                                    return Activity;
+
+                                  // Special treatments
+                                  if (lowerFeature.includes("fisioterapia"))
+                                    return HeartHandshake;
+                                  if (lowerFeature.includes("holística"))
+                                    return Sparkles;
+                                  if (lowerFeature.includes("regenerativos"))
+                                    return Heart;
+                                  if (lowerFeature.includes("geriátricos"))
+                                    return Shield;
+
+                                  // Diagnostics
+                                  if (
+                                    lowerFeature.includes("rayos") ||
+                                    lowerFeature.includes("x")
+                                  )
+                                    return Eye;
+                                  if (lowerFeature.includes("ecografías"))
+                                    return Activity;
+                                  if (lowerFeature.includes("análisis"))
+                                    return FileText;
+                                  if (lowerFeature.includes("imágenes"))
+                                    return Eye;
+
+                                  // Default icon
+                                  return CheckCircle;
+                                };
+
+                                const FeatureIcon = getFeatureIcon(
+                                  feature,
+                                  service.title,
+                                );
+
+                                return (
+                                  <div
+                                    key={i}
+                                    className="flex items-center space-x-3"
+                                  >
+                                    <div className="w-3 h-3 bg-green-100 rounded-sm flex items-center justify-center flex-shrink-0">
+                                      <FeatureIcon className="w-2 h-2 text-green-600" />
+                                    </div>
+                                    <span className="text-xs text-gray-600">
+                                      {feature}
+                                    </span>
+                                  </div>
+                                );
+                              })}
                             </div>
                           </div>
                         </div>
@@ -786,8 +893,8 @@ export default function Appointments() {
                     </Label>
 
                     {!selectedDate && (
-                      <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                        <p className="text-sm text-yellow-800">
+                      <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                        <p className="text-sm text-orange-800">
                           Primero selecciona una fecha para ver los horarios
                           disponibles
                         </p>
@@ -1062,6 +1169,137 @@ export default function Appointments() {
           </form>
         </div>
       </div>
+
+      {/* Footer */}
+      <footer className="bg-gray-900 text-gray-300 py-16">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+            <div className="space-y-4">
+              <Link to="/" className="flex items-center space-x-2">
+                <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center border-2 border-green-500">
+                  <Heart className="w-6 h-6 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-bold text-white">
+                    Matis Pet Groomer
+                  </h3>
+                  <p className="text-sm text-gray-400">
+                    Cuidado veterinario de excelencia
+                  </p>
+                </div>
+              </Link>
+              <p className="text-gray-400">
+                Comprometidos con la salud y felicidad de tu mascota desde 2019.
+              </p>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Servicios</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Consultas Veterinarias
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Grooming Premium
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Vacunación
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/servicios"
+                    className="hover:text-white transition-colors"
+                  >
+                    Cirugías
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Enlaces</h4>
+              <ul className="space-y-2">
+                <li>
+                  <Link
+                    to="/citas"
+                    className="hover:text-white transition-colors"
+                  >
+                    Agendar Cita
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="hover:text-white transition-colors"
+                  >
+                    Portal Clientes
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/contacto"
+                    className="hover:text-white transition-colors"
+                  >
+                    Contacto
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/login"
+                    className="hover:text-white transition-colors"
+                  >
+                    Sistema Veterinario
+                  </Link>
+                </li>
+              </ul>
+            </div>
+
+            <div>
+              <h4 className="font-semibold text-white mb-4">Contacto</h4>
+              <ul className="space-y-2 text-gray-400">
+                <li className="flex items-center space-x-2">
+                  <Phone className="w-4 h-4" />
+                  <span>+51 902 799 296</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MessageCircle className="w-4 h-4" />
+                  <span>+51 902 799 296</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <Mail className="w-4 h-4" />
+                  <span>info@matispetgroomer.com</span>
+                </li>
+                <li className="flex items-center space-x-2">
+                  <MapPin className="w-4 h-4" />
+                  <span>San Vicente de Cañete, Lima</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400">
+            <p>
+              &copy; 2024 Matis Pet Groomer. Todos los derechos reservados. |
+              Desarrollado con ❤️ para el cuidado animal
+            </p>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }

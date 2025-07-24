@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navigation from "@/components/Navigation";
 import { SimplePawLogo } from "@/components/PetPawLogo";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import {
   Stethoscope,
   Scissors,
@@ -40,6 +41,12 @@ import {
   Brush,
   Gem,
   Crown,
+  UserCheck,
+  ShieldCheck,
+  ClipboardCheck,
+  Bell,
+  FileText,
+  HeartHandshake,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
@@ -516,7 +523,7 @@ export default function Services() {
                         </Badge>
                       )}
                       {service.popular && (
-                        <Badge className="bg-yellow-100 text-yellow-700">
+                        <Badge className="bg-amber-100 text-amber-700">
                           <Star className="w-3 h-3 mr-1" />
                           Popular
                         </Badge>
@@ -544,12 +551,119 @@ export default function Services() {
                       <p className="text-sm font-medium text-gray-900">
                         Incluye:
                       </p>
-                      {service.includes.map((item, i) => (
-                        <div key={i} className="flex items-start space-x-2">
-                          <CheckCircle className="w-4 h-4 text-green-500 mt-0.5 flex-shrink-0" />
-                          <span className="text-xs text-gray-600">{item}</span>
-                        </div>
-                      ))}
+                      {service.includes.map((item, i) => {
+                        // Map service features to relevant icons
+                        const getServiceIcon = (
+                          item: string,
+                          serviceTitle: string,
+                        ) => {
+                          const lowerItem = item.toLowerCase();
+                          const lowerService = serviceTitle.toLowerCase();
+
+                          // Medical consultation icons
+                          if (lowerItem.includes("consulta"))
+                            return Stethoscope;
+                          if (
+                            lowerItem.includes("examen") ||
+                            lowerItem.includes("diagnóstico")
+                          )
+                            return Activity;
+                          if (
+                            lowerItem.includes("tratamiento") ||
+                            lowerItem.includes("medicación")
+                          )
+                            return Heart;
+                          if (lowerItem.includes("seguimiento"))
+                            return UserCheck;
+                          if (lowerItem.includes("emergencia")) return Shield;
+                          if (lowerItem.includes("vacun")) return Syringe;
+                          if (lowerItem.includes("desparasit")) return Pill;
+                          if (lowerItem.includes("análisis"))
+                            return ClipboardCheck;
+                          if (lowerItem.includes("estudios")) return Eye;
+
+                          // Grooming icons
+                          if (lowerItem.includes("baño")) return Bath;
+                          if (
+                            lowerItem.includes("corte") &&
+                            lowerItem.includes("pelo")
+                          )
+                            return Scissors;
+                          if (
+                            lowerItem.includes("corte") &&
+                            lowerItem.includes("uñas")
+                          )
+                            return CheckCircle;
+                          if (
+                            lowerItem.includes("limpieza") &&
+                            lowerItem.includes("oídos")
+                          )
+                            return CheckCircle;
+                          if (lowerItem.includes("cepillado")) return Brush;
+                          if (
+                            lowerItem.includes("perfume") ||
+                            lowerItem.includes("aroma")
+                          )
+                            return Sparkles;
+                          if (lowerItem.includes("masaje"))
+                            return HeartHandshake;
+                          if (lowerItem.includes("hidratación")) return Heart;
+                          if (lowerItem.includes("secado")) return Activity;
+                          if (
+                            lowerItem.includes("champú") ||
+                            lowerItem.includes("productos")
+                          )
+                            return Bath;
+                          if (
+                            lowerItem.includes("sales") ||
+                            lowerItem.includes("spa")
+                          )
+                            return Gem;
+
+                          // Specialty services
+                          if (
+                            lowerItem.includes("domicilio") ||
+                            lowerItem.includes("casa")
+                          )
+                            return Home;
+                          if (lowerItem.includes("transporte")) return Truck;
+                          if (lowerItem.includes("emergencia")) return Phone;
+                          if (lowerItem.includes("certificado"))
+                            return FileText;
+                          if (lowerItem.includes("recordatorio")) return Bell;
+                          if (lowerItem.includes("monitoreo")) return Activity;
+
+                          // Surgery icons
+                          if (
+                            lowerItem.includes("cirugía") ||
+                            lowerItem.includes("quirófano")
+                          )
+                            return Shield;
+                          if (lowerItem.includes("anestesia"))
+                            return ShieldCheck;
+                          if (
+                            lowerItem.includes("post") ||
+                            lowerItem.includes("recuperación")
+                          )
+                            return ClipboardCheck;
+
+                          // Default icon
+                          return CheckCircle;
+                        };
+
+                        const ItemIcon = getServiceIcon(item, service.title);
+
+                        return (
+                          <div key={i} className="flex items-start space-x-3">
+                            <div className="w-4 h-4 bg-green-100 rounded-md flex items-center justify-center mt-0.5 flex-shrink-0">
+                              <ItemIcon className="w-2.5 h-2.5 text-green-600" />
+                            </div>
+                            <span className="text-xs text-gray-600">
+                              {item}
+                            </span>
+                          </div>
+                        );
+                      })}
                     </div>
 
                     <div className="flex space-x-2">
@@ -607,7 +721,9 @@ export default function Services() {
                 href="https://wa.me/51902799296?text=EMERGENCIA"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="flex items-center"
               >
+                <WhatsAppIcon className="w-4 h-4 mr-2" />
                 WhatsApp Emergencia
               </a>
             </Button>
@@ -731,7 +847,7 @@ export default function Services() {
                 </li>
                 <li className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
-                  <span>Lima, Perú</span>
+                  <span>San Vicente de Cañete, Lima</span>
                 </li>
               </ul>
             </div>

@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import Navigation from "@/components/Navigation";
 import { SimplePawLogo } from "@/components/PetPawLogo";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import {
   MapPin,
   Phone,
@@ -74,11 +75,11 @@ export default function Contact() {
       bgColor: "bg-green-50",
     },
     {
-      icon: MessageCircle,
+      icon: WhatsAppIcon,
       title: "WhatsApp",
       details: ["+51 902 799 296", "Respuesta inmediata 24/7"],
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
     },
     {
       icon: Mail,
@@ -90,7 +91,7 @@ export default function Contact() {
     {
       icon: MapPin,
       title: "Ubicación",
-      details: ["Av. Universitaria 123", "San Martín de Porres, Lima"],
+      details: ["San Vicente de Cañete 15700", "Peluquería Canina MATIS"],
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
@@ -186,7 +187,7 @@ export default function Contact() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <MessageCircle className="w-5 h-5 mr-2" />
+                <WhatsAppIcon className="w-5 h-5 mr-2" />
                 WhatsApp Directo
               </a>
             </Button>
@@ -463,7 +464,7 @@ export default function Contact() {
                         target="_blank"
                         rel="noopener noreferrer"
                       >
-                        <MessageCircle className="w-4 h-4 mr-2" />
+                        <WhatsAppIcon className="w-4 h-4 mr-2" />
                         WhatsApp Emergencia
                       </a>
                     </Button>
@@ -535,13 +536,11 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">
-                      Dirección Principal
+                      Peluquería Canina MATIS
                     </h3>
-                    <p className="text-gray-600">
-                      Av. Universitaria 123, San Martín de Porres, Lima
-                    </p>
+                    <p className="text-gray-600">San Vicente de Cañete 15700</p>
                     <p className="text-sm text-gray-500">
-                      Referencia: Frente al Centro Comercial Megaplaza
+                      Provincia de Cañete, Lima - Perú
                     </p>
                   </div>
                 </div>
@@ -551,14 +550,12 @@ export default function Contact() {
                     <NavIcon className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">
-                      Transporte Público
-                    </h3>
+                    <h3 className="font-semibold text-gray-900">Cómo llegar</h3>
                     <p className="text-gray-600">
-                      Línea 1 del Metro - Estación Caquetá
+                      Desde Lima: Panamericana Sur hasta Cañete
                     </p>
                     <p className="text-sm text-gray-500">
-                      Buses: Líneas 301, 302, 304 (Paradero Universitaria)
+                      Aproximadamente 2 horas desde Lima Centro
                     </p>
                   </div>
                 </div>
@@ -583,7 +580,7 @@ export default function Contact() {
 
               <Button asChild className="w-full md:w-auto">
                 <a
-                  href="https://maps.google.com/?q=Av.+Universitaria+123,+San+Martín+de+Porres,+Lima"
+                  href="https://www.google.com/maps/place/Peluqueria+Canina+MATIS/@-13.0735007,-76.3879834,15z"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -593,12 +590,17 @@ export default function Contact() {
               </Button>
             </div>
 
-            <div className="bg-gray-200 rounded-2xl h-96 flex items-center justify-center">
-              <div className="text-center text-gray-500">
-                <MapPin className="w-16 h-16 mx-auto mb-4" />
-                <p className="text-lg font-medium">Mapa Interactivo</p>
-                <p className="text-sm">Av. Universitaria 123, Lima</p>
-              </div>
+            <div className="bg-white rounded-2xl h-96 overflow-hidden shadow-lg border border-gray-200">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3886.4049757085!2d-76.38798342528561!3d-13.073500961865891!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x910ff95e6017d359%3A0xe9ed145a60c1ed97!2sPeluqueria%20Canina%20MATIS!5e0!3m2!1ses!2spe!4v1753338945241!5m2!1ses!2spe"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación de Peluquería Canina MATIS en San Vicente de Cañete"
+              ></iframe>
             </div>
           </div>
         </div>
@@ -720,7 +722,7 @@ export default function Contact() {
                 </li>
                 <li className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
-                  <span>Lima, Perú</span>
+                  <span>San Vicente de Cañete 15700, Lima</span>
                 </li>
               </ul>
             </div>

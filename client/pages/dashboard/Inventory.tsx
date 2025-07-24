@@ -342,7 +342,7 @@ export default function Inventory() {
     } else if (product.stock <= product.minStock * 1.5) {
       return {
         label: "Stock Moderado",
-        color: "bg-yellow-100 text-yellow-800",
+        color: "bg-orange-100 text-orange-800",
       };
     } else {
       return { label: "Stock Normal", color: "bg-green-100 text-green-800" };

@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import { Textarea } from '@/components/ui/textarea';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import DashboardLayout from '@/components/DashboardLayout';
-import { useAuth } from '@/contexts/AuthContext';
-import { useBusinessData } from '@/contexts/BusinessDataContext';
-import { useNotifications } from '@/contexts/NotificationContext';
-import LoadingSpinner from '@/components/LoadingSpinner';
-import { 
-  Search, 
-  Plus, 
-  Edit, 
-  Trash2, 
+import React, { useState } from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Badge } from "@/components/ui/badge";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Textarea } from "@/components/ui/textarea";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import DashboardLayout from "@/components/DashboardLayout";
+import { useAuth } from "@/contexts/AuthContext";
+import { useBusinessData } from "@/contexts/BusinessDataContext";
+import { useNotifications } from "@/contexts/NotificationContext";
+import LoadingSpinner from "@/components/LoadingSpinner";
+import {
+  Search,
+  Plus,
+  Edit,
+  Trash2,
   Scissors,
   Calendar,
   Clock,
@@ -31,8 +57,8 @@ import {
   Heart,
   Star,
   User,
-  Phone
-} from 'lucide-react';
+  Phone,
+} from "lucide-react";
 
 interface GroomingService {
   id: string;
@@ -40,7 +66,7 @@ interface GroomingService {
   description: string;
   duration: number; // minutes
   price: number;
-  category: 'basic' | 'premium' | 'spa' | 'medical';
+  category: "basic" | "premium" | "spa" | "medical";
   isActive: boolean;
 }
 
@@ -53,7 +79,7 @@ interface GroomingAppointment {
   services: string[];
   date: Date;
   startTime: string;
-  status: 'scheduled' | 'in-progress' | 'completed' | 'cancelled';
+  status: "scheduled" | "in-progress" | "completed" | "cancelled";
   groomerName: string;
   notes: string;
   beforePhotos: string[];
@@ -66,169 +92,180 @@ export default function Grooming() {
   const { hasRole } = useAuth();
   const { isLoading } = useBusinessData();
   const { showSuccess, showError } = useNotifications();
-  
-  const [searchQuery, setSearchQuery] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+
+  const [searchQuery, setSearchQuery] = useState("");
+  const [statusFilter, setStatusFilter] = useState<string>("all");
   const [isNewServiceDialogOpen, setIsNewServiceDialogOpen] = useState(false);
-  const [isNewAppointmentDialogOpen, setIsNewAppointmentDialogOpen] = useState(false);
-  const [selectedAppointment, setSelectedAppointment] = useState<GroomingAppointment | null>(null);
+  const [isNewAppointmentDialogOpen, setIsNewAppointmentDialogOpen] =
+    useState(false);
+  const [selectedAppointment, setSelectedAppointment] =
+    useState<GroomingAppointment | null>(null);
 
   // Mock grooming services
   const groomingServices: GroomingService[] = [
     {
-      id: '1',
-      name: 'Baño Básico',
-      description: 'Baño con shampoo, secado y corte de uñas',
+      id: "1",
+      name: "Baño Básico",
+      description: "Baño con shampoo, secado y corte de uñas",
       duration: 45,
       price: 50,
-      category: 'basic',
-      isActive: true
+      category: "basic",
+      isActive: true,
     },
     {
-      id: '2',
-      name: 'Grooming Completo',
-      description: 'Baño, corte, peinado, limpieza de oídos y corte de uñas',
+      id: "2",
+      name: "Grooming Completo",
+      description: "Baño, corte, peinado, limpieza de oídos y corte de uñas",
       duration: 90,
       price: 80,
-      category: 'premium',
-      isActive: true
+      category: "premium",
+      isActive: true,
     },
     {
-      id: '3',
-      name: 'Spa Relajante',
-      description: 'Baño aromático, masaje relajante y tratamiento de pelaje',
+      id: "3",
+      name: "Spa Relajante",
+      description: "Baño aromático, masaje relajante y tratamiento de pelaje",
       duration: 120,
       price: 120,
-      category: 'spa',
-      isActive: true
+      category: "spa",
+      isActive: true,
     },
     {
-      id: '4',
-      name: 'Corte Médico',
-      description: 'Corte especializado para problemas dermatológicos',
+      id: "4",
+      name: "Corte Médico",
+      description: "Corte especializado para problemas dermatológicos",
       duration: 60,
       price: 100,
-      category: 'medical',
-      isActive: true
-    }
+      category: "medical",
+      isActive: true,
+    },
   ];
 
   // Mock grooming appointments
   const groomingAppointments: GroomingAppointment[] = [
     {
-      id: '1',
-      petId: '1',
-      petName: 'Max',
-      ownerName: 'Carlos Pérez',
-      ownerPhone: '+51 987654321',
-      services: ['1', '2'],
+      id: "1",
+      petId: "1",
+      petName: "Max",
+      ownerName: "Carlos Pérez",
+      ownerPhone: "+51 987654321",
+      services: ["1", "2"],
       date: new Date(),
-      startTime: '09:00',
-      status: 'scheduled',
-      groomerName: 'Sofia López',
-      notes: 'Perro muy activo, usar correa de seguridad',
+      startTime: "09:00",
+      status: "scheduled",
+      groomerName: "Sofia López",
+      notes: "Perro muy activo, usar correa de seguridad",
       beforePhotos: [],
       afterPhotos: [],
       totalPrice: 130,
-      createdAt: new Date()
+      createdAt: new Date(),
     },
     {
-      id: '2',
-      petId: '2',
-      petName: 'Luna',
-      ownerName: 'María García',
-      ownerPhone: '+51 912345678',
-      services: ['3'],
+      id: "2",
+      petId: "2",
+      petName: "Luna",
+      ownerName: "María García",
+      ownerPhone: "+51 912345678",
+      services: ["3"],
       date: new Date(),
-      startTime: '11:00',
-      status: 'in-progress',
-      groomerName: 'Sofia López',
-      notes: 'Gata nerviosa, manejar con cuidado',
-      beforePhotos: ['/photos/luna-before.jpg'],
+      startTime: "11:00",
+      status: "in-progress",
+      groomerName: "Sofia López",
+      notes: "Gata nerviosa, manejar con cuidado",
+      beforePhotos: ["/photos/luna-before.jpg"],
       afterPhotos: [],
       totalPrice: 120,
-      createdAt: new Date()
+      createdAt: new Date(),
     },
     {
-      id: '3',
-      petId: '3',
-      petName: 'Rocky',
-      ownerName: 'Juan Martínez',
-      ownerPhone: '+51 956789123',
-      services: ['2'],
+      id: "3",
+      petId: "3",
+      petName: "Rocky",
+      ownerName: "Juan Martínez",
+      ownerPhone: "+51 956789123",
+      services: ["2"],
       date: new Date(Date.now() - 86400000), // Yesterday
-      startTime: '14:00',
-      status: 'completed',
-      groomerName: 'Sofia López',
-      notes: 'Excelente comportamiento',
-      beforePhotos: ['/photos/rocky-before.jpg'],
-      afterPhotos: ['/photos/rocky-after.jpg'],
+      startTime: "14:00",
+      status: "completed",
+      groomerName: "Sofia López",
+      notes: "Excelente comportamiento",
+      beforePhotos: ["/photos/rocky-before.jpg"],
+      afterPhotos: ["/photos/rocky-after.jpg"],
       totalPrice: 80,
-      createdAt: new Date(Date.now() - 86400000)
-    }
+      createdAt: new Date(Date.now() - 86400000),
+    },
   ];
 
-  const filteredAppointments = groomingAppointments.filter(appointment => {
-    const matchesSearch = 
+  const filteredAppointments = groomingAppointments.filter((appointment) => {
+    const matchesSearch =
       appointment.petName.toLowerCase().includes(searchQuery.toLowerCase()) ||
       appointment.ownerName.toLowerCase().includes(searchQuery.toLowerCase());
-    
-    const matchesStatus = statusFilter === 'all' || appointment.status === statusFilter;
-    
+
+    const matchesStatus =
+      statusFilter === "all" || appointment.status === statusFilter;
+
     return matchesSearch && matchesStatus;
   });
 
   const getStatusColor = (status: string) => {
     const colors = {
-      scheduled: 'bg-blue-100 text-blue-800',
-      'in-progress': 'bg-yellow-100 text-yellow-800',
-      completed: 'bg-green-100 text-green-800',
-      cancelled: 'bg-red-100 text-red-800'
+      scheduled: "bg-blue-100 text-blue-800",
+      "in-progress": "bg-blue-100 text-blue-800",
+      completed: "bg-green-100 text-green-800",
+      cancelled: "bg-red-100 text-red-800",
     };
-    return colors[status as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    return colors[status as keyof typeof colors] || "bg-gray-100 text-gray-800";
   };
 
   const getStatusLabel = (status: string) => {
     const labels = {
-      scheduled: 'Programada',
-      'in-progress': 'En Progreso',
-      completed: 'Completada',
-      cancelled: 'Cancelada'
+      scheduled: "Programada",
+      "in-progress": "En Progreso",
+      completed: "Completada",
+      cancelled: "Cancelada",
     };
     return labels[status as keyof typeof labels] || status;
   };
 
   const getCategoryColor = (category: string) => {
     const colors = {
-      basic: 'bg-gray-100 text-gray-800',
-      premium: 'bg-blue-100 text-blue-800',
-      spa: 'bg-purple-100 text-purple-800',
-      medical: 'bg-red-100 text-red-800'
+      basic: "bg-gray-100 text-gray-800",
+      premium: "bg-blue-100 text-blue-800",
+      spa: "bg-purple-100 text-purple-800",
+      medical: "bg-red-100 text-red-800",
     };
-    return colors[category as keyof typeof colors] || 'bg-gray-100 text-gray-800';
+    return (
+      colors[category as keyof typeof colors] || "bg-gray-100 text-gray-800"
+    );
   };
 
   const getCategoryLabel = (category: string) => {
     const labels = {
-      basic: 'Básico',
-      premium: 'Premium',
-      spa: 'Spa',
-      medical: 'Médico'
+      basic: "Básico",
+      premium: "Premium",
+      spa: "Spa",
+      medical: "Médico",
     };
     return labels[category as keyof typeof labels] || category;
   };
 
   const getServiceName = (serviceId: string) => {
-    const service = groomingServices.find(s => s.id === serviceId);
-    return service?.name || 'Servicio desconocido';
+    const service = groomingServices.find((s) => s.id === serviceId);
+    return service?.name || "Servicio desconocido";
   };
 
   const handleStartGrooming = (appointmentId: string) => {
-    showSuccess('Sesión de grooming iniciada', 'El timer ha comenzado automáticamente');
+    showSuccess(
+      "Sesión de grooming iniciada",
+      "El timer ha comenzado automáticamente",
+    );
   };
 
   const handleCompleteGrooming = (appointmentId: string) => {
-    showSuccess('Grooming completado', 'Se ha enviado notificación al propietario');
+    showSuccess(
+      "Grooming completado",
+      "Se ha enviado notificación al propietario",
+    );
   };
 
   const NewServiceForm = () => (
@@ -257,7 +294,12 @@ export default function Grooming() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="service-duration">Duración (minutos) *</Label>
-          <Input id="service-duration" type="number" placeholder="60" required />
+          <Input
+            id="service-duration"
+            type="number"
+            placeholder="60"
+            required
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="service-price">Precio (S/) *</Label>
@@ -276,12 +318,14 @@ export default function Grooming() {
       </div>
 
       <div className="flex justify-end space-x-2 pt-4">
-        <Button type="button" variant="outline" onClick={() => setIsNewServiceDialogOpen(false)}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setIsNewServiceDialogOpen(false)}
+        >
           Cancelar
         </Button>
-        <Button type="submit">
-          Crear Servicio
-        </Button>
+        <Button type="submit">Crear Servicio</Button>
       </div>
     </form>
   );
@@ -329,19 +373,33 @@ export default function Grooming() {
         <Label>Servicios *</Label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {groomingServices.map((service) => (
-            <div key={service.id} className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted cursor-pointer">
-              <input type="checkbox" id={`service-${service.id}`} className="rounded" />
+            <div
+              key={service.id}
+              className="flex items-center space-x-2 p-3 border rounded-lg hover:bg-muted cursor-pointer"
+            >
+              <input
+                type="checkbox"
+                id={`service-${service.id}`}
+                className="rounded"
+              />
               <div className="flex-1">
-                <label htmlFor={`service-${service.id}`} className="text-sm font-medium cursor-pointer">
+                <label
+                  htmlFor={`service-${service.id}`}
+                  className="text-sm font-medium cursor-pointer"
+                >
                   {service.name}
                 </label>
                 <div className="flex items-center justify-between mt-1">
                   <Badge className={getCategoryColor(service.category)}>
                     {getCategoryLabel(service.category)}
                   </Badge>
-                  <span className="text-sm font-semibold text-green-600">S/ {service.price}</span>
+                  <span className="text-sm font-semibold text-green-600">
+                    S/ {service.price}
+                  </span>
                 </div>
-                <p className="text-xs text-muted-foreground">{service.duration} min</p>
+                <p className="text-xs text-muted-foreground">
+                  {service.duration} min
+                </p>
               </div>
             </div>
           ))}
@@ -381,17 +439,23 @@ export default function Grooming() {
       </div>
 
       <div className="flex justify-end space-x-2 pt-4">
-        <Button type="button" variant="outline" onClick={() => setIsNewAppointmentDialogOpen(false)}>
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setIsNewAppointmentDialogOpen(false)}
+        >
           Cancelar
         </Button>
-        <Button type="submit">
-          Agendar Grooming
-        </Button>
+        <Button type="submit">Agendar Grooming</Button>
       </div>
     </form>
   );
 
-  const AppointmentDetailsDialog = ({ appointment }: { appointment: GroomingAppointment | null }) => (
+  const AppointmentDetailsDialog = ({
+    appointment,
+  }: {
+    appointment: GroomingAppointment | null;
+  }) => (
     <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
       <DialogHeader>
         <DialogTitle className="flex items-center space-x-2">
@@ -399,10 +463,11 @@ export default function Grooming() {
           <span>Sesión de Grooming - {appointment?.petName}</span>
         </DialogTitle>
         <DialogDescription>
-          {appointment && `${appointment.ownerName} - ${appointment.date.toLocaleDateString('es-PE')} a las ${appointment.startTime}`}
+          {appointment &&
+            `${appointment.ownerName} - ${appointment.date.toLocaleDateString("es-PE")} a las ${appointment.startTime}`}
         </DialogDescription>
       </DialogHeader>
-      
+
       {appointment && (
         <Tabs defaultValue="details" className="w-full">
           <TabsList className="grid w-full grid-cols-4">
@@ -411,24 +476,32 @@ export default function Grooming() {
             <TabsTrigger value="photos">Fotos</TabsTrigger>
             <TabsTrigger value="timeline">Progreso</TabsTrigger>
           </TabsList>
-          
+
           <TabsContent value="details" className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Información de la Mascota</CardTitle>
+                  <CardTitle className="text-base">
+                    Información de la Mascota
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">Mascota</Label>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      Mascota
+                    </Label>
                     <p className="text-sm">{appointment.petName}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">Propietario</Label>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      Propietario
+                    </Label>
                     <p className="text-sm">{appointment.ownerName}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">Teléfono</Label>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      Teléfono
+                    </Label>
                     <p className="text-sm flex items-center">
                       <Phone className="w-3 h-3 mr-1" />
                       {appointment.ownerPhone}
@@ -439,11 +512,15 @@ export default function Grooming() {
 
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-base">Información de la Sesión</CardTitle>
+                  <CardTitle className="text-base">
+                    Información de la Sesión
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-3">
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">Estado</Label>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      Estado
+                    </Label>
                     <div className="mt-1">
                       <Badge className={getStatusColor(appointment.status)}>
                         {getStatusLabel(appointment.status)}
@@ -451,12 +528,18 @@ export default function Grooming() {
                     </div>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">Groomer</Label>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      Groomer
+                    </Label>
                     <p className="text-sm">{appointment.groomerName}</p>
                   </div>
                   <div>
-                    <Label className="text-sm font-medium text-muted-foreground">Total</Label>
-                    <p className="text-sm font-semibold text-green-600">S/ {appointment.totalPrice}</p>
+                    <Label className="text-sm font-medium text-muted-foreground">
+                      Total
+                    </Label>
+                    <p className="text-sm font-semibold text-green-600">
+                      S/ {appointment.totalPrice}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -477,7 +560,9 @@ export default function Grooming() {
           <TabsContent value="services" className="space-y-4">
             <div className="space-y-4">
               {appointment.services.map((serviceId) => {
-                const service = groomingServices.find(s => s.id === serviceId);
+                const service = groomingServices.find(
+                  (s) => s.id === serviceId,
+                );
                 return service ? (
                   <Card key={service.id}>
                     <CardContent className="p-4">
@@ -486,12 +571,18 @@ export default function Grooming() {
                           <Scissors className="w-5 h-5 text-primary" />
                           <div>
                             <h3 className="font-semibold">{service.name}</h3>
-                            <p className="text-sm text-muted-foreground">{service.description}</p>
+                            <p className="text-sm text-muted-foreground">
+                              {service.description}
+                            </p>
                           </div>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm font-semibold">S/ {service.price}</p>
-                          <p className="text-xs text-muted-foreground">{service.duration} min</p>
+                          <p className="text-sm font-semibold">
+                            S/ {service.price}
+                          </p>
+                          <p className="text-xs text-muted-foreground">
+                            {service.duration} min
+                          </p>
                         </div>
                       </div>
                     </CardContent>
@@ -514,7 +605,10 @@ export default function Grooming() {
                   {appointment.beforePhotos.length > 0 ? (
                     <div className="grid grid-cols-2 gap-2">
                       {appointment.beforePhotos.map((photo, index) => (
-                        <div key={index} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
+                        <div
+                          key={index}
+                          className="aspect-square bg-muted rounded-lg flex items-center justify-center"
+                        >
                           <Camera className="w-8 h-8 text-muted-foreground" />
                         </div>
                       ))}
@@ -523,7 +617,9 @@ export default function Grooming() {
                     <div className="aspect-square bg-muted rounded-lg flex items-center justify-center">
                       <div className="text-center">
                         <Camera className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">Sin fotos</p>
+                        <p className="text-sm text-muted-foreground">
+                          Sin fotos
+                        </p>
                       </div>
                     </div>
                   )}
@@ -541,7 +637,10 @@ export default function Grooming() {
                   {appointment.afterPhotos.length > 0 ? (
                     <div className="grid grid-cols-2 gap-2">
                       {appointment.afterPhotos.map((photo, index) => (
-                        <div key={index} className="aspect-square bg-muted rounded-lg flex items-center justify-center">
+                        <div
+                          key={index}
+                          className="aspect-square bg-muted rounded-lg flex items-center justify-center"
+                        >
                           <Sparkles className="w-8 h-8 text-muted-foreground" />
                         </div>
                       ))}
@@ -550,7 +649,9 @@ export default function Grooming() {
                     <div className="aspect-square bg-muted rounded-lg flex items-center justify-center">
                       <div className="text-center">
                         <Sparkles className="w-8 h-8 text-muted-foreground mx-auto mb-2" />
-                        <p className="text-sm text-muted-foreground">Sin fotos</p>
+                        <p className="text-sm text-muted-foreground">
+                          Sin fotos
+                        </p>
                       </div>
                     </div>
                   )}
@@ -566,27 +667,32 @@ export default function Grooming() {
                 <div>
                   <p className="font-medium">Cita Agendada</p>
                   <p className="text-sm text-muted-foreground">
-                    {appointment.createdAt.toLocaleDateString('es-PE')} - {appointment.createdAt.toLocaleTimeString('es-PE')}
+                    {appointment.createdAt.toLocaleDateString("es-PE")} -{" "}
+                    {appointment.createdAt.toLocaleTimeString("es-PE")}
                   </p>
                 </div>
               </div>
-              
-              {appointment.status !== 'scheduled' && (
-                <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
-                  <Clock className="w-5 h-5 text-yellow-600" />
+
+              {appointment.status !== "scheduled" && (
+                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                  <Clock className="w-5 h-5 text-blue-600" />
                   <div>
                     <p className="font-medium">Grooming Iniciado</p>
-                    <p className="text-sm text-muted-foreground">En progreso...</p>
+                    <p className="text-sm text-muted-foreground">
+                      En progreso...
+                    </p>
                   </div>
                 </div>
               )}
-              
-              {appointment.status === 'completed' && (
+
+              {appointment.status === "completed" && (
                 <div className="flex items-center space-x-3 p-3 bg-green-50 rounded-lg">
                   <CheckCircle className="w-5 h-5 text-green-600" />
                   <div>
                     <p className="font-medium">Grooming Completado</p>
-                    <p className="text-sm text-muted-foreground">Mascota lista para entrega</p>
+                    <p className="text-sm text-muted-foreground">
+                      Mascota lista para entrega
+                    </p>
                   </div>
                 </div>
               )}
@@ -611,15 +717,20 @@ export default function Grooming() {
         {/* Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold text-foreground">Gestión de Grooming</h1>
+            <h1 className="text-3xl font-bold text-foreground">
+              Gestión de Grooming
+            </h1>
             <p className="text-muted-foreground">
               Administra servicios de grooming y sesiones programadas
             </p>
           </div>
           <div className="flex space-x-2">
-            {hasRole(['admin', 'groomer']) && (
+            {hasRole(["admin", "groomer"]) && (
               <>
-                <Dialog open={isNewServiceDialogOpen} onOpenChange={setIsNewServiceDialogOpen}>
+                <Dialog
+                  open={isNewServiceDialogOpen}
+                  onOpenChange={setIsNewServiceDialogOpen}
+                >
                   <DialogTrigger asChild>
                     <Button variant="outline">
                       <Plus className="w-4 h-4 mr-2" />
@@ -637,7 +748,10 @@ export default function Grooming() {
                   </DialogContent>
                 </Dialog>
 
-                <Dialog open={isNewAppointmentDialogOpen} onOpenChange={setIsNewAppointmentDialogOpen}>
+                <Dialog
+                  open={isNewAppointmentDialogOpen}
+                  onOpenChange={setIsNewAppointmentDialogOpen}
+                >
                   <DialogTrigger asChild>
                     <Button>
                       <Calendar className="w-4 h-4 mr-2" />
@@ -663,16 +777,23 @@ export default function Grooming() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Citas de Hoy</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Citas de Hoy
+              </CardTitle>
               <Calendar className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {groomingAppointments.filter(apt => 
-                  apt.date.toDateString() === new Date().toDateString()
-                ).length}
+                {
+                  groomingAppointments.filter(
+                    (apt) =>
+                      apt.date.toDateString() === new Date().toDateString(),
+                  ).length
+                }
               </div>
-              <p className="text-xs text-muted-foreground">Sesiones programadas</p>
+              <p className="text-xs text-muted-foreground">
+                Sesiones programadas
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -682,7 +803,11 @@ export default function Grooming() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {groomingAppointments.filter(apt => apt.status === 'in-progress').length}
+                {
+                  groomingAppointments.filter(
+                    (apt) => apt.status === "in-progress",
+                  ).length
+                }
               </div>
               <p className="text-xs text-muted-foreground">Sesiones activas</p>
             </CardContent>
@@ -694,19 +819,27 @@ export default function Grooming() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {groomingAppointments.filter(apt => apt.status === 'completed').length}
+                {
+                  groomingAppointments.filter(
+                    (apt) => apt.status === "completed",
+                  ).length
+                }
               </div>
               <p className="text-xs text-muted-foreground">Este mes</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Ingresos del Mes</CardTitle>
+              <CardTitle className="text-sm font-medium">
+                Ingresos del Mes
+              </CardTitle>
               <Sparkles className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">S/ 2,400</div>
-              <p className="text-xs text-muted-foreground">+15% vs mes anterior</p>
+              <p className="text-xs text-muted-foreground">
+                +15% vs mes anterior
+              </p>
             </CardContent>
           </Card>
         </div>
@@ -729,13 +862,19 @@ export default function Grooming() {
                       {getCategoryLabel(service.category)}
                     </Badge>
                   </div>
-                  <p className="text-sm text-muted-foreground mb-3">{service.description}</p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    {service.description}
+                  </p>
                   <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-2">
                       <Clock className="w-3 h-3 text-muted-foreground" />
-                      <span className="text-xs text-muted-foreground">{service.duration} min</span>
+                      <span className="text-xs text-muted-foreground">
+                        {service.duration} min
+                      </span>
                     </div>
-                    <span className="font-semibold text-green-600">S/ {service.price}</span>
+                    <span className="font-semibold text-green-600">
+                      S/ {service.price}
+                    </span>
                   </div>
                 </div>
               ))}
@@ -796,7 +935,7 @@ export default function Grooming() {
                           <TableCell>
                             <div>
                               <p className="font-medium">
-                                {appointment.date.toLocaleDateString('es-PE')}
+                                {appointment.date.toLocaleDateString("es-PE")}
                               </p>
                               <p className="text-sm text-muted-foreground">
                                 {appointment.startTime}
@@ -805,17 +944,27 @@ export default function Grooming() {
                           </TableCell>
                           <TableCell>
                             <div>
-                              <p className="font-medium">{appointment.petName}</p>
-                              <p className="text-sm text-muted-foreground">{appointment.ownerName}</p>
+                              <p className="font-medium">
+                                {appointment.petName}
+                              </p>
+                              <p className="text-sm text-muted-foreground">
+                                {appointment.ownerName}
+                              </p>
                             </div>
                           </TableCell>
                           <TableCell>
                             <div className="space-y-1">
-                              {appointment.services.slice(0, 2).map((serviceId) => (
-                                <Badge key={serviceId} variant="outline" className="text-xs">
-                                  {getServiceName(serviceId)}
-                                </Badge>
-                              ))}
+                              {appointment.services
+                                .slice(0, 2)
+                                .map((serviceId) => (
+                                  <Badge
+                                    key={serviceId}
+                                    variant="outline"
+                                    className="text-xs"
+                                  >
+                                    {getServiceName(serviceId)}
+                                  </Badge>
+                                ))}
                               {appointment.services.length > 2 && (
                                 <Badge variant="outline" className="text-xs">
                                   +{appointment.services.length - 2} más
@@ -824,7 +973,9 @@ export default function Grooming() {
                             </div>
                           </TableCell>
                           <TableCell>
-                            <Badge className={getStatusColor(appointment.status)}>
+                            <Badge
+                              className={getStatusColor(appointment.status)}
+                            >
                               {getStatusLabel(appointment.status)}
                             </Badge>
                           </TableCell>
@@ -840,32 +991,42 @@ export default function Grooming() {
                                   <Button
                                     size="sm"
                                     variant="outline"
-                                    onClick={() => setSelectedAppointment(appointment)}
+                                    onClick={() =>
+                                      setSelectedAppointment(appointment)
+                                    }
                                   >
                                     <Eye className="w-3 h-3" />
                                   </Button>
                                 </DialogTrigger>
-                                <AppointmentDetailsDialog appointment={selectedAppointment} />
+                                <AppointmentDetailsDialog
+                                  appointment={selectedAppointment}
+                                />
                               </Dialog>
-                              
-                              {appointment.status === 'scheduled' && hasRole(['admin', 'groomer']) && (
-                                <Button 
-                                  size="sm" 
-                                  variant="outline"
-                                  onClick={() => handleStartGrooming(appointment.id)}
-                                >
-                                  Iniciar
-                                </Button>
-                              )}
-                              
-                              {appointment.status === 'in-progress' && hasRole(['admin', 'groomer']) && (
-                                <Button 
-                                  size="sm"
-                                  onClick={() => handleCompleteGrooming(appointment.id)}
-                                >
-                                  Completar
-                                </Button>
-                              )}
+
+                              {appointment.status === "scheduled" &&
+                                hasRole(["admin", "groomer"]) && (
+                                  <Button
+                                    size="sm"
+                                    variant="outline"
+                                    onClick={() =>
+                                      handleStartGrooming(appointment.id)
+                                    }
+                                  >
+                                    Iniciar
+                                  </Button>
+                                )}
+
+                              {appointment.status === "in-progress" &&
+                                hasRole(["admin", "groomer"]) && (
+                                  <Button
+                                    size="sm"
+                                    onClick={() =>
+                                      handleCompleteGrooming(appointment.id)
+                                    }
+                                  >
+                                    Completar
+                                  </Button>
+                                )}
                             </div>
                           </TableCell>
                         </TableRow>
