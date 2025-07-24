@@ -302,9 +302,9 @@ export default function Owners() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="fullName">Nombre Completo *</Label>
-          <Input 
-            id="fullName" 
-            placeholder="Nombre y apellidos" 
+          <Input
+            id="fullName"
+            placeholder="Ej: José Ángel Núñez Sánchez"
             value={createForm.fullName}
             onChange={(e) => setCreateForm(prev => ({ ...prev, fullName: e.target.value }))}
             required 
