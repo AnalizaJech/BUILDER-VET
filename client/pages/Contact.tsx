@@ -538,10 +538,10 @@ export default function Contact() {
                       Dirección Principal
                     </h3>
                     <p className="text-gray-600">
-                      Av. Universitaria 123, San Martín de Porres, Lima
+                      Jr. Lampa 1260, Cercado de Lima, Lima
                     </p>
                     <p className="text-sm text-gray-500">
-                      Referencia: Frente al Centro Comercial Megaplaza
+                      Referencia: Cerca del Jr. Áncash, zona comercial del Centro Histórico
                     </p>
                   </div>
                 </div>
