@@ -8,6 +8,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import DashboardLayout from '@/components/DashboardLayout';
+import { useBusinessData } from '@/contexts/BusinessDataContext';
+import { useNotifications } from '@/contexts/NotificationContext';
 import { 
   Users, 
   Search, 
@@ -19,129 +21,49 @@ import {
   MapPin,
   Heart,
   Calendar,
-  Eye
+  Eye,
+  AlertTriangle,
+  CheckCircle,
+  X,
+  Save
 } from 'lucide-react';
-import { Owner } from '@shared/types';
+import { Owner, Pet } from '@shared/types';
 
 export default function Owners() {
+  const { owners, addOwner, updateOwner, deleteOwner, isLoadingOwners } = useBusinessData();
+  const { showNotification } = useNotifications();
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [selectedOwner, setSelectedOwner] = useState<Owner | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
   const [ownerToEdit, setOwnerToEdit] = useState<Owner | null>(null);
-
-  const handleCreateOwner = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Propietario registrado exitosamente');
-    setIsCreateDialogOpen(false);
-  };
-
-  const handleEditOwner = (owner: Owner) => {
-    setOwnerToEdit(owner);
-    setIsEditDialogOpen(true);
-  };
-
-  const handleDeleteOwner = (owner: Owner) => {
-    if (confirm(`¿Estás seguro de que deseas eliminar el propietario ${owner.fullName}?`)) {
-      alert(`Propietario ${owner.fullName} eliminado exitosamente`);
-    }
-  };
-
-  const handleViewDetails = (owner: Owner) => {
-    setSelectedOwner(owner);
-  };
-
-  // Mock data - in real app this would come from API
-  const owners: Owner[] = [
-    {
-      id: '1',
-      fullName: 'Carlos Pérez González',
-      dni: '12345678',
-      address: 'Av. Principal 123, Lima',
-      phone: '+51 987654321',
-      email: 'carlos.perez@email.com',
-      pets: [
-        {
-          id: '1',
-          name: 'Max',
-          species: 'dog',
-          breed: 'Golden Retriever',
-          age: 3,
-          weight: 25,
-          allergies: ['Pollo'],
-          ownerId: '1',
-          medicalHistory: [],
-          createdAt: new Date('2023-01-15'),
-          updatedAt: new Date('2024-01-15')
-        },
-        {
-          id: '2',
-          name: 'Luna',
-          species: 'cat',
-          breed: 'Persa',
-          age: 2,
-          weight: 4,
-          allergies: [],
-          ownerId: '1',
-          medicalHistory: [],
-          createdAt: new Date('2023-06-10'),
-          updatedAt: new Date('2024-01-15')
-        }
-      ],
-      createdAt: new Date('2023-01-15'),
-      updatedAt: new Date('2024-01-15')
-    },
-    {
-      id: '2',
-      fullName: 'María García Rodríguez',
-      dni: '87654321',
-      address: 'Jr. Los Olivos 456, San Isidro',
-      phone: '+51 912345678',
-      email: 'maria.garcia@email.com',
-      pets: [
-        {
-          id: '3',
-          name: 'Rocky',
-          species: 'dog',
-          breed: 'Bulldog Francés',
-          age: 4,
-          weight: 12,
-          allergies: ['Lácteos', 'Trigo'],
-          ownerId: '2',
-          medicalHistory: [],
-          createdAt: new Date('2023-03-20'),
-          updatedAt: new Date('2024-01-15')
-        }
-      ],
-      createdAt: new Date('2023-03-20'),
-      updatedAt: new Date('2024-01-15')
-    },
-    {
-      id: '3',
-      fullName: 'Juan Martínez López',
-      dni: '11223344',
-      address: 'Calle Las Flores 789, Miraflores',
-      phone: '+51 956789123',
-      email: 'juan.martinez@email.com',
-      pets: [
-        {
-          id: '4',
-          name: 'Mia',
-          species: 'cat',
-          breed: 'Siamés',
-          age: 1,
-          weight: 3,
-          allergies: [],
-          ownerId: '3',
-          medicalHistory: [],
-          createdAt: new Date('2023-09-05'),
-          updatedAt: new Date('2024-01-15')
-        }
-      ],
-      createdAt: new Date('2023-09-05'),
-      updatedAt: new Date('2024-01-15')
-    }
-  ];
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [ownerToDelete, setOwnerToDelete] = useState<Owner | null>(null);
+  const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
+  
+  // Form states
+  const [createForm, setCreateForm] = useState({
+    fullName: '',
+    dni: '',
+    address: '',
+    phone: '',
+    email: '',
+    petName: '',
+    petSpecies: 'dog' as 'dog' | 'cat',
+    petBreed: '',
+    petAge: '',
+    petWeight: '',
+    petAllergies: ''
+  });
+  
+  const [editForm, setEditForm] = useState({
+    fullName: '',
+    dni: '',
+    address: '',
+    phone: '',
+    email: ''
+  });
 
   const filteredOwners = owners.filter(owner =>
     owner.fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -149,6 +71,108 @@ export default function Owners() {
     owner.email.toLowerCase().includes(searchQuery.toLowerCase()) ||
     owner.pets.some(pet => pet.name.toLowerCase().includes(searchQuery.toLowerCase()))
   );
+
+  const resetCreateForm = () => {
+    setCreateForm({
+      fullName: '',
+      dni: '',
+      address: '',
+      phone: '',
+      email: '',
+      petName: '',
+      petSpecies: 'dog',
+      petBreed: '',
+      petAge: '',
+      petWeight: '',
+      petAllergies: ''
+    });
+  };
+
+  const handleCreateOwner = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      const newOwner = {
+        fullName: createForm.fullName,
+        dni: createForm.dni,
+        address: createForm.address,
+        phone: createForm.phone,
+        email: createForm.email,
+        pets: createForm.petName ? [{
+          id: Date.now().toString(),
+          name: createForm.petName,
+          species: createForm.petSpecies,
+          breed: createForm.petBreed,
+          age: parseInt(createForm.petAge) || 0,
+          weight: parseFloat(createForm.petWeight) || 0,
+          allergies: createForm.petAllergies.split(',').map(a => a.trim()).filter(a => a),
+          ownerId: '',
+          medicalHistory: [],
+          createdAt: new Date(),
+          updatedAt: new Date()
+        }] : []
+      };
+      
+      await addOwner(newOwner);
+      showNotification('Propietario registrado exitosamente', 'success');
+      setIsCreateDialogOpen(false);
+      resetCreateForm();
+    } catch (error) {
+      showNotification('Error al registrar propietario', 'error');
+    }
+  };
+
+  const handleEditOwner = (owner: Owner) => {
+    setOwnerToEdit(owner);
+    setEditForm({
+      fullName: owner.fullName,
+      dni: owner.dni,
+      address: owner.address,
+      phone: owner.phone,
+      email: owner.email
+    });
+    setIsEditDialogOpen(true);
+  };
+  
+  const handleUpdateOwner = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!ownerToEdit) return;
+    
+    try {
+      await updateOwner(ownerToEdit.id, editForm);
+      showNotification('Propietario actualizado exitosamente', 'success');
+      setIsEditDialogOpen(false);
+      setOwnerToEdit(null);
+    } catch (error) {
+      showNotification('Error al actualizar propietario', 'error');
+    }
+  };
+
+  const handleDeleteOwner = (owner: Owner) => {
+    setOwnerToDelete(owner);
+    setIsDeleteDialogOpen(true);
+  };
+  
+  const confirmDeleteOwner = async () => {
+    if (!ownerToDelete) return;
+    
+    try {
+      await deleteOwner(ownerToDelete.id);
+      showNotification('Propietario eliminado exitosamente', 'success');
+      setIsDeleteDialogOpen(false);
+      setOwnerToDelete(null);
+    } catch (error) {
+      showNotification('Error al eliminar propietario', 'error');
+    }
+  };
+
+  const handleViewDetails = (owner: Owner) => {
+    setSelectedOwner(owner);
+    setIsDetailsDialogOpen(true);
+  };
+  
+  const handleViewPetHistory = (pet: Pet) => {
+    showNotification(`Viendo historial médico de ${pet.name}`, 'info');
+  };
 
   const getSpeciesLabel = (species: string) => {
     return species === 'dog' ? 'Perro' : 'Gato';
@@ -167,27 +191,59 @@ export default function Owners() {
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="fullName">Nombre Completo *</Label>
-          <Input id="fullName" placeholder="Nombre y apellidos" required />
+          <Input 
+            id="fullName" 
+            placeholder="Nombre y apellidos" 
+            value={createForm.fullName}
+            onChange={(e) => setCreateForm(prev => ({ ...prev, fullName: e.target.value }))}
+            required 
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="dni">DNI *</Label>
-          <Input id="dni" placeholder="12345678" required />
+          <Input 
+            id="dni" 
+            placeholder="12345678" 
+            value={createForm.dni}
+            onChange={(e) => setCreateForm(prev => ({ ...prev, dni: e.target.value }))}
+            required 
+          />
         </div>
       </div>
 
       <div className="space-y-2">
         <Label htmlFor="address">Dirección *</Label>
-        <Input id="address" placeholder="Dirección completa" required />
+        <Input 
+          id="address" 
+          placeholder="Dirección completa" 
+          value={createForm.address}
+          onChange={(e) => setCreateForm(prev => ({ ...prev, address: e.target.value }))}
+          required 
+        />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
           <Label htmlFor="phone">Teléfono *</Label>
-          <Input id="phone" type="tel" placeholder="+51 987654321" required />
+          <Input 
+            id="phone" 
+            type="tel" 
+            placeholder="+51 987654321" 
+            value={createForm.phone}
+            onChange={(e) => setCreateForm(prev => ({ ...prev, phone: e.target.value }))}
+            required 
+          />
         </div>
         <div className="space-y-2">
           <Label htmlFor="email">Email *</Label>
-          <Input id="email" type="email" placeholder="correo@email.com" required />
+          <Input 
+            id="email" 
+            type="email" 
+            placeholder="correo@email.com" 
+            value={createForm.email}
+            onChange={(e) => setCreateForm(prev => ({ ...prev, email: e.target.value }))}
+            required 
+          />
         </div>
       </div>
 
@@ -197,11 +253,17 @@ export default function Owners() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="petName">Nombre de la Mascota *</Label>
-            <Input id="petName" placeholder="Nombre de la mascota" required />
+            <Input 
+              id="petName" 
+              placeholder="Nombre de la mascota" 
+              value={createForm.petName}
+              onChange={(e) => setCreateForm(prev => ({ ...prev, petName: e.target.value }))}
+              required 
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="species">Especie *</Label>
-            <Select required>
+            <Select value={createForm.petSpecies} onValueChange={(value: 'dog' | 'cat') => setCreateForm(prev => ({ ...prev, petSpecies: value }))} required>
               <SelectTrigger>
                 <SelectValue placeholder="Seleccionar especie" />
               </SelectTrigger>
@@ -216,31 +278,137 @@ export default function Owners() {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
           <div className="space-y-2">
             <Label htmlFor="breed">Raza *</Label>
-            <Input id="breed" placeholder="Raza de la mascota" required />
+            <Input 
+              id="breed" 
+              placeholder="Raza de la mascota" 
+              value={createForm.petBreed}
+              onChange={(e) => setCreateForm(prev => ({ ...prev, petBreed: e.target.value }))}
+              required 
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="age">Edad (años)</Label>
-            <Input id="age" type="number" placeholder="0" min="0" max="30" />
+            <Input 
+              id="age" 
+              type="number" 
+              placeholder="0" 
+              min="0" 
+              max="30" 
+              value={createForm.petAge}
+              onChange={(e) => setCreateForm(prev => ({ ...prev, petAge: e.target.value }))}
+            />
           </div>
           <div className="space-y-2">
             <Label htmlFor="weight">Peso (kg)</Label>
-            <Input id="weight" type="number" placeholder="0" min="0" step="0.1" />
+            <Input 
+              id="weight" 
+              type="number" 
+              placeholder="0" 
+              min="0" 
+              step="0.1" 
+              value={createForm.petWeight}
+              onChange={(e) => setCreateForm(prev => ({ ...prev, petWeight: e.target.value }))}
+            />
           </div>
         </div>
 
         <div className="space-y-2 mt-4">
           <Label htmlFor="allergies">Alergias (separar con comas)</Label>
-          <Input id="allergies" placeholder="Ej: Pollo, Lácteos, Trigo" />
+          <Input 
+            id="allergies" 
+            placeholder="Ej: Pollo, Lácteos, Trigo" 
+            value={createForm.petAllergies}
+            onChange={(e) => setCreateForm(prev => ({ ...prev, petAllergies: e.target.value }))}
+          />
         </div>
       </div>
 
       <div className="flex justify-end space-x-2 pt-4">
-        <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
+        <Button type="button" variant="outline" onClick={() => {
+          setIsCreateDialogOpen(false);
+          resetCreateForm();
+        }}>
           Cancelar
         </Button>
-        <Button type="submit" variant="success">
+        <Button type="submit" variant="success" disabled={isLoadingOwners}>
           <Plus className="w-4 h-4 mr-2" />
-          Registrar Propietario
+          {isLoadingOwners ? 'Registrando...' : 'Registrar Propietario'}
+        </Button>
+      </div>
+    </form>
+  );
+
+  const EditOwnerForm = () => (
+    <form className="space-y-4" onSubmit={handleUpdateOwner}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="edit-fullName">Nombre Completo *</Label>
+          <Input 
+            id="edit-fullName" 
+            placeholder="Nombre y apellidos" 
+            value={editForm.fullName}
+            onChange={(e) => setEditForm(prev => ({ ...prev, fullName: e.target.value }))}
+            required 
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="edit-dni">DNI *</Label>
+          <Input 
+            id="edit-dni" 
+            placeholder="12345678" 
+            value={editForm.dni}
+            onChange={(e) => setEditForm(prev => ({ ...prev, dni: e.target.value }))}
+            required 
+          />
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="edit-address">Dirección *</Label>
+        <Input 
+          id="edit-address" 
+          placeholder="Dirección completa" 
+          value={editForm.address}
+          onChange={(e) => setEditForm(prev => ({ ...prev, address: e.target.value }))}
+          required 
+        />
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="edit-phone">Teléfono *</Label>
+          <Input 
+            id="edit-phone" 
+            type="tel" 
+            placeholder="+51 987654321" 
+            value={editForm.phone}
+            onChange={(e) => setEditForm(prev => ({ ...prev, phone: e.target.value }))}
+            required 
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="edit-email">Email *</Label>
+          <Input 
+            id="edit-email" 
+            type="email" 
+            placeholder="correo@email.com" 
+            value={editForm.email}
+            onChange={(e) => setEditForm(prev => ({ ...prev, email: e.target.value }))}
+            required 
+          />
+        </div>
+      </div>
+
+      <div className="flex justify-end space-x-2 pt-4">
+        <Button type="button" variant="outline" onClick={() => {
+          setIsEditDialogOpen(false);
+          setOwnerToEdit(null);
+        }}>
+          Cancelar
+        </Button>
+        <Button type="submit" variant="success" disabled={isLoadingOwners}>
+          <Save className="w-4 h-4 mr-2" />
+          {isLoadingOwners ? 'Guardando...' : 'Guardar Cambios'}
         </Button>
       </div>
     </form>
@@ -278,6 +446,9 @@ export default function Owners() {
                     {owner.phone}
                   </p>
                 </div>
+              </div>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <Label className="text-sm font-medium text-muted-foreground">Email</Label>
                   <p className="text-sm flex items-center">
@@ -286,12 +457,17 @@ export default function Owners() {
                   </p>
                 </div>
                 <div>
-                  <Label className="text-sm font-medium text-muted-foreground">Dirección</Label>
-                  <p className="text-sm flex items-center">
-                    <MapPin className="w-3 h-3 mr-1" />
-                    {owner.address}
-                  </p>
+                  <Label className="text-sm font-medium text-muted-foreground">Fecha de Registro</Label>
+                  <p className="text-sm">{new Date(owner.createdAt).toLocaleDateString('es-PE')}</p>
                 </div>
+              </div>
+              
+              <div>
+                <Label className="text-sm font-medium text-muted-foreground">Dirección</Label>
+                <p className="text-sm flex items-center">
+                  <MapPin className="w-3 h-3 mr-1" />
+                  {owner.address}
+                </p>
               </div>
             </CardContent>
           </Card>
@@ -315,7 +491,7 @@ export default function Owners() {
                       <h3 className="font-semibold">{pet.name}</h3>
                       <Badge variant="outline">{getSpeciesLabel(pet.species)}</Badge>
                     </div>
-                    <Button size="sm" variant="info" onClick={() => alert(`Ver historial médico de ${pet.name}`)}>
+                    <Button size="sm" variant="info" onClick={() => handleViewPetHistory(pet)}>
                       <Calendar className="w-3 h-3 mr-1" />
                       Ver Historial
                     </Button>
@@ -388,7 +564,7 @@ export default function Owners() {
             <CardContent>
               <div className="text-2xl font-bold">{owners.length}</div>
               <p className="text-xs text-muted-foreground">
-                +3 este mes
+                Registrados en el sistema
               </p>
             </CardContent>
           </Card>
@@ -413,7 +589,7 @@ export default function Owners() {
             </CardHeader>
             <CardContent>
               <div className="text-2xl font-bold">
-                {(owners.reduce((total, owner) => total + owner.pets.length, 0) / owners.length).toFixed(1)}
+                {owners.length > 0 ? (owners.reduce((total, owner) => total + owner.pets.length, 0) / owners.length).toFixed(1) : '0'}
               </div>
               <p className="text-xs text-muted-foreground">
                 Por propietario
@@ -492,18 +668,13 @@ export default function Owners() {
                       </TableCell>
                       <TableCell className="text-right">
                         <div className="flex items-center justify-end space-x-2">
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                onClick={() => setSelectedOwner(owner)}
-                              >
-                                <Eye className="w-3 h-3" />
-                              </Button>
-                            </DialogTrigger>
-                            <OwnerDetailsDialog owner={selectedOwner} />
-                          </Dialog>
+                          <Button
+                            size="sm"
+                            variant="outline"
+                            onClick={() => handleViewDetails(owner)}
+                          >
+                            <Eye className="w-3 h-3" />
+                          </Button>
                           
                           <Button size="sm" variant="outline" onClick={() => handleEditOwner(owner)}>
                             <Edit className="w-3 h-3" />
@@ -521,6 +692,62 @@ export default function Owners() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Edit Owner Dialog */}
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Editar Propietario</DialogTitle>
+              <DialogDescription>
+                Actualiza la información del propietario
+              </DialogDescription>
+            </DialogHeader>
+            <EditOwnerForm />
+          </DialogContent>
+        </Dialog>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center space-x-2">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+                <span>Confirmar Eliminación</span>
+              </DialogTitle>
+              <DialogDescription>
+                Esta acción no se puede deshacer. Se eliminará permanentemente al propietario y todas sus mascotas del sistema.
+              </DialogDescription>
+            </DialogHeader>
+            
+            {ownerToDelete && (
+              <div className="space-y-4">
+                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                  <p className="text-sm text-red-800">
+                    <strong>Propietario:</strong> {ownerToDelete.fullName}
+                  </p>
+                  <p className="text-sm text-red-800">
+                    <strong>Mascotas:</strong> {ownerToDelete.pets.length} mascota(s)
+                  </p>
+                </div>
+                
+                <div className="flex justify-end space-x-2">
+                  <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                    Cancelar
+                  </Button>
+                  <Button variant="destructive" onClick={confirmDeleteOwner} disabled={isLoadingOwners}>
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    {isLoadingOwners ? 'Eliminando...' : 'Eliminar Propietario'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Owner Details Dialog */}
+        <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
+          <OwnerDetailsDialog owner={selectedOwner} />
+        </Dialog>
       </div>
     </DashboardLayout>
   );
