@@ -31,6 +31,7 @@ import {
   Phone,
   Mail,
   MapPin,
+  MessageCircle,
   Scissors,
   Shield,
   Sparkles,
