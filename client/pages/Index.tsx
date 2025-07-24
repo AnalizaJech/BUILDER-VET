@@ -283,7 +283,7 @@ export default function Index() {
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                        className="w-4 h-4 fill-amber-400 text-amber-400"
                       />
                     ))}
                   </div>
@@ -419,7 +419,7 @@ export default function Index() {
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Badge className="bg-yellow-100 text-yellow-700 mb-4">
+            <Badge className="bg-amber-100 text-amber-700 mb-4">
               <MessageCircle className="w-4 h-4 mr-1" />
               Testimonios
             </Badge>
@@ -454,7 +454,7 @@ export default function Index() {
                   {[...Array(5)].map((_, i) => (
                     <Star
                       key={i}
-                      className="w-4 h-4 fill-yellow-400 text-yellow-400"
+                      className="w-4 h-4 fill-amber-400 text-amber-400"
                     />
                   ))}
                 </div>
@@ -476,7 +476,7 @@ export default function Index() {
                     {[...Array(testimonial.rating)].map((_, i) => (
                       <Star
                         key={i}
-                        className="w-5 h-5 fill-yellow-400 text-yellow-400 group-hover:scale-110 transition-transform duration-300"
+                        className="w-5 h-5 fill-amber-400 text-amber-400 group-hover:scale-110 transition-transform duration-300"
                         style={{ animationDelay: `${i * 100}ms` }}
                       />
                     ))}
