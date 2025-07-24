@@ -1,6 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { ServiceCarousel } from "@/components/ui/service-carousel";
+import { PersonAvatar, TestimonialAvatar } from "@/components/ui/person-avatar";
 import Navigation from "@/components/Navigation";
 import {
   Heart,
@@ -29,30 +31,32 @@ export default function Index() {
     {
       icon: Stethoscope,
       title: "Consultas Veterinarias",
-      description: "Exámenes médicos completos con tecnología de última generación",
-      price: "Desde S/ 60",
-      features: ["Diagnóstico profesional", "Plan de tratamiento", "Seguimiento personalizado"]
+      description: "Exámenes médicos completos con tecnología de última generación para el diagnóstico preciso y tratamiento oportuno de tu mascota",
+      features: ["Diagnóstico profesional", "Plan de tratamiento personalizado", "Seguimiento continuo", "Atención especializada"]
     },
     {
       icon: Scissors,
       title: "Grooming Premium",
-      description: "Servicios de estética y cuidado para que tu mascota luzca espectacular",
-      price: "Desde S/ 80",
-      features: ["Corte especializado", "Baño terapéutico", "Spa relajante"]
+      description: "Servicios de estética y cuidado especializados para que tu mascota luzca radiante y se sienta cómoda",
+      features: ["Corte especializado", "Baño terapéutico", "Spa relajante", "Cuidado de uñas y oídos"]
     },
     {
       icon: Heart,
       title: "Vacunación y Prevención",
-      description: "Protege a tu mascota con nuestro programa completo de vacunación",
-      price: "Desde S/ 40",
-      features: ["Calendario personalizado", "Recordatorios automáticos", "Certificados oficiales"]
+      description: "Programa completo de inmunización y medicina preventiva para mantener la salud óptima de tu compañero",
+      features: ["Calendario personalizado", "Recordatorios automáticos", "Certificados oficiales", "Seguimiento médico"]
     },
     {
       icon: Shield,
       title: "Cirugías Especializadas",
-      description: "Procedimientos quirúrgicos con los más altos estándares de seguridad",
-      price: "Desde S/ 350",
-      features: ["Quirófano moderno", "Anestesia segura", "Cuidado post-operatorio"]
+      description: "Procedimientos quirúrgicos con tecnología moderna y los más altos estándares de seguridad veterinaria",
+      features: ["Quir��fano moderno", "Anestesia segura", "Cuidado post-operatorio", "Monitoreo especializado"]
+    },
+    {
+      icon: Sparkles,
+      title: "Tratamientos Especiales",
+      description: "Terapias avanzadas y tratamientos innovadores para casos especiales y rehabilitación animal",
+      features: ["Fisioterapia veterinaria", "Medicina holística", "Tratamientos regenerativos", "Cuidados geriátricos"]
     }
   ];
 
@@ -60,21 +64,21 @@ export default function Index() {
     {
       name: "María González",
       pet: "Luna (Gata Persa)",
-      comment: "Excelente atención, mi gatita Luna siempre sale feliz de sus citas. El Dr. Carlos es muy profesional.",
+      comment: "Excelente atención, mi gatita Luna siempre sale feliz de sus citas. El Dr. Carlos es muy profesional y cariñoso.",
       rating: 5,
       petType: "cat"
     },
     {
       name: "Carlos Mendoza",
       pet: "Max (Golden Retriever)",
-      comment: "El servicio de grooming es increíble. Max queda como nuevo cada vez. Muy recomendado.",
+      comment: "El servicio de grooming es increíble. Max queda como nuevo cada vez. El equipo es muy profesional y dedicado.",
       rating: 5,
       petType: "dog"
     },
     {
       name: "Ana Rodríguez",
       pet: "Rocky (Bulldog Francés)",
-      comment: "Salvaron la vida de Rocky con una cirug��a de emergencia. Estoy eternamente agradecida.",
+      comment: "Salvaron la vida de Rocky con una cirugía de emergencia. Estoy eternamente agradecida por su profesionalismo.",
       rating: 5,
       petType: "dog"
     }
@@ -84,17 +88,17 @@ export default function Index() {
     {
       icon: Award,
       title: "Más de 5 años de experiencia",
-      description: "Equipo veterinario certificado con amplia trayectoria"
+      description: "Equipo veterinario certificado con amplia trayectoria y formación continua"
     },
     {
       icon: Clock,
       title: "Atención 24/7",
-      description: "Emergencias atendidas todos los días del año"
+      description: "Emergencias atendidas todos los días del año con personal especializado"
     },
     {
       icon: Users,
       title: "+1000 mascotas felices",
-      description: "Familias que confían en nosotros para el cuidado de sus mascotas"
+      description: "Familias que confían en nosotros para el cuidado integral de sus mascotas"
     },
     {
       icon: MapPin,
@@ -147,9 +151,9 @@ export default function Index() {
               <div className="flex items-center space-x-8 pt-4">
                 <div className="flex items-center space-x-2">
                   <div className="flex -space-x-2">
-                    <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center text-white text-sm font-bold">M</div>
-                    <div className="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center text-white text-sm font-bold">A</div>
-                    <div className="w-8 h-8 bg-purple-500 rounded-full flex items-center justify-center text-white text-sm font-bold">R</div>
+                    <PersonAvatar name="María González" className="border-2 border-white" />
+                    <PersonAvatar name="Carlos Mendoza" className="border-2 border-white" />
+                    <PersonAvatar name="Ana Rodríguez" className="border-2 border-white" />
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">+1000 familias</p>
@@ -205,7 +209,7 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Services Section */}
+      {/* Services Carousel Section */}
       <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -222,42 +226,15 @@ export default function Index() {
             </p>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-2">
-                  <CardHeader className="text-center pb-4">
-                    <div className="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform border-2 border-green-200">
-                      <Icon className="w-10 h-10 text-green-600" />
-                    </div>
-                    <CardTitle className="text-2xl text-gray-900">{service.title}</CardTitle>
-                    <div className="flex items-center justify-center space-x-2">
-                      <Badge variant="outline" className="text-green-600 border-green-200">
-                        {service.price}
-                      </Badge>
-                    </div>
-                  </CardHeader>
-                  <CardContent>
-                    <p className="text-gray-600 text-center mb-6">{service.description}</p>
-                    <div className="space-y-3">
-                      {service.features.map((feature, i) => (
-                        <div key={i} className="flex items-center space-x-2">
-                          <CheckCircle className="w-4 h-4 text-green-500" />
-                          <span className="text-sm text-gray-600">{feature}</span>
-                        </div>
-                      ))}
-                    </div>
-                    <Button asChild className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white">
-                      <Link to="/citas">
-                        Agendar Ahora
-                        <ArrowRight className="w-4 h-4 ml-2" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <ServiceCarousel services={services} />
+          
+          <div className="text-center mt-12">
+            <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white">
+              <Link to="/servicios">
+                Ver Todos los Servicios
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -322,13 +299,7 @@ export default function Index() {
                   </div>
                   <p className="text-gray-600 mb-6 italic">"{testimonial.comment}"</p>
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center border-2 border-green-200">
-                      {testimonial.petType === 'cat' ? (
-                        <Heart className="w-6 h-6 text-purple-600" />
-                      ) : (
-                        <Heart className="w-6 h-6 text-green-600" />
-                      )}
-                    </div>
+                    <TestimonialAvatar name={testimonial.name} />
                     <div>
                       <p className="font-semibold text-gray-900">{testimonial.name}</p>
                       <p className="text-sm text-gray-500">{testimonial.pet}</p>
@@ -337,120 +308,6 @@ export default function Index() {
                 </CardContent>
               </Card>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA Section */}
-      <section className="relative py-24 bg-green-600 text-white overflow-hidden">
-        {/* Animated background elements */}
-        <div className="absolute inset-0">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
-          <div className="absolute top-40 right-20 w-24 h-24 bg-purple-300/20 rounded-full blur-lg animate-bounce"></div>
-          <div className="absolute bottom-20 left-1/3 w-40 h-40 bg-blue-300/10 rounded-full blur-2xl animate-pulse"></div>
-        </div>
-
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div className="space-y-8">
-              <div className="space-y-6">
-                <div className="inline-flex items-center px-4 py-2 bg-white/20 rounded-full backdrop-blur-sm">
-                  <SimplePawLogo className="w-5 h-5 mr-2" />
-                  <span className="text-sm font-medium">Más de 1000 familias confían en nosotros</span>
-                </div>
-
-                <h2 className="text-4xl md:text-5xl font-bold leading-tight">
-                  Tu mascota merece el
-                  <span className="block text-yellow-300">
-                    mejor cuidado
-                  </span>
-                </h2>
-
-                <p className="text-xl opacity-90 leading-relaxed">
-                  Agenda tu cita en menos de 2 minutos y experimenta la diferencia
-                  de una atención veterinaria de clase mundial.
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-white text-gray-900 hover:bg-gray-100 hover:scale-105 transition-all duration-300 shadow-2xl text-lg px-8 py-6 rounded-2xl font-semibold">
-                  <Link to="/citas">
-                    <Calendar className="w-6 h-6 mr-3" />
-                    Agendar Ahora
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Link>
-                </Button>
-                <Button asChild size="lg" variant="outline" className="border-2 border-white/50 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-lg px-8 py-6 rounded-2xl font-semibold">
-                  <a href="https://wa.me/51902799296" target="_blank" rel="noopener noreferrer">
-                    <MessageCircle className="w-6 h-6 mr-3" />
-                    WhatsApp
-                  </a>
-                </Button>
-              </div>
-
-              {/* Stats */}
-              <div className="flex items-center space-x-8 pt-4">
-                <div className="text-center">
-                  <div className="text-3xl font-bold">4.9</div>
-                  <div className="flex items-center justify-center space-x-1 mt-1">
-                    {[...Array(5)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-300 text-yellow-300" />
-                    ))}
-                  </div>
-                  <div className="text-xs opacity-80">Rating promedio</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">24/7</div>
-                  <div className="text-xs opacity-80">Emergencias</div>
-                </div>
-                <div className="text-center">
-                  <div className="text-3xl font-bold">5+</div>
-                  <div className="text-xs opacity-80">Años experiencia</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Content - Interactive Card */}
-            <div className="relative">
-              <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl transform hover:scale-105 transition-all duration-300">
-                <div className="space-y-6">
-                  <div className="text-center">
-                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg border-4 border-green-400">
-                      <Heart className="w-10 h-10 text-white" />
-                    </div>
-                    <h3 className="text-2xl font-bold mb-2">¡Agenda en 2 Minutos!</h3>
-                    <p className="text-white/80">Sistema online disponible 24/7</p>
-                  </div>
-
-                  <div className="space-y-4">
-                    <div className="flex items-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                      <CheckCircle className="w-6 h-6 text-green-300 mr-3" />
-                      <span>Confirmación inmediata</span>
-                    </div>
-                    <div className="flex items-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                      <CheckCircle className="w-6 h-6 text-green-300 mr-3" />
-                      <span>Recordatorios automáticos</span>
-                    </div>
-                    <div className="flex items-center p-4 bg-white/10 rounded-xl backdrop-blur-sm">
-                      <CheckCircle className="w-6 h-6 text-green-300 mr-3" />
-                      <span>Historial médico digital</span>
-                    </div>
-                  </div>
-
-                  <div className="grid grid-cols-2 gap-4 pt-4">
-                    <div className="text-center p-3 bg-white/10 rounded-xl backdrop-blur-sm">
-                      <Phone className="w-6 h-6 mx-auto mb-2 text-blue-300" />
-                      <div className="text-sm font-semibold">+51 902 799 296</div>
-                    </div>
-                    <div className="text-center p-3 bg-white/10 rounded-xl backdrop-blur-sm">
-                      <Clock className="w-6 h-6 mx-auto mb-2 text-purple-300" />
-                      <div className="text-sm font-semibold">8:00 - 20:00</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
         </div>
       </section>
