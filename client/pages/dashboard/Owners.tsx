@@ -364,9 +364,9 @@ export default function Owners() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="petName">Nombre de la Mascota *</Label>
-            <Input 
-              id="petName" 
-              placeholder="Nombre de la mascota" 
+            <Input
+              id="petName"
+              placeholder="Ej: Simón, María, José"
               value={createForm.petName}
               onChange={(e) => setCreateForm(prev => ({ ...prev, petName: e.target.value }))}
               required 
