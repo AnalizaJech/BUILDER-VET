@@ -82,19 +82,19 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
   }, [emblaApi, onInit, onSelect]);
 
   return (
-    <div className="relative max-w-6xl mx-auto">
+    <div className="relative max-w-6xl mx-auto overflow-visible">
       {/* Carousel Container */}
-      <div className="overflow-hidden py-2" ref={emblaRef}>
-        <div className="flex touch-pan-y pinch-zoom">
+      <div className="overflow-visible py-8" ref={emblaRef}>
+        <div className="flex touch-pan-y pinch-zoom overflow-visible">
           {services.map((service, index) => {
             const Icon = service.icon;
             return (
               <div
                 key={index}
-                className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-3"
+                className="flex-[0_0_100%] min-w-0 md:flex-[0_0_50%] lg:flex-[0_0_33.333%] px-4 overflow-visible"
               >
-                <div className="h-full select-none min-h-[440px] py-4">
-                  <div className="group relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 h-full cursor-grab active:cursor-grabbing max-w-sm mx-auto min-h-[400px] overflow-visible">
+                <div className="h-full select-none min-h-[460px] py-6 overflow-visible">
+                  <div className="group relative bg-white rounded-2xl p-6 shadow-lg border border-gray-100 hover:shadow-2xl transition-all duration-500 hover:-translate-y-3 h-full cursor-grab active:cursor-grabbing max-w-sm mx-auto min-h-[400px] overflow-visible">
                     {/* Background decoration */}
                     <div className="absolute -top-2 -right-2 w-16 h-16 bg-green-50 rounded-full opacity-60 group-hover:scale-110 transition-transform duration-500"></div>
                     <div className="absolute -bottom-1 -left-1 w-12 h-12 bg-blue-50 rounded-full opacity-40 group-hover:scale-110 transition-transform duration-500"></div>
