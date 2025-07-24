@@ -86,10 +86,10 @@ export default function Navigation() {
                     key={item.href}
                     to={item.href}
                     onClick={() => setIsMenuOpen(false)}
-                    className={`flex items-center space-x-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                    className={`flex items-center space-x-3 px-4 py-3 text-sm font-medium transition-colors border-l-4 ${
                       isActive
-                        ? "bg-primary text-primary-foreground"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                        ? "bg-green-50 text-green-600 border-green-600"
+                        : "text-gray-700 hover:text-green-600 hover:bg-green-50 border-transparent"
                     }`}
                   >
                     <Icon className="w-4 h-4" />
