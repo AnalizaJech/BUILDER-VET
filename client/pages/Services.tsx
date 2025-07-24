@@ -666,7 +666,9 @@ export default function Services() {
                 href="https://wa.me/51902799296?text=EMERGENCIA"
                 target="_blank"
                 rel="noopener noreferrer"
+                className="flex items-center"
               >
+                <WhatsAppIcon className="w-4 h-4 mr-2" />
                 WhatsApp Emergencia
               </a>
             </Button>
