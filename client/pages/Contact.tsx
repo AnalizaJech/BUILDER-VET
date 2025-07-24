@@ -555,10 +555,10 @@ export default function Contact() {
                       Transporte Público
                     </h3>
                     <p className="text-gray-600">
-                      Línea 1 del Metro - Estación Caquetá
+                      Metropolitano - Estación Central
                     </p>
                     <p className="text-sm text-gray-500">
-                      Buses: Líneas 301, 302, 304 (Paradero Universitaria)
+                      Buses urbanos: Múltiples líneas hacia el Centro de Lima
                     </p>
                   </div>
                 </div>
