@@ -666,7 +666,7 @@ export default function DashboardAppointments() {
                               <AppointmentDetailsDialog appointment={selectedAppointment} />
                             </Dialog>
                             
-                            <Button size="sm" variant="outline">
+                            <Button size="sm" variant="outline" onClick={() => handleEditAppointment(appointment)}>
                               <Edit className="w-3 h-3" />
                             </Button>
                           </div>
