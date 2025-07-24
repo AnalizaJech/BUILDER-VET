@@ -62,25 +62,52 @@ export default function Index() {
 
   const testimonials = [
     {
-      name: "María González",
+      name: "María González Sánchez",
       pet: "Luna (Gata Persa)",
-      comment: "Excelente atención, mi gatita Luna siempre sale feliz de sus citas. El Dr. Carlos es muy profesional y cariñoso.",
+      comment: "Excelente atención, mi gatita Luna siempre sale feliz de sus citas. El Dr. Carlos es muy profesional y cariñoso con todos los animalitos.",
       rating: 5,
-      petType: "cat"
+      petType: "cat",
+      location: "San Isidro, Lima"
     },
     {
-      name: "Carlos Mendoza",
+      name: "Carlos Mendoza Peña",
       pet: "Max (Golden Retriever)",
-      comment: "El servicio de grooming es increíble. Max queda como nuevo cada vez. El equipo es muy profesional y dedicado.",
+      comment: "El servicio de grooming es increíble. Max queda como nuevo cada vez. El equipo es muy profesional y dedicado, ¡los recomiendo al 100%!",
       rating: 5,
-      petType: "dog"
+      petType: "dog",
+      location: "Miraflores, Lima"
     },
     {
-      name: "Ana Rodríguez",
+      name: "Ana Rodríguez Vásquez",
       pet: "Rocky (Bulldog Francés)",
-      comment: "Salvaron la vida de Rocky con una cirugía de emergencia. Estoy eternamente agradecida por su profesionalismo.",
+      comment: "Salvaron la vida de Rocky con una cirugía de emergencia. Estoy eternamente agradecida por su profesionalismo y dedicación.",
       rating: 5,
-      petType: "dog"
+      petType: "dog",
+      location: "La Molina, Lima"
+    },
+    {
+      name: "José Luis Ramírez",
+      pet: "Mía (Border Collie)",
+      comment: "El mejor lugar para el cuidado veterinario en Lima. Mía siempre está contenta de venir aquí. ¡Gracias por tanto cariño!",
+      rating: 5,
+      petType: "dog",
+      location: "Surco, Lima"
+    },
+    {
+      name: "Patricia Núñez Torres",
+      pet: "Simón (Gato Siamés)",
+      comment: "Profesionales excepcionales. Simón recibe el mejor cuidado y atención. La clínica es moderna y el personal muy amable.",
+      rating: 5,
+      petType: "cat",
+      location: "San Borja, Lima"
+    },
+    {
+      name: "Roberto Díaz Morales",
+      pet: "Coco (Cocker Spaniel)",
+      comment: "Llevamos a Coco desde cachorro y siempre hemos recibido una atención de primera calidad. ¡Son los mejores!",
+      rating: 5,
+      petType: "dog",
+      location: "Pueblo Libre, Lima"
     }
   ];
 
@@ -149,11 +176,15 @@ export default function Index() {
               </div>
               
               <div className="flex items-center space-x-8 pt-4">
-                <div className="flex items-center space-x-2">
-                  <div className="flex -space-x-2">
-                    <PersonAvatar name="María González" className="border-2 border-white" />
-                    <PersonAvatar name="Carlos Mendoza" className="border-2 border-white" />
-                    <PersonAvatar name="Ana Rodríguez" className="border-2 border-white" />
+                <div className="flex items-center space-x-3">
+                  <div className="flex -space-x-3">
+                    <PersonAvatar name="María González Sánchez" className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300" size="md" />
+                    <PersonAvatar name="Carlos Mendoza Peña" className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300" size="md" />
+                    <PersonAvatar name="Ana Rodríguez Vásquez" className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300" size="md" />
+                    <PersonAvatar name="José Luis Ramírez" className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300" size="md" />
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 border-3 border-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                      <span className="text-xs font-bold text-green-700">+1K</span>
+                    </div>
                   </div>
                   <div>
                     <p className="text-sm font-medium text-gray-900">+1000 familias</p>
@@ -286,25 +317,75 @@ export default function Index() {
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               La satisfacción de las familias que confían en nosotros es nuestro mayor logro
             </p>
+
+            {/* Client Trust Indicators */}
+            <div className="flex items-center justify-center space-x-8 mt-8">
+              <div className="flex items-center space-x-2">
+                <div className="flex -space-x-2">
+                  {testimonials.slice(0, 5).map((testimonial, i) => (
+                    <PersonAvatar
+                      key={i}
+                      name={testimonial.name}
+                      className="border-2 border-white shadow-md hover:scale-110 transition-transform duration-300"
+                      size="sm"
+                    />
+                  ))}
+                </div>
+                <span className="text-sm font-medium text-gray-700">y muchos más...</span>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <div className="flex space-x-1">
+                  {[...Array(5)].map((_, i) => (
+                    <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                  ))}
+                </div>
+                <span className="text-sm font-bold text-gray-900">4.9/5</span>
+                <span className="text-sm text-gray-600">(+250 reseñas)</span>
+              </div>
+            </div>
           </div>
           
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {testimonials.map((testimonial, index) => (
-              <Card key={index} className="border-0 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-6">
-                  <div className="flex items-center space-x-1 mb-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {testimonials.slice(0, 6).map((testimonial, index) => (
+              <Card key={index} className="border-0 shadow-lg hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
+                <CardContent className="p-8">
+                  {/* Rating Stars */}
+                  <div className="flex items-center justify-center space-x-1 mb-6">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} className="w-4 h-4 fill-yellow-400 text-yellow-400" />
+                      <Star key={i} className="w-5 h-5 fill-yellow-400 text-yellow-400 group-hover:scale-110 transition-transform duration-300" style={{ animationDelay: `${i * 100}ms` }} />
                     ))}
                   </div>
-                  <p className="text-gray-600 mb-6 italic">"{testimonial.comment}"</p>
-                  <div className="flex items-center space-x-3">
-                    <TestimonialAvatar name={testimonial.name} />
-                    <div>
-                      <p className="font-semibold text-gray-900">{testimonial.name}</p>
-                      <p className="text-sm text-gray-500">{testimonial.pet}</p>
+
+                  {/* Testimonial Text */}
+                  <div className="relative mb-8">
+                    <div className="absolute -top-2 -left-2 text-6xl text-green-200 font-serif leading-none">"</div>
+                    <p className="text-gray-700 leading-relaxed relative z-10 pl-6 group-hover:text-gray-800 transition-colors duration-300">
+                      {testimonial.comment}
+                    </p>
+                    <div className="absolute -bottom-2 -right-2 text-6xl text-green-200 font-serif leading-none rotate-180">"</div>
+                  </div>
+
+                  {/* Client Info */}
+                  <div className="flex items-center space-x-4">
+                    <div className="relative">
+                      <TestimonialAvatar name={testimonial.name} className="shadow-lg group-hover:scale-110 transition-transform duration-300" />
+                      <div className="absolute -bottom-1 -right-1 w-6 h-6 bg-green-500 rounded-full border-2 border-white flex items-center justify-center">
+                        <Heart className="w-3 h-3 text-white" />
+                      </div>
+                    </div>
+                    <div className="flex-1">
+                      <p className="font-bold text-gray-900 group-hover:text-green-700 transition-colors duration-300">{testimonial.name}</p>
+                      <p className="text-sm text-gray-600 font-medium">{testimonial.pet}</p>
+                      <p className="text-xs text-gray-500 flex items-center mt-1">
+                        <MapPin className="w-3 h-3 mr-1" />
+                        {testimonial.location}
+                      </p>
                     </div>
                   </div>
+
+                  {/* Hover Effect Border */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-blue-500/5 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
                 </CardContent>
               </Card>
             ))}
