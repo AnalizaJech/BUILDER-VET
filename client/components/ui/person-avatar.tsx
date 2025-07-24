@@ -84,9 +84,17 @@ export const TestimonialAvatar: React.FC<{
   name: string;
   className?: string;
 }> = ({ name, className }) => {
-  // Use a different avatar style for testimonials (more realistic photos)
-  const seed = name.toLowerCase().replace(/\s+/g, '');
-  const imageUrl = `https://api.dicebear.com/7.x/personas/svg?seed=${seed}&size=64&backgroundColor=transparent`;
+  // Generate consistent seed for real photos
+  const generateSeed = (name: string) => {
+    let hash = 0;
+    for (let i = 0; i < name.length; i++) {
+      hash = name.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    return Math.abs(hash);
+  };
+
+  const seed = generateSeed(name);
+  const imageUrl = `https://i.pravatar.cc/64?img=${(seed % 70) + 1}`;
 
   return (
     <div
