@@ -172,10 +172,10 @@ export default function Appointments() {
     return (
       <>
         <Navigation />
-        <div className="min-h-screen bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 flex items-center justify-center p-4">
+        <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
           <Card className="max-w-2xl w-full shadow-2xl border-0">
             <CardHeader className="text-center pb-4">
-              <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="w-20 h-20 bg-green-600 rounded-full flex items-center justify-center mx-auto mb-4 border-4 border-green-500">
                 <CheckCircle className="w-10 h-10 text-white" />
               </div>
               <CardTitle className="text-3xl text-green-700">¡Cita Registrada Exitosamente!</CardTitle>
@@ -184,7 +184,7 @@ export default function Appointments() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-6">
-              <div className="bg-gradient-to-r from-green-50 to-blue-50 border border-green-200 rounded-xl p-6 space-y-4">
+              <div className="bg-green-50 border border-green-200 rounded-xl p-6 space-y-4">
                 <h3 className="font-semibold text-lg text-gray-900 mb-4">Resumen de tu cita:</h3>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
@@ -230,7 +230,7 @@ export default function Appointments() {
                 <Button onClick={() => setIsSubmitted(false)} variant="outline" className="flex-1">
                   Agendar Otra Cita
                 </Button>
-                <Button asChild className="flex-1 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600">
+                <Button asChild className="flex-1 bg-green-600 hover:bg-green-700 text-white">
                   <a href="/">Volver al Inicio</a>
                 </Button>
               </div>
@@ -246,7 +246,7 @@ export default function Appointments() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 py-12">
+      <section className="bg-green-50 py-12">
         <div className="max-w-4xl mx-auto text-center px-4">
           <div className="space-y-6">
             <Badge className="bg-green-100 text-green-700 text-base px-4 py-2">
@@ -255,7 +255,7 @@ export default function Appointments() {
             </Badge>
             <h1 className="text-4xl md:text-5xl font-bold text-gray-900">
               Reserva tu cita en 
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600"> 3 simples pasos</span>
+              <span className="text-green-600"> 3 simples pasos</span>
             </h1>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Selecciona el servicio, fecha y hora que mejor te convenga. 
@@ -279,14 +279,14 @@ export default function Appointments() {
         </div>
       </section>
 
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 py-8 px-4">
+      <div className="min-h-screen bg-gray-50 py-8 px-4">
         <div className="max-w-6xl mx-auto">
           <form onSubmit={handleSubmit} className="space-y-8">
             {/* Step 1: Service Selection */}
             <Card className="shadow-xl border-0">
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold border-2 border-green-500">
                     1
                   </div>
                   <div>
@@ -308,12 +308,12 @@ export default function Appointments() {
                         onClick={() => setSelectedService(service.id)}
                         className={`relative border-2 rounded-2xl p-6 cursor-pointer transition-all duration-300 ${
                           isSelected
-                            ? "border-green-500 bg-gradient-to-br from-green-50 to-blue-50 shadow-lg scale-105"
+                            ? "border-green-500 bg-green-50 shadow-lg scale-105"
                             : "border-gray-200 hover:border-green-300 hover:shadow-md"
                         }`}
                       >
                         {service.popular && (
-                          <Badge className="absolute -top-2 -right-2 bg-gradient-to-r from-orange-500 to-pink-500 text-white">
+                          <Badge className="absolute -top-2 -right-2 bg-orange-500 text-white">
                             <Star className="w-3 h-3 mr-1" />
                             Popular
                           </Badge>
@@ -321,8 +321,8 @@ export default function Appointments() {
                         
                         <div className="flex items-start space-x-4">
                           <div className={`w-12 h-12 rounded-xl flex items-center justify-center ${
-                            isSelected 
-                              ? "bg-gradient-to-r from-green-500 to-blue-500 text-white" 
+                            isSelected
+                              ? "bg-green-600 text-white border-2 border-green-500"
                               : "bg-gray-100 text-gray-600"
                           }`}>
                             <Icon className="w-6 h-6" />
@@ -360,7 +360,7 @@ export default function Appointments() {
             <Card className="shadow-xl border-0">
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold border-2 border-green-500">
                     2
                   </div>
                   <div>
@@ -399,7 +399,7 @@ export default function Appointments() {
                           onClick={() => setSelectedTime(time)}
                           className={`h-12 text-sm ${
                             selectedTime === time
-                              ? "bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600"
+                              ? "bg-green-600 hover:bg-green-700 text-white"
                               : "hover:border-green-400"
                           }`}
                         >
@@ -425,7 +425,7 @@ export default function Appointments() {
             <Card className="shadow-xl border-0">
               <CardHeader>
                 <div className="flex items-center space-x-3">
-                  <div className="w-8 h-8 bg-gradient-to-r from-green-500 to-blue-500 rounded-full flex items-center justify-center text-white font-bold">
+                  <div className="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center text-white font-bold border-2 border-green-500">
                     3
                   </div>
                   <div>
