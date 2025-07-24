@@ -75,11 +75,11 @@ export default function Contact() {
       bgColor: "bg-green-50",
     },
     {
-      icon: MessageCircle,
+      icon: WhatsAppIcon,
       title: "WhatsApp",
       details: ["+51 902 799 296", "Respuesta inmediata 24/7"],
-      color: "text-blue-600",
-      bgColor: "bg-blue-50",
+      color: "text-green-600",
+      bgColor: "bg-green-50",
     },
     {
       icon: Mail,
