@@ -552,13 +552,13 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">
-                      Transporte Público
+                      Cómo llegar
                     </h3>
                     <p className="text-gray-600">
-                      Metropolitano - Estación Central
+                      Desde Lima: Panamericana Sur hasta Cañete
                     </p>
                     <p className="text-sm text-gray-500">
-                      Buses urbanos: Múltiples líneas hacia el Centro de Lima
+                      Aproximadamente 2 horas desde Lima Centro
                     </p>
                   </div>
                 </div>
