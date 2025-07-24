@@ -535,13 +535,13 @@ export default function Contact() {
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">
-                      Dirección Principal
+                      Peluquería Canina MATIS
                     </h3>
                     <p className="text-gray-600">
-                      Jr. Lampa 1260, Cercado de Lima, Lima
+                      San Vicente de Cañete 15700
                     </p>
                     <p className="text-sm text-gray-500">
-                      Referencia: Cerca del Jr. Áncash, zona comercial del Centro Histórico
+                      Provincia de Cañete, Lima - Perú
                     </p>
                   </div>
                 </div>
