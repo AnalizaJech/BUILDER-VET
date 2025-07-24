@@ -1,0 +1,116 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /**
+   * Tailwind CSS theme
+   * tailwind.config.ts expects the following color variables to be expressed as HSL values.
+   * A different format will require also updating the theme in tailwind.config.ts.
+  */
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 220 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 15% 15%;
+
+    --primary: 159 84% 32%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 46 100% 95%;
+    --secondary-foreground: 159 84% 20%;
+
+    --muted: 220 10% 96%;
+    --muted-foreground: 220 10% 45%;
+
+    --accent: 46 100% 88%;
+    --accent-foreground: 159 84% 20%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 159 84% 32%;
+
+    --radius: 0.75rem;
+
+    --vet-primary: 159 84% 32%;
+    --vet-secondary: 46 100% 88%;
+    --vet-accent: 210 100% 95%;
+    --vet-warm: 32 95% 88%;
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 220 20% 8%;
+    --foreground: 220 10% 95%;
+
+    --card: 220 20% 10%;
+    --card-foreground: 220 10% 95%;
+
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 10% 95%;
+
+    --primary: 159 84% 45%;
+    --primary-foreground: 220 20% 8%;
+
+    --secondary: 220 20% 15%;
+    --secondary-foreground: 220 10% 95%;
+
+    --muted: 220 20% 15%;
+    --muted-foreground: 220 10% 65%;
+
+    --accent: 220 20% 15%;
+    --accent-foreground: 220 10% 95%;
+
+    --destructive: 0 75% 55%;
+    --destructive-foreground: 220 10% 95%;
+
+    --border: 220 20% 20%;
+    --input: 220 20% 20%;
+    --ring: 159 84% 45%;
+
+    --vet-primary: 159 84% 45%;
+    --vet-secondary: 46 85% 25%;
+    --vet-accent: 210 50% 25%;
+    --vet-warm: 32 75% 25%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
