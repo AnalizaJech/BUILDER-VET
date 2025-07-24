@@ -84,7 +84,7 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
   return (
     <div className="relative max-w-6xl mx-auto">
       {/* Carousel Container */}
-      <div className="overflow-hidden" ref={emblaRef}>
+      <div className="overflow-hidden py-2" ref={emblaRef}>
         <div className="flex touch-pan-y pinch-zoom">
           {services.map((service, index) => {
             const Icon = service.icon;
