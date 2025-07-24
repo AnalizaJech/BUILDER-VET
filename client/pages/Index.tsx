@@ -60,7 +60,7 @@ export default function Index() {
     },
     {
       icon: Heart,
-      title: "Vacunaci��n y Prevención",
+      title: "Vacunación y Prevención",
       description:
         "Programa completo de inmunización y medicina preventiva para mantener la salud óptima de tu compañero",
       features: [
@@ -345,7 +345,7 @@ export default function Index() {
       </section>
 
       {/* Services Carousel Section */}
-      <section className="py-20 bg-white">
+      <section className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-blue-100 text-blue-700 mb-4">
