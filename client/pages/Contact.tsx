@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import Navigation from "@/components/Navigation";
 import { SimplePawLogo } from "@/components/PetPawLogo";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import {
   MapPin,
   Phone,
