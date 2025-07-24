@@ -583,7 +583,7 @@ export default function Contact() {
 
               <Button asChild className="w-full md:w-auto">
                 <a
-                  href="https://maps.google.com/?q=Av.+Universitaria+123,+San+Martín+de+Porres,+Lima"
+                  href="https://maps.app.goo.gl/XreKsuodrN2c4LBB8"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
