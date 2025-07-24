@@ -18,6 +18,10 @@ interface BusinessDataContextType {
   addOwner: (owner: Omit<Owner, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateOwner: (id: string, updates: Partial<Owner>) => Promise<void>;
   deleteOwner: (id: string) => Promise<void>;
+
+  addPet: (ownerId: string, pet: Omit<Pet, 'id' | 'ownerId' | 'createdAt' | 'updatedAt'>) => Promise<void>;
+  updatePet: (petId: string, updates: Partial<Pet>) => Promise<void>;
+  deletePet: (petId: string) => Promise<void>;
   
   addAppointment: (appointment: Omit<Appointment, 'id' | 'createdAt' | 'updatedAt'>) => Promise<void>;
   updateAppointment: (id: string, updates: Partial<Appointment>) => Promise<void>;
@@ -272,6 +276,67 @@ export const BusinessDataProvider: React.FC<BusinessDataProviderProps> = ({ chil
     }
   };
 
+  const addPet = async (ownerId: string, petData: Omit<Pet, 'id' | 'ownerId' | 'createdAt' | 'updatedAt'>) => {
+    setIsLoadingOwners(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 500));
+
+      const newPet: Pet = {
+        ...petData,
+        id: Date.now().toString(),
+        ownerId,
+        createdAt: new Date(),
+        updatedAt: new Date()
+      };
+
+      setOwners(prev => prev.map(owner =>
+        owner.id === ownerId
+          ? { ...owner, pets: [...owner.pets, newPet], updatedAt: new Date() }
+          : owner
+      ));
+    } finally {
+      setIsLoadingOwners(false);
+    }
+  };
+
+  const updatePet = async (petId: string, updates: Partial<Pet>) => {
+    setIsLoadingOwners(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      setOwners(prev => prev.map(owner => ({
+        ...owner,
+        pets: owner.pets.map(pet =>
+          pet.id === petId
+            ? { ...pet, ...updates, updatedAt: new Date() }
+            : pet
+        ),
+        updatedAt: owner.pets.some(pet => pet.id === petId) ? new Date() : owner.updatedAt
+      })));
+    } finally {
+      setIsLoadingOwners(false);
+    }
+  };
+
+  const deletePet = async (petId: string) => {
+    setIsLoadingOwners(true);
+    try {
+      await new Promise(resolve => setTimeout(resolve, 300));
+
+      setOwners(prev => prev.map(owner => ({
+        ...owner,
+        pets: owner.pets.filter(pet => pet.id !== petId),
+        updatedAt: owner.pets.some(pet => pet.id === petId) ? new Date() : owner.updatedAt
+      })));
+
+      // Also remove related appointments and medical records
+      setAppointments(prev => prev.filter(apt => apt.petId !== petId));
+      setMedicalRecords(prev => prev.filter(record => record.petId !== petId));
+    } finally {
+      setIsLoadingOwners(false);
+    }
+  };
+
   const addAppointment = async (appointmentData: any) => {
     setIsLoadingAppointments(true);
     try {
@@ -412,6 +477,9 @@ export const BusinessDataProvider: React.FC<BusinessDataProviderProps> = ({ chil
     addOwner,
     updateOwner,
     deleteOwner,
+    addPet,
+    updatePet,
+    deletePet,
     addAppointment,
     updateAppointment,
     cancelAppointment,
