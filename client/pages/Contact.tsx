@@ -583,7 +583,7 @@ export default function Contact() {
 
               <Button asChild className="w-full md:w-auto">
                 <a
-                  href="https://maps.app.goo.gl/XreKsuodrN2c4LBB8"
+                  href="https://www.google.com/maps/place/Peluqueria+Canina+MATIS/@-13.0735007,-76.3879834,15z"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
