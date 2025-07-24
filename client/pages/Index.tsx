@@ -109,7 +109,7 @@ export default function Index() {
       <Navigation />
       
       {/* Hero Section */}
-      <section className="relative overflow-hidden bg-gradient-to-br from-green-50 via-blue-50 to-purple-50 py-20 lg:py-32">
+      <section className="relative overflow-hidden bg-green-50 py-20 lg:py-32">
         <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
         <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
@@ -121,7 +121,7 @@ export default function Index() {
                 </Badge>
                 <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight">
                   El mejor cuidado para 
-                  <span className="text-transparent bg-clip-text bg-gradient-to-r from-green-600 to-blue-600"> tu mascota</span>
+                  <span className="text-green-600"> tu mascota</span>
                 </h1>
                 <p className="text-xl text-gray-600 leading-relaxed">
                   En Matis Pet Groomer brindamos atención veterinaria de excelencia con tecnología 
@@ -130,7 +130,7 @@ export default function Index() {
               </div>
               
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all">
+                <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white text-lg px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all">
                   <Link to="/citas">
                     <Calendar className="w-5 h-5 mr-2" />
                     Agendar Cita Ahora
@@ -175,13 +175,13 @@ export default function Index() {
             
             <div className="relative">
               <div className="relative bg-white rounded-3xl p-8 shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-300">
-                <div className="absolute -top-4 -right-4 w-16 h-16 bg-gradient-to-r from-green-400 to-blue-500 rounded-full flex items-center justify-center">
+                <div className="absolute -top-4 -right-4 w-16 h-16 bg-green-500 rounded-full flex items-center justify-center border-4 border-white shadow-lg">
                   <Heart className="w-8 h-8 text-white" />
                 </div>
                 <div className="space-y-6">
                   <div className="text-center">
                     <h3 className="text-2xl font-bold text-gray-900 mb-2">Próxima Cita</h3>
-                    <div className="w-16 h-16 bg-gradient-to-r from-green-100 to-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-green-200">
                       <Heart className="w-8 h-8 text-green-600" />
                     </div>
                     <p className="text-gray-600">Max - Golden Retriever</p>
@@ -200,7 +200,7 @@ export default function Index() {
                       <span className="text-sm text-purple-600">Dr. Carlos</span>
                     </div>
                   </div>
-                  <Button className="w-full bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600">
+                  <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
                     <CheckCircle className="w-4 h-4 mr-2" />
                     Confirmar Asistencia
                   </Button>
@@ -234,7 +234,7 @@ export default function Index() {
               return (
                 <Card key={index} className="group hover:shadow-2xl transition-all duration-300 border-0 shadow-lg hover:-translate-y-2">
                   <CardHeader className="text-center pb-4">
-                    <div className="w-20 h-20 bg-gradient-to-br from-green-100 to-blue-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
+                    <div className="w-20 h-20 bg-green-100 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform border-2 border-green-200">
                       <Icon className="w-10 h-10 text-green-600" />
                     </div>
                     <CardTitle className="text-2xl text-gray-900">{service.title}</CardTitle>
@@ -254,7 +254,7 @@ export default function Index() {
                         </div>
                       ))}
                     </div>
-                    <Button asChild className="w-full mt-6 bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600">
+                    <Button asChild className="w-full mt-6 bg-green-600 hover:bg-green-700 text-white">
                       <Link to="/citas">
                         Agendar Ahora
                         <ArrowRight className="w-4 h-4 ml-2" />
@@ -269,7 +269,7 @@ export default function Index() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="py-20 bg-gradient-to-br from-gray-50 to-gray-100">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="bg-purple-100 text-purple-700 mb-4">
@@ -289,7 +289,7 @@ export default function Index() {
               const Icon = feature.icon;
               return (
                 <div key={index} className="text-center group">
-                  <div className="w-20 h-20 bg-gradient-to-br from-purple-500 to-pink-500 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg">
+                  <div className="w-20 h-20 bg-green-600 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg border-2 border-green-500">
                     <Icon className="w-10 h-10 text-white" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-900 mb-3">{feature.title}</h3>
@@ -328,7 +328,7 @@ export default function Index() {
                   </div>
                   <p className="text-gray-600 mb-6 italic">"{testimonial.comment}"</p>
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-gradient-to-r from-green-100 to-blue-100 rounded-full flex items-center justify-center">
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center border-2 border-green-200">
                       {testimonial.petType === 'cat' ? (
                         <Heart className="w-6 h-6 text-purple-600" />
                       ) : (
@@ -348,7 +348,7 @@ export default function Index() {
       </section>
 
       {/* CTA Section */}
-      <section className="relative py-24 bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 text-white overflow-hidden">
+      <section className="relative py-24 bg-green-600 text-white overflow-hidden">
         {/* Animated background elements */}
         <div className="absolute inset-0">
           <div className="absolute top-10 left-10 w-32 h-32 bg-white/10 rounded-full blur-xl animate-pulse"></div>
@@ -368,7 +368,7 @@ export default function Index() {
 
                 <h2 className="text-4xl md:text-5xl font-bold leading-tight">
                   Tu mascota merece el
-                  <span className="block text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-orange-300">
+                  <span className="block text-yellow-300">
                     mejor cuidado
                   </span>
                 </h2>
@@ -388,7 +388,7 @@ export default function Index() {
                   </Link>
                 </Button>
                 <Button asChild size="lg" variant="outline" className="border-2 border-white/50 text-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300 text-lg px-8 py-6 rounded-2xl font-semibold">
-                  <a href="https://wa.me/51987654321" target="_blank" rel="noopener noreferrer">
+                  <a href="https://wa.me/51902799296" target="_blank" rel="noopener noreferrer">
                     <MessageCircle className="w-6 h-6 mr-3" />
                     WhatsApp
                   </a>
@@ -422,7 +422,7 @@ export default function Index() {
               <div className="bg-white/15 backdrop-blur-lg rounded-3xl p-8 border border-white/20 shadow-2xl transform hover:scale-105 transition-all duration-300">
                 <div className="space-y-6">
                   <div className="text-center">
-                    <div className="w-20 h-20 bg-gradient-to-r from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg border-4 border-green-400">
                       <Heart className="w-10 h-10 text-white" />
                     </div>
                     <h3 className="text-2xl font-bold mb-2">¡Agenda en 2 Minutos!</h3>
@@ -447,7 +447,7 @@ export default function Index() {
                   <div className="grid grid-cols-2 gap-4 pt-4">
                     <div className="text-center p-3 bg-white/10 rounded-xl backdrop-blur-sm">
                       <Phone className="w-6 h-6 mx-auto mb-2 text-blue-300" />
-                      <div className="text-sm font-semibold">(01) 234-5678</div>
+                      <div className="text-sm font-semibold">+51 902 799 296</div>
                     </div>
                     <div className="text-center p-3 bg-white/10 rounded-xl backdrop-blur-sm">
                       <Clock className="w-6 h-6 mx-auto mb-2 text-purple-300" />
@@ -467,7 +467,7 @@ export default function Index() {
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
             <div className="space-y-4">
               <Link to="/" className="flex items-center space-x-2">
-                <div className="w-10 h-10 bg-gradient-to-r from-green-500 to-blue-500 rounded-lg flex items-center justify-center">
+                <div className="w-10 h-10 bg-green-600 rounded-lg flex items-center justify-center border-2 border-green-500">
                   <SimplePawLogo className="w-6 h-6 text-white" />
                 </div>
                 <div>
@@ -505,11 +505,11 @@ export default function Index() {
               <ul className="space-y-2 text-gray-400">
                 <li className="flex items-center space-x-2">
                   <Phone className="w-4 h-4" />
-                  <span>(01) 234-5678</span>
+                  <span>+51 902 799 296</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <MessageCircle className="w-4 h-4" />
-                  <span>+51 987-654-321</span>
+                  <span>+51 902 799 296</span>
                 </li>
                 <li className="flex items-center space-x-2">
                   <Mail className="w-4 h-4" />
