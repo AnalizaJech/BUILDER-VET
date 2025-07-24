@@ -90,7 +90,7 @@ export default function Contact() {
     {
       icon: MapPin,
       title: "Ubicación",
-      details: ["Jr. Lampa 1260", "Cercado de Lima, Lima"],
+      details: ["San Vicente de Cañete 15700", "Peluquería Canina MATIS"],
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
