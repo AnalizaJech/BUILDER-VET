@@ -41,6 +41,18 @@ import {
   AlertCircle,
   Info,
   X,
+  UserCheck,
+  Activity,
+  ShieldCheck,
+  Pill,
+  Eye,
+  FileText,
+  Bell,
+  HeartHandshake,
+  Bath,
+  Brush,
+  Gem,
+  Syringe,
 } from "lucide-react";
 import {
   format,
