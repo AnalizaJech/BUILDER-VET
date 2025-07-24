@@ -19,7 +19,6 @@ import {
   Camera,
   MessageCircle,
   ArrowRight,
-  PlayCircle,
   Mail
 } from "lucide-react";
 import { SimplePawLogo } from "@/components/PetPawLogo";
@@ -75,7 +74,7 @@ export default function Index() {
     {
       name: "Ana Rodríguez",
       pet: "Rocky (Bulldog Francés)",
-      comment: "Salvaron la vida de Rocky con una cirugía de emergencia. Estoy eternamente agradecida.",
+      comment: "Salvaron la vida de Rocky con una cirug��a de emergencia. Estoy eternamente agradecida.",
       rating: 5,
       petType: "dog"
     }
