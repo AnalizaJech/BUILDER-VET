@@ -266,9 +266,10 @@ export default function Index() {
           <ServiceCarousel services={services} />
           
           <div className="text-center mt-12">
-            <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white">
+            <Button asChild size="lg" className="bg-green-600 hover:bg-green-700 text-white shadow-lg hover:shadow-xl transition-all duration-300 hover:scale-105">
               <Link to="/servicios">
-                Ver Todos los Servicios
+                <Sparkles className="w-5 h-5 mr-2" />
+                Explorar Todos los Servicios
                 <ArrowRight className="w-5 h-5 ml-2" />
               </Link>
             </Button>
