@@ -167,12 +167,7 @@ export default function Login() {
           </CardContent>
         </Card>
 
-        {/* Back to Website */}
-        <div className="text-center">
-          <Button asChild variant="outline">
-            <Link to="/">← Volver al Sitio Web</Link>
-          </Button>
-        </div>
+
       </div>
     </div>
   );
