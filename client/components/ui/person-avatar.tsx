@@ -83,9 +83,41 @@ export const ClientAvatar: React.FC<{ name: string; className?: string }> = ({
 export const TestimonialAvatar: React.FC<{
   name: string;
   className?: string;
-}> = ({ name, className }) => (
-  <PersonAvatar name={name} className={className} size="lg" />
-);
+}> = ({ name, className }) => {
+  // Use a different avatar style for testimonials (more realistic photos)
+  const seed = name.toLowerCase().replace(/\s+/g, '');
+  const imageUrl = `https://api.dicebear.com/7.x/personas/svg?seed=${seed}&size=64&backgroundColor=transparent`;
+
+  return (
+    <div
+      className={cn(
+        "w-16 h-16 rounded-full overflow-hidden shadow-md bg-gradient-to-br from-gray-100 to-gray-200",
+        className,
+      )}
+    >
+      <img
+        src={imageUrl}
+        alt={`Avatar de ${name}`}
+        className="w-full h-full object-cover"
+        onError={(e) => {
+          // Fallback to PersonAvatar if image fails
+          const target = e.target as HTMLImageElement;
+          target.style.display = 'none';
+          const parent = target.parentElement;
+          if (parent) {
+            const initials = name
+              .split(" ")
+              .map((word) => word.charAt(0))
+              .join("")
+              .toUpperCase()
+              .slice(0, 2);
+            parent.innerHTML = `<div class="w-full h-full bg-gradient-to-br from-blue-500 to-green-500 rounded-full flex items-center justify-center text-white font-semibold text-base">${initials}</div>`;
+          }
+        }}
+      />
+    </div>
+  );
+};
 
 // Professional veterinary team avatars with consistent styling
 const teamMembers = [
