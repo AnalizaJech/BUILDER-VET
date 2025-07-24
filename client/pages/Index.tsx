@@ -265,7 +265,7 @@ export default function Index() {
                       className="border-3 border-white shadow-lg"
                       size="md"
                     />
-                    <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 border-3 border-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+                    <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 border-3 border-white rounded-full flex items-center justify-center shadow-lg">
                       <span className="text-xs font-bold text-green-700">
                         +1K
                       </span>
