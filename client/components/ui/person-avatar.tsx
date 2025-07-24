@@ -10,14 +10,14 @@ interface PersonAvatarProps {
 // Database of high-quality professional avatar images mapped to specific names
 const avatarDatabase = {
   // Female clients
-  "María González Sánchez": "https://images.unsplash.com/photo-1494790108755-2616b612b786?w=150&h=150&fit=crop&crop=face",
-  "Ana Rodríguez Vásquez": "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150&h=150&fit=crop&crop=face",
-  "Patricia Núñez Torres": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&h=150&fit=crop&crop=face",
+  "María González Sánchez": "photo-1494790108755-2616b612b786",
+  "Ana Rodríguez Vásquez": "photo-1438761681033-6461ffad8d80",
+  "Patricia Núñez Torres": "photo-1544005313-94ddf0286df2",
 
   // Male clients
-  "Carlos Mendoza Peña": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&h=150&fit=crop&crop=face",
-  "José Luis Ramírez": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&h=150&fit=crop&crop=face",
-  "Roberto Díaz Morales": "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face",
+  "Carlos Mendoza Peña": "photo-1507003211169-0a1dd7228f2d",
+  "José Luis Ramírez": "photo-1500648767791-00dcc994a43e",
+  "Roberto Díaz Morales": "photo-1472099645785-5658abf4ff4e",
 };
 
 // Detect gender based on common Spanish names
