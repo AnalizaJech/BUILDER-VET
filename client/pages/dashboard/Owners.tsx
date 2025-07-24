@@ -30,7 +30,7 @@ import {
 import { Owner, Pet } from '@shared/types';
 
 export default function Owners() {
-  const { owners, addOwner, updateOwner, deleteOwner, isLoadingOwners } = useBusinessData();
+  const { owners, addOwner, updateOwner, deleteOwner, addPet, updatePet, deletePet, isLoadingOwners } = useBusinessData();
   const { showNotification } = useNotifications();
   
   const [searchQuery, setSearchQuery] = useState('');
@@ -41,6 +41,12 @@ export default function Owners() {
   const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
   const [ownerToDelete, setOwnerToDelete] = useState<Owner | null>(null);
   const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
+  const [isPetDialogOpen, setIsPetDialogOpen] = useState(false);
+  const [selectedOwnerForPet, setSelectedOwnerForPet] = useState<Owner | null>(null);
+  const [petToEdit, setPetToEdit] = useState<Pet | null>(null);
+  const [isPetEditDialogOpen, setIsPetEditDialogOpen] = useState(false);
+  const [isPetDeleteDialogOpen, setIsPetDeleteDialogOpen] = useState(false);
+  const [petToDelete, setPetToDelete] = useState<Pet | null>(null);
   
   // Form states
   const [createForm, setCreateForm] = useState({
@@ -63,6 +69,24 @@ export default function Owners() {
     address: '',
     phone: '',
     email: ''
+  });
+
+  const [petForm, setPetForm] = useState({
+    name: '',
+    species: 'dog' as 'dog' | 'cat',
+    breed: '',
+    age: '',
+    weight: '',
+    allergies: ''
+  });
+
+  const [editPetForm, setEditPetForm] = useState({
+    name: '',
+    species: 'dog' as 'dog' | 'cat',
+    breed: '',
+    age: '',
+    weight: '',
+    allergies: ''
   });
 
   const filteredOwners = owners.filter(owner =>
@@ -172,6 +196,93 @@ export default function Owners() {
   
   const handleViewPetHistory = (pet: Pet) => {
     showNotification(`Viendo historial médico de ${pet.name}`, 'info');
+  };
+
+  const handleAddPet = (owner: Owner) => {
+    setSelectedOwnerForPet(owner);
+    setPetForm({
+      name: '',
+      species: 'dog',
+      breed: '',
+      age: '',
+      weight: '',
+      allergies: ''
+    });
+    setIsPetDialogOpen(true);
+  };
+
+  const handleEditPet = (pet: Pet) => {
+    setPetToEdit(pet);
+    setEditPetForm({
+      name: pet.name,
+      species: pet.species,
+      breed: pet.breed,
+      age: pet.age.toString(),
+      weight: pet.weight.toString(),
+      allergies: pet.allergies.join(', ')
+    });
+    setIsPetEditDialogOpen(true);
+  };
+
+  const handleDeletePet = (pet: Pet) => {
+    setPetToDelete(pet);
+    setIsPetDeleteDialogOpen(true);
+  };
+
+  const submitNewPet = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!selectedOwnerForPet) return;
+
+    try {
+      await addPet(selectedOwnerForPet.id, {
+        name: petForm.name,
+        species: petForm.species,
+        breed: petForm.breed,
+        age: parseInt(petForm.age) || 0,
+        weight: parseFloat(petForm.weight) || 0,
+        allergies: petForm.allergies.split(',').map(a => a.trim()).filter(a => a),
+        medicalHistory: []
+      });
+      showNotification('Mascota agregada exitosamente', 'success');
+      setIsPetDialogOpen(false);
+      setSelectedOwnerForPet(null);
+    } catch (error) {
+      showNotification('Error al agregar mascota', 'error');
+    }
+  };
+
+  const submitEditPet = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!petToEdit) return;
+
+    try {
+      await updatePet(petToEdit.id, {
+        name: editPetForm.name,
+        species: editPetForm.species,
+        breed: editPetForm.breed,
+        age: parseInt(editPetForm.age) || 0,
+        weight: parseFloat(editPetForm.weight) || 0,
+        allergies: editPetForm.allergies.split(',').map(a => a.trim()).filter(a => a)
+      });
+      showNotification('Mascota actualizada exitosamente', 'success');
+      setIsPetEditDialogOpen(false);
+      setPetToEdit(null);
+    } catch (error) {
+      showNotification('Error al actualizar mascota', 'error');
+    }
+  };
+
+  const confirmDeletePet = async () => {
+    if (!petToDelete) return;
+
+    try {
+      await deletePet(petToDelete.id);
+      showNotification('Mascota eliminada exitosamente', 'success');
+      setIsPetDeleteDialogOpen(false);
+      setPetToDelete(null);
+    } catch (error) {
+      showNotification('Error al eliminar mascota', 'error');
+    }
   };
 
   const getSpeciesLabel = (species: string) => {
@@ -475,9 +586,15 @@ export default function Owners() {
           {/* Pets Info */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center space-x-2">
-                <Heart className="w-5 h-5" />
-                <span>Mascotas ({owner.pets.length})</span>
+              <CardTitle className="text-lg flex items-center justify-between">
+                <div className="flex items-center space-x-2">
+                  <Heart className="w-5 h-5" />
+                  <span>Mascotas ({owner.pets.length})</span>
+                </div>
+                <Button size="sm" onClick={() => handleAddPet(owner)}>
+                  <Plus className="w-3 h-3 mr-1" />
+                  Agregar Mascota
+                </Button>
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -491,10 +608,18 @@ export default function Owners() {
                       <h3 className="font-semibold">{pet.name}</h3>
                       <Badge variant="outline">{getSpeciesLabel(pet.species)}</Badge>
                     </div>
-                    <Button size="sm" variant="info" onClick={() => handleViewPetHistory(pet)}>
-                      <Calendar className="w-3 h-3 mr-1" />
-                      Ver Historial
-                    </Button>
+                    <div className="flex space-x-2">
+                      <Button size="sm" variant="info" onClick={() => handleViewPetHistory(pet)}>
+                        <Calendar className="w-3 h-3 mr-1" />
+                        Ver Historial
+                      </Button>
+                      <Button size="sm" variant="outline" onClick={() => handleEditPet(pet)}>
+                        <Edit className="w-3 h-3" />
+                      </Button>
+                      <Button size="sm" variant="destructive" onClick={() => handleDeletePet(pet)}>
+                        <Trash2 className="w-3 h-3" />
+                      </Button>
+                    </div>
                   </div>
                   
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
