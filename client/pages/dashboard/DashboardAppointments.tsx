@@ -12,6 +12,8 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { Textarea } from '@/components/ui/textarea';
 import DashboardLayout from '@/components/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
+import { useBusinessData } from '@/contexts/BusinessDataContext';
+import { useNotifications } from '@/contexts/NotificationContext';
 import { 
   Calendar as CalendarIcon, 
   Clock, 
@@ -28,7 +30,9 @@ import {
   AlertCircle,
   CheckCircle,
   Eye,
-  Send
+  Send,
+  Save,
+  X
 } from 'lucide-react';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
@@ -54,90 +58,51 @@ const safeFormatDate = (date: any, formatStr: string, options?: any): string => 
 
 export default function DashboardAppointments() {
   const { hasRole } = useAuth();
+  const { 
+    appointments, 
+    owners, 
+    pets, 
+    addAppointment, 
+    updateAppointment, 
+    cancelAppointment,
+    isLoadingAppointments 
+  } = useBusinessData();
+  const { showNotification } = useNotifications();
+  
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date>();
-  const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
   const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [isDetailsDialogOpen, setIsDetailsDialogOpen] = useState(false);
+  const [isReminderDialogOpen, setIsReminderDialogOpen] = useState(false);
+  
+  const [selectedDate, setSelectedDate] = useState<Date>();
+  const [selectedAppointment, setSelectedAppointment] = useState<any>(null);
   const [appointmentToEdit, setAppointmentToEdit] = useState<any>(null);
+  const [appointmentToDelete, setAppointmentToDelete] = useState<any>(null);
+  const [appointmentForReminder, setAppointmentForReminder] = useState<any>(null);
 
-  // Mock data - in real app this would come from API
-  const appointments: (Appointment & { petName: string; ownerName: string; ownerPhone: string })[] = [
-    {
-      id: '1',
-      petId: '1',
-      ownerId: '1',
-      veterinarianId: '2',
-      appointmentType: 'consultation',
-      date: new Date('2024-01-20'),
-      startTime: '09:00',
-      duration: 30,
-      status: 'confirmed',
-      notes: 'Chequeo de rutina. El dueño menciona que ha estado un poco decaído.',
-      reminderSent: true,
-      createdAt: new Date('2024-01-15'),
-      updatedAt: new Date('2024-01-18'),
-      petName: 'Max',
-      ownerName: 'Carlos Pérez',
-      ownerPhone: '+51 987654321'
-    },
-    {
-      id: '2',
-      petId: '2',
-      ownerId: '1',
-      veterinarianId: '2',
-      appointmentType: 'vaccination',
-      date: new Date('2024-01-20'),
-      startTime: '10:30',
-      duration: 15,
-      status: 'confirmed',
-      notes: 'Vacuna antirrábica anual',
-      reminderSent: true,
-      createdAt: new Date('2024-01-16'),
-      updatedAt: new Date('2024-01-18'),
-      petName: 'Luna',
-      ownerName: 'Carlos Pérez',
-      ownerPhone: '+51 987654321'
-    },
-    {
-      id: '3',
-      petId: '3',
-      ownerId: '2',
-      veterinarianId: undefined,
-      appointmentType: 'grooming',
-      date: new Date('2024-01-20'),
-      startTime: '11:00',
-      duration: 120,
-      status: 'pending',
-      notes: 'Corte completo y baño. Dueña solicita corte especial para concurso.',
-      reminderSent: false,
-      createdAt: new Date('2024-01-17'),
-      updatedAt: new Date('2024-01-17'),
-      petName: 'Rocky',
-      ownerName: 'María García',
-      ownerPhone: '+51 912345678'
-    },
-    {
-      id: '4',
-      petId: '4',
-      ownerId: '3',
-      veterinarianId: '2',
-      appointmentType: 'surgery',
-      date: new Date('2024-01-21'),
-      startTime: '08:00',
-      duration: 180,
-      status: 'scheduled',
-      notes: 'Esterilización programada. Ayuno de 12 horas requerido.',
-      reminderSent: true,
-      createdAt: new Date('2024-01-10'),
-      updatedAt: new Date('2024-01-18'),
-      petName: 'Mia',
-      ownerName: 'Juan Martínez',
-      ownerPhone: '+51 956789123'
-    }
-  ];
+  // Form states
+  const [createForm, setCreateForm] = useState({
+    ownerId: '',
+    petId: '',
+    appointmentType: '' as AppointmentType,
+    date: '',
+    startTime: '',
+    notes: '',
+    veterinarianId: ''
+  });
+
+  const [editForm, setEditForm] = useState({
+    appointmentType: '' as AppointmentType,
+    date: '',
+    startTime: '',
+    notes: '',
+    veterinarianId: '',
+    status: '' as AppointmentStatus
+  });
 
   const appointmentTypes = [
     { value: 'consultation', label: 'Consulta', duration: 30, price: 'S/ 60', icon: Stethoscope },
@@ -179,183 +144,400 @@ export default function DashboardAppointments() {
     return appointmentTypes.find(t => t.value === type) || appointmentTypes[0];
   };
 
-  const handleSendReminder = (appointment: any) => {
-    // Simulate sending reminder
-    alert(`Recordatorio enviado a ${appointment.ownerName} para la cita de ${appointment.petName}`);
+  const resetCreateForm = () => {
+    setCreateForm({
+      ownerId: '',
+      petId: '',
+      appointmentType: '' as AppointmentType,
+      date: '',
+      startTime: '',
+      notes: '',
+      veterinarianId: ''
+    });
+    setSelectedDate(undefined);
+  };
+
+  const handleCreateAppointment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      if (!selectedDate) {
+        showNotification('Por favor selecciona una fecha', 'error');
+        return;
+      }
+
+      const appointmentDate = new Date(selectedDate);
+      const [hours, minutes] = createForm.startTime.split(':');
+      appointmentDate.setHours(parseInt(hours), parseInt(minutes));
+
+      const typeConfig = getTypeConfig(createForm.appointmentType);
+      
+      const newAppointment = {
+        petId: createForm.petId,
+        ownerId: createForm.ownerId,
+        appointmentType: createForm.appointmentType,
+        date: appointmentDate,
+        startTime: createForm.startTime,
+        duration: typeConfig.duration,
+        status: 'scheduled' as AppointmentStatus,
+        notes: createForm.notes,
+        reminderSent: false,
+        veterinarianId: createForm.veterinarianId
+      };
+
+      await addAppointment(newAppointment);
+      showNotification('Cita agendada exitosamente', 'success');
+      setIsCreateDialogOpen(false);
+      resetCreateForm();
+    } catch (error) {
+      showNotification('Error al agendar la cita', 'error');
+    }
   };
 
   const handleEditAppointment = (appointment: any) => {
     setAppointmentToEdit(appointment);
+    setEditForm({
+      appointmentType: appointment.appointmentType,
+      date: safeFormatDate(appointment.date, 'yyyy-MM-dd'),
+      startTime: appointment.startTime,
+      notes: appointment.notes || '',
+      veterinarianId: appointment.veterinarianId || '',
+      status: appointment.status
+    });
     setIsEditDialogOpen(true);
   };
 
-  const handleCancelAppointment = (appointment: any) => {
-    if (confirm(`¿Estás seguro de que deseas cancelar la cita de ${appointment.petName}?`)) {
-      alert(`Cita de ${appointment.petName} cancelada exitosamente`);
+  const handleUpdateAppointment = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!appointmentToEdit) return;
+
+    try {
+      const appointmentDate = new Date(editForm.date);
+      const [hours, minutes] = editForm.startTime.split(':');
+      appointmentDate.setHours(parseInt(hours), parseInt(minutes));
+
+      const updates = {
+        appointmentType: editForm.appointmentType,
+        date: appointmentDate,
+        startTime: editForm.startTime,
+        notes: editForm.notes,
+        veterinarianId: editForm.veterinarianId,
+        status: editForm.status
+      };
+
+      await updateAppointment(appointmentToEdit.id, updates);
+      showNotification('Cita actualizada exitosamente', 'success');
+      setIsEditDialogOpen(false);
+      setAppointmentToEdit(null);
+    } catch (error) {
+      showNotification('Error al actualizar la cita', 'error');
     }
   };
 
-  const handleCreateAppointment = (e: React.FormEvent) => {
-    e.preventDefault();
-    alert('Cita creada exitosamente');
-    setIsCreateDialogOpen(false);
+  const handleDeleteAppointment = (appointment: any) => {
+    setAppointmentToDelete(appointment);
+    setIsDeleteDialogOpen(true);
   };
 
-  const CreateAppointmentForm = () => {
-    const [selectedType, setSelectedType] = useState<string>('');
-    const [selectedTime, setSelectedTime] = useState<string>('');
-    const [selectedPet, setSelectedPet] = useState<string>('');
+  const confirmCancelAppointment = async () => {
+    if (!appointmentToDelete) return;
 
-    return (
-      <form className="space-y-4" onSubmit={handleCreateAppointment}>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label htmlFor="owner">Propietario *</Label>
-            <Select required>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccionar propietario" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">Carlos Pérez</SelectItem>
-                <SelectItem value="2">María García</SelectItem>
-                <SelectItem value="3">Juan Martínez</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="pet">Mascota *</Label>
-            <Select value={selectedPet} onValueChange={setSelectedPet} required>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccionar mascota" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="1">
-                  <div className="flex items-center space-x-2">
-                    <Heart className="w-3 h-3 text-green-600" />
-                    <span>Max (Perro - Golden Retriever)</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="2">
-                  <div className="flex items-center space-x-2">
-                    <Heart className="w-3 h-3 text-purple-600" />
-                    <span>Luna (Gato - Persa)</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="3">
-                  <div className="flex items-center space-x-2">
-                    <Heart className="w-3 h-3 text-green-600" />
-                    <span>Rocky (Perro - Bulldog Francés)</span>
-                  </div>
-                </SelectItem>
-                <SelectItem value="4">
-                  <div className="flex items-center space-x-2">
-                    <Heart className="w-3 h-3 text-purple-600" />
-                    <span>Mia (Gato - Siamés)</span>
-                  </div>
-                </SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
+    try {
+      await cancelAppointment(appointmentToDelete.id);
+      showNotification('Cita cancelada exitosamente', 'success');
+      setIsDeleteDialogOpen(false);
+      setAppointmentToDelete(null);
+    } catch (error) {
+      showNotification('Error al cancelar la cita', 'error');
+    }
+  };
 
+  const handleSendReminder = (appointment: any) => {
+    setAppointmentForReminder(appointment);
+    setIsReminderDialogOpen(true);
+  };
+
+  const confirmSendReminder = async () => {
+    if (!appointmentForReminder) return;
+
+    try {
+      await updateAppointment(appointmentForReminder.id, { reminderSent: true });
+      showNotification(`Recordatorio enviado a ${appointmentForReminder.ownerName}`, 'success');
+      setIsReminderDialogOpen(false);
+      setAppointmentForReminder(null);
+    } catch (error) {
+      showNotification('Error al enviar recordatorio', 'error');
+    }
+  };
+
+  const handleViewDetails = (appointment: any) => {
+    setSelectedAppointment(appointment);
+    setIsDetailsDialogOpen(true);
+  };
+
+  const getAvailablePets = () => {
+    const selectedOwner = owners.find(o => o.id === createForm.ownerId);
+    return selectedOwner ? selectedOwner.pets : [];
+  };
+
+  const CreateAppointmentForm = () => (
+    <form className="space-y-4" onSubmit={handleCreateAppointment}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="space-y-2">
-          <Label htmlFor="type">Tipo de Cita *</Label>
-          <Select value={selectedType} onValueChange={setSelectedType} required>
+          <Label htmlFor="owner">Propietario *</Label>
+          <Select 
+            value={createForm.ownerId} 
+            onValueChange={(value) => setCreateForm(prev => ({ ...prev, ownerId: value, petId: '' }))} 
+            required
+          >
             <SelectTrigger>
-              <SelectValue placeholder="Seleccionar tipo de cita" />
+              <SelectValue placeholder="Seleccionar propietario" />
             </SelectTrigger>
             <SelectContent>
-              {appointmentTypes.map((type) => {
-                const Icon = type.icon;
-                return (
-                  <SelectItem key={type.value} value={type.value}>
-                    <div className="flex items-center space-x-2">
-                      <Icon className="w-4 h-4" />
-                      <span>{type.label}</span>
-                      <span className="text-xs text-muted-foreground">({type.duration} min)</span>
-                    </div>
-                  </SelectItem>
-                );
-              })}
+              {owners.map(owner => (
+                <SelectItem key={owner.id} value={owner.id}>{owner.fullName}</SelectItem>
+              ))}
             </SelectContent>
           </Select>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="space-y-2">
-            <Label>Fecha *</Label>
-            <Popover>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  className="w-full justify-start text-left font-normal"
-                >
-                  <CalendarIcon className="mr-2 h-4 w-4" />
-                  {selectedDate ? format(selectedDate, "PPP", { locale: es }) : "Seleccionar fecha"}
-                </Button>
-              </PopoverTrigger>
-              <PopoverContent className="w-auto p-0" align="start">
-                <Calendar
-                  mode="single"
-                  selected={selectedDate}
-                  onSelect={setSelectedDate}
-                  disabled={(date) => date < new Date()}
-                  locale={es}
-                />
-              </PopoverContent>
-            </Popover>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="time">Hora *</Label>
-            <Select value={selectedTime} onValueChange={setSelectedTime} required>
-              <SelectTrigger>
-                <SelectValue placeholder="Seleccionar hora" />
-              </SelectTrigger>
-              <SelectContent>
-                {timeSlots.map((time) => (
-                  <SelectItem key={time} value={time}>{time}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        {hasRole(['admin', 'veterinarian']) && (
-          <div className="space-y-2">
-            <Label htmlFor="veterinarian">Veterinario</Label>
-            <Select>
-              <SelectTrigger>
-                <SelectValue placeholder="Asignar veterinario (opcional)" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="2">Dr. Carlos Rodríguez</SelectItem>
-                <SelectItem value="3">Dra. Ana Martínez</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        )}
-
         <div className="space-y-2">
-          <Label htmlFor="notes">Notas</Label>
-          <Textarea
-            id="notes"
-            placeholder="Información adicional sobre la cita..."
-            rows={3}
+          <Label htmlFor="pet">Mascota *</Label>
+          <Select 
+            value={createForm.petId} 
+            onValueChange={(value) => setCreateForm(prev => ({ ...prev, petId: value }))} 
+            required
+            disabled={!createForm.ownerId}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar mascota" />
+            </SelectTrigger>
+            <SelectContent>
+              {getAvailablePets().map(pet => (
+                <SelectItem key={pet.id} value={pet.id}>
+                  <div className="flex items-center space-x-2">
+                    <Heart className="w-3 h-3 text-green-600" />
+                    <span>{pet.name} ({pet.species === 'dog' ? 'Perro' : 'Gato'} - {pet.breed})</span>
+                  </div>
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="type">Tipo de Cita *</Label>
+        <Select 
+          value={createForm.appointmentType} 
+          onValueChange={(value: AppointmentType) => setCreateForm(prev => ({ ...prev, appointmentType: value }))} 
+          required
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccionar tipo de cita" />
+          </SelectTrigger>
+          <SelectContent>
+            {appointmentTypes.map((type) => {
+              const Icon = type.icon;
+              return (
+                <SelectItem key={type.value} value={type.value}>
+                  <div className="flex items-center space-x-2">
+                    <Icon className="w-4 h-4" />
+                    <span>{type.label}</span>
+                    <span className="text-xs text-muted-foreground">({type.duration} min)</span>
+                  </div>
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label>Fecha *</Label>
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button
+                variant="outline"
+                className="w-full justify-start text-left font-normal"
+              >
+                <CalendarIcon className="mr-2 h-4 w-4" />
+                {selectedDate ? format(selectedDate, "PPP", { locale: es }) : "Seleccionar fecha"}
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="w-auto p-0" align="start">
+              <Calendar
+                mode="single"
+                selected={selectedDate}
+                onSelect={setSelectedDate}
+                disabled={(date) => date < new Date()}
+                locale={es}
+              />
+            </PopoverContent>
+          </Popover>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="time">Hora *</Label>
+          <Select 
+            value={createForm.startTime} 
+            onValueChange={(value) => setCreateForm(prev => ({ ...prev, startTime: value }))} 
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar hora" />
+            </SelectTrigger>
+            <SelectContent>
+              {timeSlots.map((time) => (
+                <SelectItem key={time} value={time}>{time}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
+      {hasRole(['admin', 'veterinarian']) && (
+        <div className="space-y-2">
+          <Label htmlFor="veterinarian">Veterinario</Label>
+          <Select 
+            value={createForm.veterinarianId} 
+            onValueChange={(value) => setCreateForm(prev => ({ ...prev, veterinarianId: value }))}
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Asignar veterinario (opcional)" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="2">Dr. Carlos Rodríguez</SelectItem>
+              <SelectItem value="3">Dra. Ana Martínez</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+
+      <div className="space-y-2">
+        <Label htmlFor="notes">Notas</Label>
+        <Textarea
+          id="notes"
+          placeholder="Información adicional sobre la cita..."
+          value={createForm.notes}
+          onChange={(e) => setCreateForm(prev => ({ ...prev, notes: e.target.value }))}
+          rows={3}
+        />
+      </div>
+
+      <div className="flex justify-end space-x-2 pt-4">
+        <Button type="button" variant="outline" onClick={() => {
+          setIsCreateDialogOpen(false);
+          resetCreateForm();
+        }}>
+          Cancelar
+        </Button>
+        <Button type="submit" variant="success" disabled={isLoadingAppointments}>
+          <Plus className="w-4 h-4 mr-2" />
+          {isLoadingAppointments ? 'Agendando...' : 'Agendar Cita'}
+        </Button>
+      </div>
+    </form>
+  );
+
+  const EditAppointmentForm = () => (
+    <form className="space-y-4" onSubmit={handleUpdateAppointment}>
+      <div className="space-y-2">
+        <Label htmlFor="edit-type">Tipo de Cita *</Label>
+        <Select 
+          value={editForm.appointmentType} 
+          onValueChange={(value: AppointmentType) => setEditForm(prev => ({ ...prev, appointmentType: value }))} 
+          required
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccionar tipo de cita" />
+          </SelectTrigger>
+          <SelectContent>
+            {appointmentTypes.map((type) => {
+              const Icon = type.icon;
+              return (
+                <SelectItem key={type.value} value={type.value}>
+                  <div className="flex items-center space-x-2">
+                    <Icon className="w-4 h-4" />
+                    <span>{type.label}</span>
+                  </div>
+                </SelectItem>
+              );
+            })}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div className="space-y-2">
+          <Label htmlFor="edit-date">Fecha *</Label>
+          <Input
+            id="edit-date"
+            type="date"
+            value={editForm.date}
+            onChange={(e) => setEditForm(prev => ({ ...prev, date: e.target.value }))}
+            required
           />
         </div>
-
-        <div className="flex justify-end space-x-2 pt-4">
-          <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
-            Cancelar
-          </Button>
-          <Button type="submit" variant="success">
-            <Plus className="w-4 h-4 mr-2" />
-            Agendar Cita
-          </Button>
+        <div className="space-y-2">
+          <Label htmlFor="edit-time">Hora *</Label>
+          <Select 
+            value={editForm.startTime} 
+            onValueChange={(value) => setEditForm(prev => ({ ...prev, startTime: value }))} 
+            required
+          >
+            <SelectTrigger>
+              <SelectValue placeholder="Seleccionar hora" />
+            </SelectTrigger>
+            <SelectContent>
+              {timeSlots.map((time) => (
+                <SelectItem key={time} value={time}>{time}</SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-      </form>
-    );
-  };
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="edit-status">Estado</Label>
+        <Select 
+          value={editForm.status} 
+          onValueChange={(value: AppointmentStatus) => setEditForm(prev => ({ ...prev, status: value }))}
+        >
+          <SelectTrigger>
+            <SelectValue placeholder="Seleccionar estado" />
+          </SelectTrigger>
+          <SelectContent>
+            {Object.entries(statusConfig).map(([key, config]) => (
+              <SelectItem key={key} value={key}>{config.label}</SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="edit-notes">Notas</Label>
+        <Textarea
+          id="edit-notes"
+          placeholder="Información adicional sobre la cita..."
+          value={editForm.notes}
+          onChange={(e) => setEditForm(prev => ({ ...prev, notes: e.target.value }))}
+          rows={3}
+        />
+      </div>
+
+      <div className="flex justify-end space-x-2 pt-4">
+        <Button type="button" variant="outline" onClick={() => {
+          setIsEditDialogOpen(false);
+          setAppointmentToEdit(null);
+        }}>
+          Cancelar
+        </Button>
+        <Button type="submit" variant="success" disabled={isLoadingAppointments}>
+          <Save className="w-4 h-4 mr-2" />
+          {isLoadingAppointments ? 'Guardando...' : 'Guardar Cambios'}
+        </Button>
+      </div>
+    </form>
+  );
 
   const AppointmentDetailsDialog = ({ appointment }: { appointment: any }) => (
     <DialogContent className="max-w-2xl">
@@ -459,12 +641,18 @@ export default function DashboardAppointments() {
               )}
             </div>
             <div className="space-x-2">
-              <Button size="sm" variant="outline" onClick={() => handleEditAppointment(appointment)}>
+              <Button size="sm" variant="outline" onClick={() => {
+                setIsDetailsDialogOpen(false);
+                handleEditAppointment(appointment);
+              }}>
                 <Edit className="w-3 h-3 mr-1" />
                 Editar
               </Button>
               {hasRole(['admin', 'veterinarian']) && (
-                <Button size="sm" variant="destructive" onClick={() => handleCancelAppointment(appointment)}>
+                <Button size="sm" variant="destructive" onClick={() => {
+                  setIsDetailsDialogOpen(false);
+                  handleDeleteAppointment(appointment);
+                }}>
                   <Trash2 className="w-3 h-3 mr-1" />
                   Cancelar
                 </Button>
@@ -516,8 +704,17 @@ export default function DashboardAppointments() {
               <CalendarIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">12</div>
-              <p className="text-xs text-muted-foreground">3 pendientes</p>
+              <div className="text-2xl font-bold">
+                {appointments.filter(apt => 
+                  new Date(apt.date).toDateString() === new Date().toDateString()
+                ).length}
+              </div>
+              <p className="text-xs text-muted-foreground">
+                {appointments.filter(apt => 
+                  apt.status === 'pending' && 
+                  new Date(apt.date).toDateString() === new Date().toDateString()
+                ).length} pendientes
+              </p>
             </CardContent>
           </Card>
           <Card>
@@ -526,8 +723,8 @@ export default function DashboardAppointments() {
               <CalendarIcon className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">47</div>
-              <p className="text-xs text-muted-foreground">+8 vs semana anterior</p>
+              <div className="text-2xl font-bold">{appointments.length}</div>
+              <p className="text-xs text-muted-foreground">Total programadas</p>
             </CardContent>
           </Card>
           <Card>
@@ -536,17 +733,21 @@ export default function DashboardAppointments() {
               <CheckCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">89%</div>
+              <div className="text-2xl font-bold">
+                {Math.round((appointments.filter(apt => apt.status === 'confirmed').length / appointments.length) * 100) || 0}%
+              </div>
               <p className="text-xs text-muted-foreground">Tasa de confirmación</p>
             </CardContent>
           </Card>
           <Card>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">No Shows</CardTitle>
+              <CardTitle className="text-sm font-medium">Canceladas</CardTitle>
               <AlertCircle className="h-4 w-4 text-muted-foreground" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">3</div>
+              <div className="text-2xl font-bold">
+                {appointments.filter(apt => apt.status === 'cancelled').length}
+              </div>
               <p className="text-xs text-muted-foreground">Este mes</p>
             </CardContent>
           </Card>
@@ -653,18 +854,13 @@ export default function DashboardAppointments() {
                         </TableCell>
                         <TableCell className="text-right">
                           <div className="flex items-center justify-end space-x-2">
-                            <Dialog>
-                              <DialogTrigger asChild>
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  onClick={() => setSelectedAppointment(appointment)}
-                                >
-                                  <Eye className="w-3 h-3" />
-                                </Button>
-                              </DialogTrigger>
-                              <AppointmentDetailsDialog appointment={selectedAppointment} />
-                            </Dialog>
+                            <Button
+                              size="sm"
+                              variant="outline"
+                              onClick={() => handleViewDetails(appointment)}
+                            >
+                              <Eye className="w-3 h-3" />
+                            </Button>
                             
                             <Button size="sm" variant="outline" onClick={() => handleEditAppointment(appointment)}>
                               <Edit className="w-3 h-3" />
@@ -679,6 +875,111 @@ export default function DashboardAppointments() {
             </div>
           </CardContent>
         </Card>
+
+        {/* Dialogs */}
+        
+        {/* Edit Appointment Dialog */}
+        <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
+          <DialogContent className="max-w-2xl">
+            <DialogHeader>
+              <DialogTitle>Editar Cita</DialogTitle>
+              <DialogDescription>
+                Actualiza la información de la cita
+              </DialogDescription>
+            </DialogHeader>
+            <EditAppointmentForm />
+          </DialogContent>
+        </Dialog>
+
+        {/* Delete Confirmation Dialog */}
+        <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center space-x-2">
+                <AlertTriangle className="w-5 h-5 text-red-600" />
+                <span>Cancelar Cita</span>
+              </DialogTitle>
+              <DialogDescription>
+                ¿Estás seguro de que deseas cancelar esta cita?
+              </DialogDescription>
+            </DialogHeader>
+            
+            {appointmentToDelete && (
+              <div className="space-y-4">
+                <div className="p-4 bg-red-50 rounded-lg border border-red-200">
+                  <p className="text-sm text-red-800">
+                    <strong>Mascota:</strong> {appointmentToDelete.petName}
+                  </p>
+                  <p className="text-sm text-red-800">
+                    <strong>Propietario:</strong> {appointmentToDelete.ownerName}
+                  </p>
+                  <p className="text-sm text-red-800">
+                    <strong>Fecha:</strong> {safeFormatDate(appointmentToDelete.date, "PPP", { locale: es })} a las {appointmentToDelete.startTime}
+                  </p>
+                </div>
+                
+                <div className="flex justify-end space-x-2">
+                  <Button variant="outline" onClick={() => setIsDeleteDialogOpen(false)}>
+                    Mantener Cita
+                  </Button>
+                  <Button variant="destructive" onClick={confirmCancelAppointment} disabled={isLoadingAppointments}>
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    {isLoadingAppointments ? 'Cancelando...' : 'Cancelar Cita'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Reminder Confirmation Dialog */}
+        <Dialog open={isReminderDialogOpen} onOpenChange={setIsReminderDialogOpen}>
+          <DialogContent className="max-w-md">
+            <DialogHeader>
+              <DialogTitle className="flex items-center space-x-2">
+                <Send className="w-5 h-5 text-blue-600" />
+                <span>Enviar Recordatorio</span>
+              </DialogTitle>
+              <DialogDescription>
+                Se enviará un recordatorio al propietario sobre la cita programada.
+              </DialogDescription>
+            </DialogHeader>
+            
+            {appointmentForReminder && (
+              <div className="space-y-4">
+                <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="text-sm text-blue-800">
+                    <strong>Para:</strong> {appointmentForReminder.ownerName}
+                  </p>
+                  <p className="text-sm text-blue-800">
+                    <strong>Teléfono:</strong> {appointmentForReminder.ownerPhone}
+                  </p>
+                  <p className="text-sm text-blue-800">
+                    <strong>Mascota:</strong> {appointmentForReminder.petName}
+                  </p>
+                  <p className="text-sm text-blue-800">
+                    <strong>Cita:</strong> {safeFormatDate(appointmentForReminder.date, "PPP", { locale: es })} a las {appointmentForReminder.startTime}
+                  </p>
+                </div>
+                
+                <div className="flex justify-end space-x-2">
+                  <Button variant="outline" onClick={() => setIsReminderDialogOpen(false)}>
+                    Cancelar
+                  </Button>
+                  <Button variant="info" onClick={confirmSendReminder} disabled={isLoadingAppointments}>
+                    <Send className="w-4 h-4 mr-2" />
+                    {isLoadingAppointments ? 'Enviando...' : 'Enviar Recordatorio'}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </DialogContent>
+        </Dialog>
+
+        {/* Appointment Details Dialog */}
+        <Dialog open={isDetailsDialogOpen} onOpenChange={setIsDetailsDialogOpen}>
+          <AppointmentDetailsDialog appointment={selectedAppointment} />
+        </Dialog>
       </div>
     </DashboardLayout>
   );
