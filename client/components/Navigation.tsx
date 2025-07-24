@@ -1,6 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Heart, Calendar, Phone, User, Menu, X, Play } from "lucide-react";
+import { Heart, Calendar, Phone, Menu, X } from "lucide-react";
 import { SimplePawLogo } from "@/components/PetPawLogo";
 import { useState } from "react";
 
@@ -12,7 +11,6 @@ export default function Navigation() {
     { href: "/", label: "Inicio", icon: Heart },
     { href: "/servicios", label: "Servicios", icon: Heart },
     { href: "/citas", label: "Agendar Cita", icon: Calendar },
-    { href: "/demo", label: "Demo Sistema", icon: Play },
     { href: "/contacto", label: "Contacto", icon: Phone },
   ];
 
@@ -26,8 +24,12 @@ export default function Navigation() {
               <SimplePawLogo className="w-6 h-6 text-white" />
             </div>
             <div className="hidden sm:block">
-              <h1 className="text-xl font-bold text-foreground">Matis Pet Groomer</h1>
-              <p className="text-xs text-muted-foreground">Cuidado veterinario profesional</p>
+              <h1 className="text-xl font-bold text-foreground">
+                Matis Pet Groomer
+              </h1>
+              <p className="text-xs text-muted-foreground">
+                Cuidado veterinario profesional
+              </p>
             </div>
           </Link>
 
@@ -51,27 +53,18 @@ export default function Navigation() {
             })}
           </div>
 
-          {/* CTA Button & Mobile Menu */}
-          <div className="flex items-center space-x-4">
-            <Button asChild variant="outline" className="hidden sm:flex">
-              <Link to="/login">
-                <User className="w-4 h-4 mr-2" />
-                Acceder al Sistema
-              </Link>
-            </Button>
-            <Button asChild className="hidden sm:flex">
-              <Link to="/citas">
-                <Calendar className="w-4 h-4 mr-2" />
-                Agendar Cita
-              </Link>
-            </Button>
-
+          {/* Mobile Menu */}
+          <div className="flex items-center">
             {/* Mobile menu button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="md:hidden p-2 rounded-lg text-muted-foreground hover:text-foreground hover:bg-muted"
             >
-              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {isMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
             </button>
           </div>
         </div>

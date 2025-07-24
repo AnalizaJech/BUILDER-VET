@@ -1,49 +1,61 @@
-import React, { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Alert, AlertDescription } from '@/components/ui/alert';
-import { useAuth } from '@/contexts/AuthContext';
-import { Heart, Eye, EyeOff, Loader2 } from 'lucide-react';
-import { SimplePawLogo } from '@/components/PetPawLogo';
+import React, { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/contexts/AuthContext";
+import { Heart, Eye, EyeOff, Loader2 } from "lucide-react";
+import { SimplePawLogo } from "@/components/PetPawLogo";
 
 export default function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  
+
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError('');
+    setError("");
     setIsLoading(true);
 
     try {
       const success = await login(email, password);
       if (success) {
-        navigate('/dashboard');
+        navigate("/dashboard");
       } else {
-        setError('Credenciales incorrectas. Por favor verifica tu email y contraseña.');
+        setError(
+          "Credenciales incorrectas. Por favor verifica tu email y contraseña.",
+        );
       }
     } catch (error) {
-      setError('Error al iniciar sesión. Por favor intenta nuevamente.');
+      setError("Error al iniciar sesión. Por favor intenta nuevamente.");
     } finally {
       setIsLoading(false);
     }
   };
 
   const demoAccounts = [
-    { email: 'admin@matispet.com', role: 'Administrador', password: '123456' },
-    { email: 'vet@matispet.com', role: 'Veterinario', password: '123456' },
-    { email: 'recepcion@matispet.com', role: 'Recepcionista', password: '123456' },
-    { email: 'cajero@matispet.com', role: 'Cajero', password: '123456' },
-    { email: 'groomer@matispet.com', role: 'Groomer', password: '123456' }
+    { email: "admin@matispet.com", role: "Administrador", password: "123456" },
+    { email: "vet@matispet.com", role: "Veterinario", password: "123456" },
+    {
+      email: "recepcion@matispet.com",
+      role: "Recepcionista",
+      password: "123456",
+    },
+    { email: "cajero@matispet.com", role: "Cajero", password: "123456" },
+    { email: "groomer@matispet.com", role: "Groomer", password: "123456" },
   ];
 
   return (
@@ -56,8 +68,12 @@ export default function Login() {
               <SimplePawLogo className="w-7 h-7 text-white" />
             </div>
             <div className="text-left">
-              <h1 className="text-2xl font-bold text-foreground">Matis Pet Groomer</h1>
-              <p className="text-sm text-muted-foreground">Sistema de Gestión Veterinaria</p>
+              <h1 className="text-2xl font-bold text-foreground">
+                Matis Pet Groomer
+              </h1>
+              <p className="text-sm text-muted-foreground">
+                Sistema de Gestión Veterinaria
+              </p>
             </div>
           </Link>
         </div>
@@ -90,7 +106,7 @@ export default function Login() {
                 <div className="relative">
                   <Input
                     id="password"
-                    type={showPassword ? 'text' : 'password'}
+                    type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
@@ -127,7 +143,7 @@ export default function Login() {
                     Iniciando sesión...
                   </>
                 ) : (
-                  'Iniciar Sesión'
+                  "Iniciar Sesión"
                 )}
               </Button>
             </form>
@@ -154,7 +170,9 @@ export default function Login() {
               >
                 <div>
                   <p className="font-medium text-sm">{account.role}</p>
-                  <p className="text-xs text-muted-foreground">{account.email}</p>
+                  <p className="text-xs text-muted-foreground">
+                    {account.email}
+                  </p>
                 </div>
                 <Button variant="outline" size="sm" type="button">
                   Usar
@@ -162,17 +180,11 @@ export default function Login() {
               </div>
             ))}
             <p className="text-xs text-muted-foreground text-center pt-2">
-              Contraseña para todas las cuentas: <code className="bg-muted px-1 rounded">123456</code>
+              Contraseña para todas las cuentas:{" "}
+              <code className="bg-muted px-1 rounded">123456</code>
             </p>
           </CardContent>
         </Card>
-
-        {/* Back to Website */}
-        <div className="text-center">
-          <Button asChild variant="outline">
-            <Link to="/">← Volver al Sitio Web</Link>
-          </Button>
-        </div>
       </div>
     </div>
   );
