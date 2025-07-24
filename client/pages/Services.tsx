@@ -789,7 +789,7 @@ export default function Services() {
                 </li>
                 <li className="flex items-center space-x-2">
                   <MapPin className="w-4 h-4" />
-                  <span>Lima, Perú</span>
+                  <span>San Vicente de Cañete, Lima</span>
                 </li>
               </ul>
             </div>
