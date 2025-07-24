@@ -233,7 +233,7 @@ export default function Index() {
                   asChild
                   variant="ghost"
                   size="lg"
-                  className="text-lg px-8 py-4 rounded-xl hover:bg-gray-50"
+                  className="text-lg px-8 py-4 rounded-xl hover:bg-green-50 hover:text-green-700"
                 >
                   <Link to="/login">
                     Acceder al Sistema
