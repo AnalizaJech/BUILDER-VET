@@ -60,6 +60,8 @@ export default function DashboardAppointments() {
   const [isCreateDialogOpen, setIsCreateDialogOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<Date>();
   const [selectedAppointment, setSelectedAppointment] = useState<Appointment | null>(null);
+  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false);
+  const [appointmentToEdit, setAppointmentToEdit] = useState<any>(null);
 
   // Mock data - in real app this would come from API
   const appointments: (Appointment & { petName: string; ownerName: string; ownerPhone: string })[] = [
@@ -177,13 +179,35 @@ export default function DashboardAppointments() {
     return appointmentTypes.find(t => t.value === type) || appointmentTypes[0];
   };
 
+  const handleSendReminder = (appointment: any) => {
+    // Simulate sending reminder
+    alert(`Recordatorio enviado a ${appointment.ownerName} para la cita de ${appointment.petName}`);
+  };
+
+  const handleEditAppointment = (appointment: any) => {
+    setAppointmentToEdit(appointment);
+    setIsEditDialogOpen(true);
+  };
+
+  const handleCancelAppointment = (appointment: any) => {
+    if (confirm(`¿Estás seguro de que deseas cancelar la cita de ${appointment.petName}?`)) {
+      alert(`Cita de ${appointment.petName} cancelada exitosamente`);
+    }
+  };
+
+  const handleCreateAppointment = (e: React.FormEvent) => {
+    e.preventDefault();
+    alert('Cita creada exitosamente');
+    setIsCreateDialogOpen(false);
+  };
+
   const CreateAppointmentForm = () => {
     const [selectedType, setSelectedType] = useState<string>('');
     const [selectedTime, setSelectedTime] = useState<string>('');
     const [selectedPet, setSelectedPet] = useState<string>('');
 
     return (
-      <form className="space-y-4">
+      <form className="space-y-4" onSubmit={handleCreateAppointment}>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div className="space-y-2">
             <Label htmlFor="owner">Propietario *</Label>
@@ -324,7 +348,8 @@ export default function DashboardAppointments() {
           <Button type="button" variant="outline" onClick={() => setIsCreateDialogOpen(false)}>
             Cancelar
           </Button>
-          <Button type="submit">
+          <Button type="submit" variant="success">
+            <Plus className="w-4 h-4 mr-2" />
             Agendar Cita
           </Button>
         </div>
@@ -427,19 +452,19 @@ export default function DashboardAppointments() {
           <div className="flex justify-between">
             <div className="space-x-2">
               {!appointment.reminderSent && hasRole(['admin', 'receptionist']) && (
-                <Button size="sm" variant="outline">
+                <Button size="sm" variant="info" onClick={() => handleSendReminder(appointment)}>
                   <Send className="w-3 h-3 mr-1" />
                   Enviar Recordatorio
                 </Button>
               )}
             </div>
             <div className="space-x-2">
-              <Button size="sm" variant="outline">
+              <Button size="sm" variant="outline" onClick={() => handleEditAppointment(appointment)}>
                 <Edit className="w-3 h-3 mr-1" />
                 Editar
               </Button>
               {hasRole(['admin', 'veterinarian']) && (
-                <Button size="sm" variant="outline" className="text-red-600">
+                <Button size="sm" variant="destructive" onClick={() => handleCancelAppointment(appointment)}>
                   <Trash2 className="w-3 h-3 mr-1" />
                   Cancelar
                 </Button>
