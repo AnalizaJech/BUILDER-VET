@@ -553,46 +553,99 @@ export default function Services() {
                       </p>
                       {service.includes.map((item, i) => {
                         // Map service features to relevant icons
-                        const getServiceIcon = (item: string, serviceTitle: string) => {
+                        const getServiceIcon = (
+                          item: string,
+                          serviceTitle: string,
+                        ) => {
                           const lowerItem = item.toLowerCase();
                           const lowerService = serviceTitle.toLowerCase();
 
                           // Medical consultation icons
-                          if (lowerItem.includes('consulta')) return Stethoscope;
-                          if (lowerItem.includes('examen') || lowerItem.includes('diagnóstico')) return Activity;
-                          if (lowerItem.includes('tratamiento') || lowerItem.includes('medicación')) return Heart;
-                          if (lowerItem.includes('seguimiento')) return UserCheck;
-                          if (lowerItem.includes('emergencia')) return Shield;
-                          if (lowerItem.includes('vacun')) return Syringe;
-                          if (lowerItem.includes('desparasit')) return Pill;
-                          if (lowerItem.includes('análisis')) return ClipboardCheck;
-                          if (lowerItem.includes('estudios')) return Eye;
+                          if (lowerItem.includes("consulta"))
+                            return Stethoscope;
+                          if (
+                            lowerItem.includes("examen") ||
+                            lowerItem.includes("diagnóstico")
+                          )
+                            return Activity;
+                          if (
+                            lowerItem.includes("tratamiento") ||
+                            lowerItem.includes("medicación")
+                          )
+                            return Heart;
+                          if (lowerItem.includes("seguimiento"))
+                            return UserCheck;
+                          if (lowerItem.includes("emergencia")) return Shield;
+                          if (lowerItem.includes("vacun")) return Syringe;
+                          if (lowerItem.includes("desparasit")) return Pill;
+                          if (lowerItem.includes("análisis"))
+                            return ClipboardCheck;
+                          if (lowerItem.includes("estudios")) return Eye;
 
                           // Grooming icons
-                          if (lowerItem.includes('baño')) return Bath;
-                          if (lowerItem.includes('corte') && lowerItem.includes('pelo')) return Scissors;
-                          if (lowerItem.includes('corte') && lowerItem.includes('uñas')) return CheckCircle;
-                          if (lowerItem.includes('limpieza') && lowerItem.includes('oídos')) return CheckCircle;
-                          if (lowerItem.includes('cepillado')) return Brush;
-                          if (lowerItem.includes('perfume') || lowerItem.includes('aroma')) return Sparkles;
-                          if (lowerItem.includes('masaje')) return HeartHandshake;
-                          if (lowerItem.includes('hidratación')) return Heart;
-                          if (lowerItem.includes('secado')) return Activity;
-                          if (lowerItem.includes('champú') || lowerItem.includes('productos')) return Bath;
-                          if (lowerItem.includes('sales') || lowerItem.includes('spa')) return Gem;
+                          if (lowerItem.includes("baño")) return Bath;
+                          if (
+                            lowerItem.includes("corte") &&
+                            lowerItem.includes("pelo")
+                          )
+                            return Scissors;
+                          if (
+                            lowerItem.includes("corte") &&
+                            lowerItem.includes("uñas")
+                          )
+                            return CheckCircle;
+                          if (
+                            lowerItem.includes("limpieza") &&
+                            lowerItem.includes("oídos")
+                          )
+                            return CheckCircle;
+                          if (lowerItem.includes("cepillado")) return Brush;
+                          if (
+                            lowerItem.includes("perfume") ||
+                            lowerItem.includes("aroma")
+                          )
+                            return Sparkles;
+                          if (lowerItem.includes("masaje"))
+                            return HeartHandshake;
+                          if (lowerItem.includes("hidratación")) return Heart;
+                          if (lowerItem.includes("secado")) return Activity;
+                          if (
+                            lowerItem.includes("champú") ||
+                            lowerItem.includes("productos")
+                          )
+                            return Bath;
+                          if (
+                            lowerItem.includes("sales") ||
+                            lowerItem.includes("spa")
+                          )
+                            return Gem;
 
                           // Specialty services
-                          if (lowerItem.includes('domicilio') || lowerItem.includes('casa')) return Home;
-                          if (lowerItem.includes('transporte')) return Truck;
-                          if (lowerItem.includes('emergencia')) return Phone;
-                          if (lowerItem.includes('certificado')) return FileText;
-                          if (lowerItem.includes('recordatorio')) return Bell;
-                          if (lowerItem.includes('monitoreo')) return Activity;
+                          if (
+                            lowerItem.includes("domicilio") ||
+                            lowerItem.includes("casa")
+                          )
+                            return Home;
+                          if (lowerItem.includes("transporte")) return Truck;
+                          if (lowerItem.includes("emergencia")) return Phone;
+                          if (lowerItem.includes("certificado"))
+                            return FileText;
+                          if (lowerItem.includes("recordatorio")) return Bell;
+                          if (lowerItem.includes("monitoreo")) return Activity;
 
                           // Surgery icons
-                          if (lowerItem.includes('cirugía') || lowerItem.includes('quirófano')) return Shield;
-                          if (lowerItem.includes('anestesia')) return ShieldCheck;
-                          if (lowerItem.includes('post') || lowerItem.includes('recuperación')) return ClipboardCheck;
+                          if (
+                            lowerItem.includes("cirugía") ||
+                            lowerItem.includes("quirófano")
+                          )
+                            return Shield;
+                          if (lowerItem.includes("anestesia"))
+                            return ShieldCheck;
+                          if (
+                            lowerItem.includes("post") ||
+                            lowerItem.includes("recuperación")
+                          )
+                            return ClipboardCheck;
 
                           // Default icon
                           return CheckCircle;
@@ -605,7 +658,9 @@ export default function Services() {
                             <div className="w-4 h-4 bg-green-100 rounded-md flex items-center justify-center mt-0.5 flex-shrink-0">
                               <ItemIcon className="w-2.5 h-2.5 text-green-600" />
                             </div>
-                            <span className="text-xs text-gray-600">{item}</span>
+                            <span className="text-xs text-gray-600">
+                              {item}
+                            </span>
                           </div>
                         );
                       })}

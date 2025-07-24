@@ -538,9 +538,7 @@ export default function Contact() {
                     <h3 className="font-semibold text-gray-900">
                       Peluquería Canina MATIS
                     </h3>
-                    <p className="text-gray-600">
-                      San Vicente de Cañete 15700
-                    </p>
+                    <p className="text-gray-600">San Vicente de Cañete 15700</p>
                     <p className="text-sm text-gray-500">
                       Provincia de Cañete, Lima - Perú
                     </p>
@@ -552,9 +550,7 @@ export default function Contact() {
                     <NavIcon className="w-6 h-6 text-blue-600" />
                   </div>
                   <div>
-                    <h3 className="font-semibold text-gray-900">
-                      Cómo llegar
-                    </h3>
+                    <h3 className="font-semibold text-gray-900">Cómo llegar</h3>
                     <p className="text-gray-600">
                       Desde Lima: Panamericana Sur hasta Cañete
                     </p>

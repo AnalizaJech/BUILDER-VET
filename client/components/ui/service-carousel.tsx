@@ -21,7 +21,7 @@ import {
   HeartHandshake,
   Activity,
   Syringe,
-  X
+  X,
 } from "lucide-react";
 
 type ServiceCarouselProps = {
@@ -119,54 +119,90 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
                       <div className="space-y-3">
                         {service.features.slice(0, 3).map((feature, i) => {
                           // Map features to relevant icons based on content
-                          const getFeatureIcon = (feature: string, serviceTitle: string) => {
+                          const getFeatureIcon = (
+                            feature: string,
+                            serviceTitle: string,
+                          ) => {
                             const lowerFeature = feature.toLowerCase();
                             const lowerService = serviceTitle.toLowerCase();
 
                             // Medical/Consultation icons
-                            if (lowerFeature.includes('diagnóstico')) return Stethoscope;
-                            if (lowerFeature.includes('tratamiento')) return Heart;
-                            if (lowerFeature.includes('seguimiento')) return Activity;
-                            if (lowerFeature.includes('especializada')) return Award;
+                            if (lowerFeature.includes("diagnóstico"))
+                              return Stethoscope;
+                            if (lowerFeature.includes("tratamiento"))
+                              return Heart;
+                            if (lowerFeature.includes("seguimiento"))
+                              return Activity;
+                            if (lowerFeature.includes("especializada"))
+                              return Award;
 
                             // Grooming icons
-                            if (lowerFeature.includes('corte')) return Scissors;
-                            if (lowerFeature.includes('baño')) return Sparkles;
-                            if (lowerFeature.includes('spa')) return HeartHandshake;
-                            if (lowerFeature.includes('uñas') || lowerFeature.includes('oídos')) return CheckCircle;
+                            if (lowerFeature.includes("corte")) return Scissors;
+                            if (lowerFeature.includes("baño")) return Sparkles;
+                            if (lowerFeature.includes("spa"))
+                              return HeartHandshake;
+                            if (
+                              lowerFeature.includes("uñas") ||
+                              lowerFeature.includes("oídos")
+                            )
+                              return CheckCircle;
 
                             // Vaccination icons
-                            if (lowerFeature.includes('calendario')) return Calendar;
-                            if (lowerFeature.includes('recordatorios')) return Bell;
-                            if (lowerFeature.includes('certificados')) return FileText;
-                            if (lowerFeature.includes('médico')) return UserCheck;
+                            if (lowerFeature.includes("calendario"))
+                              return Calendar;
+                            if (lowerFeature.includes("recordatorios"))
+                              return Bell;
+                            if (lowerFeature.includes("certificados"))
+                              return FileText;
+                            if (lowerFeature.includes("médico"))
+                              return UserCheck;
 
                             // Surgery icons
-                            if (lowerFeature.includes('quirófano')) return Shield;
-                            if (lowerFeature.includes('anestesia')) return ShieldCheck;
-                            if (lowerFeature.includes('post-operatorio')) return ClipboardCheck;
-                            if (lowerFeature.includes('monitoreo')) return Activity;
+                            if (lowerFeature.includes("quirófano"))
+                              return Shield;
+                            if (lowerFeature.includes("anestesia"))
+                              return ShieldCheck;
+                            if (lowerFeature.includes("post-operatorio"))
+                              return ClipboardCheck;
+                            if (lowerFeature.includes("monitoreo"))
+                              return Activity;
 
                             // Special treatments
-                            if (lowerFeature.includes('fisioterapia')) return HeartHandshake;
-                            if (lowerFeature.includes('holística')) return Sparkles;
-                            if (lowerFeature.includes('regenerativos')) return Heart;
-                            if (lowerFeature.includes('geriátricos')) return Shield;
+                            if (lowerFeature.includes("fisioterapia"))
+                              return HeartHandshake;
+                            if (lowerFeature.includes("holística"))
+                              return Sparkles;
+                            if (lowerFeature.includes("regenerativos"))
+                              return Heart;
+                            if (lowerFeature.includes("geriátricos"))
+                              return Shield;
 
                             // Diagnostics
-                            if (lowerFeature.includes('rayos') || lowerFeature.includes('x')) return Eye;
-                            if (lowerFeature.includes('ecografías')) return Activity;
-                            if (lowerFeature.includes('análisis')) return ClipboardCheck;
-                            if (lowerFeature.includes('imágenes')) return Eye;
+                            if (
+                              lowerFeature.includes("rayos") ||
+                              lowerFeature.includes("x")
+                            )
+                              return Eye;
+                            if (lowerFeature.includes("ecografías"))
+                              return Activity;
+                            if (lowerFeature.includes("análisis"))
+                              return ClipboardCheck;
+                            if (lowerFeature.includes("imágenes")) return Eye;
 
                             // Default icon
                             return CheckCircle;
                           };
 
-                          const FeatureIcon = getFeatureIcon(feature, service.title);
+                          const FeatureIcon = getFeatureIcon(
+                            feature,
+                            service.title,
+                          );
 
                           return (
-                            <div key={i} className="flex items-center space-x-3">
+                            <div
+                              key={i}
+                              className="flex items-center space-x-3"
+                            >
                               <div className="w-5 h-5 bg-green-100 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-green-200 transition-colors">
                                 <FeatureIcon className="w-3 h-3 text-green-600" />
                               </div>

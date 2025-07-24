@@ -1,13 +1,13 @@
-import React from 'react';
+import React from "react";
 
 interface WhatsAppIconProps {
   className?: string;
   size?: number;
 }
 
-export const WhatsAppIcon: React.FC<WhatsAppIconProps> = ({ 
-  className = '', 
-  size = 24 
+export const WhatsAppIcon: React.FC<WhatsAppIconProps> = ({
+  className = "",
+  size = 24,
 }) => {
   return (
     <svg

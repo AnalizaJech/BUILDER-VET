@@ -705,54 +705,93 @@ export default function Appointments() {
                             <div className="space-y-2">
                               {service.features.map((feature, i) => {
                                 // Map features to relevant icons based on content
-                                const getFeatureIcon = (feature: string, serviceTitle: string) => {
+                                const getFeatureIcon = (
+                                  feature: string,
+                                  serviceTitle: string,
+                                ) => {
                                   const lowerFeature = feature.toLowerCase();
 
                                   // Medical/Consultation icons
-                                  if (lowerFeature.includes('diagnóstico')) return Stethoscope;
-                                  if (lowerFeature.includes('tratamiento')) return Heart;
-                                  if (lowerFeature.includes('seguimiento')) return Activity;
-                                  if (lowerFeature.includes('especializada')) return UserCheck;
-                                  if (lowerFeature.includes('profesional')) return UserCheck;
-                                  if (lowerFeature.includes('personalizado')) return User;
+                                  if (lowerFeature.includes("diagnóstico"))
+                                    return Stethoscope;
+                                  if (lowerFeature.includes("tratamiento"))
+                                    return Heart;
+                                  if (lowerFeature.includes("seguimiento"))
+                                    return Activity;
+                                  if (lowerFeature.includes("especializada"))
+                                    return UserCheck;
+                                  if (lowerFeature.includes("profesional"))
+                                    return UserCheck;
+                                  if (lowerFeature.includes("personalizado"))
+                                    return User;
 
                                   // Grooming icons
-                                  if (lowerFeature.includes('corte')) return Scissors;
-                                  if (lowerFeature.includes('baño')) return Bath;
-                                  if (lowerFeature.includes('spa')) return Gem;
-                                  if (lowerFeature.includes('uñas') || lowerFeature.includes('oídos')) return CheckCircle;
-                                  if (lowerFeature.includes('cepillado')) return Brush;
-                                  if (lowerFeature.includes('relajante')) return HeartHandshake;
+                                  if (lowerFeature.includes("corte"))
+                                    return Scissors;
+                                  if (lowerFeature.includes("baño"))
+                                    return Bath;
+                                  if (lowerFeature.includes("spa")) return Gem;
+                                  if (
+                                    lowerFeature.includes("uñas") ||
+                                    lowerFeature.includes("oídos")
+                                  )
+                                    return CheckCircle;
+                                  if (lowerFeature.includes("cepillado"))
+                                    return Brush;
+                                  if (lowerFeature.includes("relajante"))
+                                    return HeartHandshake;
 
                                   // Vaccination icons
-                                  if (lowerFeature.includes('calendario')) return CalendarIcon;
-                                  if (lowerFeature.includes('recordatorios')) return Bell;
-                                  if (lowerFeature.includes('certificados')) return FileText;
-                                  if (lowerFeature.includes('vacuna')) return Syringe;
+                                  if (lowerFeature.includes("calendario"))
+                                    return CalendarIcon;
+                                  if (lowerFeature.includes("recordatorios"))
+                                    return Bell;
+                                  if (lowerFeature.includes("certificados"))
+                                    return FileText;
+                                  if (lowerFeature.includes("vacuna"))
+                                    return Syringe;
 
                                   // Surgery icons
-                                  if (lowerFeature.includes('quirófano')) return Shield;
-                                  if (lowerFeature.includes('anestesia')) return ShieldCheck;
-                                  if (lowerFeature.includes('post-operatorio')) return Activity;
-                                  if (lowerFeature.includes('monitoreo')) return Activity;
+                                  if (lowerFeature.includes("quirófano"))
+                                    return Shield;
+                                  if (lowerFeature.includes("anestesia"))
+                                    return ShieldCheck;
+                                  if (lowerFeature.includes("post-operatorio"))
+                                    return Activity;
+                                  if (lowerFeature.includes("monitoreo"))
+                                    return Activity;
 
                                   // Special treatments
-                                  if (lowerFeature.includes('fisioterapia')) return HeartHandshake;
-                                  if (lowerFeature.includes('holística')) return Sparkles;
-                                  if (lowerFeature.includes('regenerativos')) return Heart;
-                                  if (lowerFeature.includes('geriátricos')) return Shield;
+                                  if (lowerFeature.includes("fisioterapia"))
+                                    return HeartHandshake;
+                                  if (lowerFeature.includes("holística"))
+                                    return Sparkles;
+                                  if (lowerFeature.includes("regenerativos"))
+                                    return Heart;
+                                  if (lowerFeature.includes("geriátricos"))
+                                    return Shield;
 
                                   // Diagnostics
-                                  if (lowerFeature.includes('rayos') || lowerFeature.includes('x')) return Eye;
-                                  if (lowerFeature.includes('ecografías')) return Activity;
-                                  if (lowerFeature.includes('análisis')) return FileText;
-                                  if (lowerFeature.includes('imágenes')) return Eye;
+                                  if (
+                                    lowerFeature.includes("rayos") ||
+                                    lowerFeature.includes("x")
+                                  )
+                                    return Eye;
+                                  if (lowerFeature.includes("ecografías"))
+                                    return Activity;
+                                  if (lowerFeature.includes("análisis"))
+                                    return FileText;
+                                  if (lowerFeature.includes("imágenes"))
+                                    return Eye;
 
                                   // Default icon
                                   return CheckCircle;
                                 };
 
-                                const FeatureIcon = getFeatureIcon(feature, service.title);
+                                const FeatureIcon = getFeatureIcon(
+                                  feature,
+                                  service.title,
+                                );
 
                                 return (
                                   <div

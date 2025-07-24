@@ -21,17 +21,37 @@ const avatarDatabase = {
 };
 
 // Detect gender based on common Spanish names
-const detectGender = (name: string): 'male' | 'female' => {
-  const femaleNames = ['maría', 'ana', 'patricia', 'carmen', 'laura', 'elena', 'sofia', 'isabella', 'valentina'];
-  const maleNames = ['carlos', 'josé', 'roberto', 'miguel', 'antonio', 'francisco', 'manuel', 'diego', 'alejandro'];
+const detectGender = (name: string): "male" | "female" => {
+  const femaleNames = [
+    "maría",
+    "ana",
+    "patricia",
+    "carmen",
+    "laura",
+    "elena",
+    "sofia",
+    "isabella",
+    "valentina",
+  ];
+  const maleNames = [
+    "carlos",
+    "josé",
+    "roberto",
+    "miguel",
+    "antonio",
+    "francisco",
+    "manuel",
+    "diego",
+    "alejandro",
+  ];
 
-  const firstName = name.toLowerCase().split(' ')[0];
+  const firstName = name.toLowerCase().split(" ")[0];
 
-  if (femaleNames.some(fn => firstName.includes(fn))) return 'female';
-  if (maleNames.some(mn => firstName.includes(mn))) return 'male';
+  if (femaleNames.some((fn) => firstName.includes(fn))) return "female";
+  if (maleNames.some((mn) => firstName.includes(mn))) return "male";
 
   // Default fallback based on name ending
-  return firstName.endsWith('a') ? 'female' : 'male';
+  return firstName.endsWith("a") ? "female" : "male";
 };
 
 // Generate consistent high-quality image based on gender
@@ -62,7 +82,7 @@ const generateImageUrl = (name: string, size: number): string => {
     "photo-1560250097-0b93528c311a", // Professional portrait
   ];
 
-  const ids = gender === 'female' ? femaleIds : maleIds;
+  const ids = gender === "female" ? femaleIds : maleIds;
   const selectedId = ids[seed % ids.length];
 
   return `https://images.unsplash.com/${selectedId}?w=${size}&h=${size}&fit=crop&crop=face`;
@@ -122,11 +142,14 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
         onError={(e) => {
           // Fallback to initials if image fails to load
           const target = e.target as HTMLImageElement;
-          target.style.display = 'none';
+          target.style.display = "none";
           const parent = target.parentElement;
           if (parent) {
             const gender = detectGender(name);
-            const bgColor = gender === 'female' ? 'from-pink-500 to-purple-500' : 'from-blue-500 to-green-500';
+            const bgColor =
+              gender === "female"
+                ? "from-pink-500 to-purple-500"
+                : "from-blue-500 to-green-500";
             parent.innerHTML = `<div class="w-full h-full bg-gradient-to-br ${bgColor} rounded-full flex items-center justify-center text-white font-semibold">${getInitials(name)}</div>`;
           }
         }}
