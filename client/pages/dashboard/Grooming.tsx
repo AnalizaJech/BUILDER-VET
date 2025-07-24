@@ -181,7 +181,7 @@ export default function Grooming() {
   const getStatusColor = (status: string) => {
     const colors = {
       scheduled: 'bg-blue-100 text-blue-800',
-      'in-progress': 'bg-yellow-100 text-yellow-800',
+      'in-progress': 'bg-blue-100 text-blue-800',
       completed: 'bg-green-100 text-green-800',
       cancelled: 'bg-red-100 text-red-800'
     };
@@ -572,8 +572,8 @@ export default function Grooming() {
               </div>
               
               {appointment.status !== 'scheduled' && (
-                <div className="flex items-center space-x-3 p-3 bg-yellow-50 rounded-lg">
-                  <Clock className="w-5 h-5 text-yellow-600" />
+                <div className="flex items-center space-x-3 p-3 bg-blue-50 rounded-lg">
+                  <Clock className="w-5 h-5 text-blue-600" />
                   <div>
                     <p className="font-medium">Grooming Iniciado</p>
                     <p className="text-sm text-muted-foreground">En progreso...</p>
