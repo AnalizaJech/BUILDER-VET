@@ -153,6 +153,31 @@ export const BusinessDataProvider: React.FC<BusinessDataProviderProps> = ({ chil
         ],
         createdAt: new Date('2023-03-20'),
         updatedAt: new Date('2024-01-15')
+      },
+      {
+        id: '3',
+        fullName: 'José Ángel Núñez Sánchez',
+        dni: '45612378',
+        address: 'Calle Martín Olañeta 789, Miraflores',
+        phone: '+51 998765432',
+        email: 'jose.nunez@email.com',
+        pets: [
+          {
+            id: '4',
+            name: 'Simón',
+            species: 'cat',
+            breed: 'Siamés',
+            age: 1,
+            weight: 3.5,
+            allergies: ['Pescado'],
+            ownerId: '3',
+            medicalHistory: [],
+            createdAt: new Date('2023-08-15'),
+            updatedAt: new Date('2024-01-15')
+          }
+        ],
+        createdAt: new Date('2023-08-15'),
+        updatedAt: new Date('2024-01-15')
       }
     ];
 
