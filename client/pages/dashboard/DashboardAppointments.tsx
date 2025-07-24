@@ -14,20 +14,21 @@ import DashboardLayout from '@/components/DashboardLayout';
 import { useAuth } from '@/contexts/AuthContext';
 import { useBusinessData } from '@/contexts/BusinessDataContext';
 import { useNotifications } from '@/contexts/NotificationContext';
-import { 
-  Calendar as CalendarIcon, 
-  Clock, 
-  Search, 
-  Plus, 
-  Edit, 
-  Trash2, 
-  Phone, 
-  Mail, 
+import {
+  Calendar as CalendarIcon,
+  Clock,
+  Search,
+  Plus,
+  Edit,
+  Trash2,
+  Phone,
+  Mail,
   User,
   Heart,
   Stethoscope,
   Scissors,
   AlertCircle,
+  AlertTriangle,
   CheckCircle,
   Eye,
   Send,
