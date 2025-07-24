@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import Navigation from "@/components/Navigation";
 import { SimplePawLogo } from "@/components/PetPawLogo";
+import { WhatsAppIcon } from "@/components/ui/WhatsAppIcon";
 import {
   Stethoscope,
   Scissors,
