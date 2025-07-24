@@ -247,22 +247,22 @@ export default function Index() {
                   <div className="flex -space-x-3">
                     <PersonAvatar
                       name="María González Sánchez"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <PersonAvatar
                       name="Carlos Mendoza Peña"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <PersonAvatar
                       name="Ana Rodríguez Vásquez"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <PersonAvatar
                       name="José Luis Ramírez"
-                      className="border-3 border-white shadow-lg hover:scale-110 transition-transform duration-300"
+                      className="border-3 border-white shadow-lg"
                       size="md"
                     />
                     <div className="w-12 h-12 bg-gradient-to-br from-green-100 to-green-200 border-3 border-white rounded-full flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
