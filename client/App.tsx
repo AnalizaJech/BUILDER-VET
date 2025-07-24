@@ -49,7 +49,7 @@ const App = () => (
             <Route path="/servicios" element={<Services />} />
             <Route path="/citas" element={<Appointments />} />
             <Route path="/contacto" element={<Contact />} />
-            <Route path="/demo" element={<Demo />} />
+
             <Route path="/login" element={<Login />} />
 
             {/* Protected dashboard routes */}
