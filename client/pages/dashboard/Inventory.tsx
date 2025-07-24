@@ -320,11 +320,8 @@ export default function Inventory() {
     return date <= oneMonthFromNow && date >= new Date();
   };
 
-  const handleStockMovement = (productId: string, type: 'in' | 'out', quantity: number, reason: string) => {
-    showSuccess(
-      `Stock ${type === 'in' ? 'agregado' : 'retirado'}`,
-      `${quantity} unidades ${type === 'in' ? 'agregadas al' : 'retiradas del'} inventario`
-    );
+  const handleStockMovementAction = (productId: string, type: 'in' | 'out', quantity: number, reason: string) => {
+    showSuccess(`Stock ${type === 'in' ? 'agregado' : 'retirado'}: ${quantity} unidades ${type === 'in' ? 'agregadas al' : 'retiradas del'} inventario`);
   };
 
   const NewProductForm = () => (
