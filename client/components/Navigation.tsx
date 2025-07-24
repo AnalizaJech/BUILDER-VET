@@ -12,7 +12,6 @@ export default function Navigation() {
     { href: "/", label: "Inicio", icon: Heart },
     { href: "/servicios", label: "Servicios", icon: Heart },
     { href: "/citas", label: "Agendar Cita", icon: Calendar },
-    { href: "/demo", label: "Demo Sistema", icon: Play },
     { href: "/contacto", label: "Contacto", icon: Phone },
   ];
 
