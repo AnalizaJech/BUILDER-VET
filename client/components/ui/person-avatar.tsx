@@ -107,6 +107,11 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
   const imageSize = sizePixels[size];
   const imageUrl = generateImageUrl(name, imageSize);
 
+  // Debug log for María González
+  if (name === "María González Sánchez") {
+    console.log("María González image URL:", imageUrl);
+  }
+
   return (
     <div
       className={cn(
@@ -120,6 +125,7 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
         alt={`Avatar de ${name}`}
         className="w-full h-full object-cover"
         onError={(e) => {
+          console.error(`Failed to load image for ${name}:`, imageUrl);
           // Fallback to initials if image fails to load
           const target = e.target as HTMLImageElement;
           target.style.display = 'none';
@@ -128,6 +134,11 @@ export const PersonAvatar: React.FC<PersonAvatarProps> = ({
             const gender = detectGender(name);
             const bgColor = gender === 'female' ? 'from-pink-500 to-purple-500' : 'from-blue-500 to-green-500';
             parent.innerHTML = `<div class="w-full h-full bg-gradient-to-br ${bgColor} rounded-full flex items-center justify-center text-white font-semibold">${getInitials(name)}</div>`;
+          }
+        }}
+        onLoad={() => {
+          if (name === "María González Sánchez") {
+            console.log("María González image loaded successfully");
           }
         }}
       />
