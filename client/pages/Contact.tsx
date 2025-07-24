@@ -90,7 +90,7 @@ export default function Contact() {
     {
       icon: MapPin,
       title: "Ubicación",
-      details: ["Av. Universitaria 123", "San Martín de Porres, Lima"],
+      details: ["Jr. Lampa 1260", "Cercado de Lima, Lima"],
       color: "text-orange-600",
       bgColor: "bg-orange-50",
     },
