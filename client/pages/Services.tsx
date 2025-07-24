@@ -40,6 +40,13 @@ import {
   Brush,
   Gem,
   Crown,
+  UserCheck,
+  ShieldCheck,
+  Syringe,
+  ClipboardCheck,
+  Bell,
+  FileText,
+  HeartHandshake,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
