@@ -18,7 +18,7 @@ import Services from "./pages/Services";
 import Contact from "./pages/Contact";
 import Appointments from "./pages/Appointments";
 import Login from "./pages/Login";
-import Demo from "./pages/Demo";
+
 
 // Dashboard pages
 import Dashboard from "./pages/Dashboard";
