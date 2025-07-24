@@ -219,11 +219,6 @@ export default function DashboardLayout({ children }: DashboardLayoutProps) {
           </div>
 
           <div className="flex items-center space-x-4">
-            <Button asChild variant="outline" size="sm">
-              <Link to="/">
-                Ver Sitio Web
-              </Link>
-            </Button>
           </div>
         </header>
 
