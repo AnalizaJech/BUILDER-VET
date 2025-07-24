@@ -39,7 +39,7 @@ export default function Services() {
 
   const serviceCategories = [
     { id: "medical", label: "Servicios Médicos", icon: Stethoscope },
-    { id: "grooming", label: "Grooming & Est��tica", icon: Scissors },
+    { id: "grooming", label: "Grooming & Estética", icon: Scissors },
     { id: "preventive", label: "Medicina Preventiva", icon: Shield },
     { id: "surgical", label: "Cirugías", icon: Heart },
     { id: "specialty", label: "Especialidades", icon: Award },
