@@ -187,7 +187,7 @@ export const ServiceCarousel: React.FC<ServiceCarouselProps> = ({
       </div>
 
       {/* Enhanced Dots Indicator */}
-      <div className="flex justify-center mt-8 space-x-2">
+      <div className="flex justify-center mt-12 space-x-2">
         {scrollSnaps.map((_, index) => (
           <button
             key={index}
