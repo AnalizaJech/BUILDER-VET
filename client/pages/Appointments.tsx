@@ -786,8 +786,8 @@ export default function Appointments() {
                     </Label>
 
                     {!selectedDate && (
-                      <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
-                        <p className="text-sm text-yellow-800">
+                      <div className="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                        <p className="text-sm text-orange-800">
                           Primero selecciona una fecha para ver los horarios
                           disponibles
                         </p>
